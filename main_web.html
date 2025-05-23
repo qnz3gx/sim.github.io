@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="styles.css">
+<title>Helium 3 Data</title>
+</head>
+
+<body>
+  <header>
+    <h1>Database</h1>
+  </header>
+
+<hr width="100%" size="3" color=#eeeeee>
+
+  <div class="container">
+    <div class="dropdown-container">
+      <nav>
+          <div class="dropdown">
+            <button onclick="dropdown_menu(this)" class="dropbtn">Polarized 3He</button>
+            <div class="dropdown-content">
+              <a href="link">All Data</a>
+              <a href="/Users/scarlettimorse/SLAC E142.csv" download="SLAC_E142.csv">SLAC E142</a>
+              <a href="link">SLAC E154</a>
+              <a href="link">Zheng</a>
+              <a href="link">Kramer</a>
+              <a href="link">Solvignon</a>
+              <a href="link">E97110</a>
+              <a href="link">E94010</a>
+              <a href="link">plots</a>
+            </div>
+            <button onclick="dropdown_menu(this)" class="dropbtn">Another?</button>
+            <div class="dropdown-content">
+              <a href="link">data</a>
+              <a href="link">plots</a>
+            </div>
+          </div>
+      </nav>
+    </div>
+    
+    <div class="text-content">
+      <p>
+      Clicking on an item to the left will give you options for downloading the data.
+      </p>
+      <h4>
+      Polarized 3He
+      </h4>
+      <h5>
+      Sources:
+      </h5>
+      <ul>
+        <li>SLAC E142 -- <a href="link">link</a></li>
+        <li>SLAC E154 -- <a href="link">link</a></li>
+        <li>Zheng -- <a href = "https://journals.aps.org/prc/pdf/10.1103/PhysRevC.70.065207">https://journals.aps.org/prc/pdf/10.1103/PhysRevC.70.065207</a></li>
+        <li>Kramer -- (Thesis) <a href = "https://scholarworks.wm.edu/cgi/viewcontent.cgi?article=3220&context=etd">https://scholarworks.wm.edu/cgi/viewcontent.cgi?article=3220&context=etd</a></li>
+        <li>Flay (E06-014) -- <a href = "https://journals.aps.org/prd/pdf/10.1103/PhysRevD.94.052003">https://journals.aps.org/prd/pdf/10.1103/PhysRevD.94.052003</a></li>
+        <li>Solvignon (E01-012) -- P Solvignon Thesis (Table F.1)
+          <ul>
+            <li>publication (g1he3 plot, no data table) - <a href = "https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.101.182502">https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.101.182502</a></li>
+            <li>publication (g1he3 plot, no data table) - <a href="https://journals.aps.org/prc/pdf/10.1103/PhysRevC.92.015208">https://journals.aps.org/prc/pdf/10.1103/PhysRevC.92.015208</a></li>
+          </ul></li>
+        <li>E97110 -- Data provided by Karl Slifer & Alexandre Deur</li>
+        <li>E94010 -- Data provided by Karl Slifer. sigma_LT, sigma_TT published in <a href="https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.101.022303">https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.101.022303</a></li>
+        </ul>
+    </div>
+  </div>
+
+<script>
+function dropdown_menu(button) {
+  document.querySelectorAll('.dropdown-content').forEach(menu =>{
+    if (!menu.previousElementSibling.isSameNode(button)) {
+      menu.classList.remove('show');
+    }
+  });
+
+  var dropdown = button.nextElementSibling;
+  dropdown.classList.toggle("show");
+}
+
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    document.querySelectorAll('.dropdown-content').forEach(menu => {
+      menu.classList.remove('show');
+    });
+  }
+}
+</script>
+
+</body>
+</html>
