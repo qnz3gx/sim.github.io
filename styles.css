@@ -58,9 +58,12 @@ a:hover {
   color: #010177;
 }
 
-table, th, td {
-  border: 1px solid black;
+table {
   border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid black;
   font-weight: normal;
   font-size: 10px;
   padding: 5px;
@@ -119,6 +122,16 @@ table, th, td {
 
 .show {display:block;}
 
-.sources-content p {
+#Polarized3He {
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+.Polarized3He p {
   margin: 5px;
+}
+
+.data-section {
+  display: none;
 }

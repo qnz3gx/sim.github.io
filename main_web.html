@@ -16,9 +16,9 @@
     <div class="dropdown-container">
       <nav>
           <div class="dropdown">
-            <button onclick="dropdown_menu(this)" class="dropbtn">Polarized <sup>3</sup>He</button>
+            <button onclick="dropdown_menu(this,'Polarized3He')" class="dropbtn">Polarized <sup>3</sup>He</button>
             <div class="dropdown-content">
-              <a href="link">All Data</a>
+              <a href="./allData.csv" download="allData.csv">All Data</a>
               <a href="./SLAC E142.csv" download="SLAC_E142.csv">SLAC E142</a>
               <a href="./SLAC E154.csv" download="SLAC_E154.csv">SLAC E154</a>
               <a href="./Zheng.csv" download="Zheng.csv">Zheng</a>
@@ -27,9 +27,9 @@
               <a href="./Solvignon.csv" download="Solvignon.csv">Solvignon</a>
               <a href="./E97110.csv" download="E97110.csv">E97110</a>
               <a href="./E94010.csv" download="E94010.csv">E94010</a>
-              <a href="link">plots</a>
+              <a href="./plotly_figure.html" download="random_plot.html">plots</a>
             </div>
-            <button onclick="dropdown_menu(this)" class="dropbtn">Another?</button>
+            <button onclick="dropdown_menu(this,'Another')" class="dropbtn">Another?</button>
             <div class="dropdown-content">
               <a href="link">data</a>
               <a href="link">plots</a>
@@ -42,10 +42,10 @@
       <p>
       Clicking on an item to the left will give you options for downloading the data.
       </p>
-      <h4>
-      Polarized <sup>3</sup>He
-      </h4>
-      <div class="sources-content">
+      <div class="data-section Polarized3He" id="Polarized3He">
+        <h4>
+        Polarized <sup>3</sup>He
+        </h4>
         <p>&#8226 SLAC E142</p>
         <table>
           <tr>
@@ -159,12 +159,15 @@
           </tr>
         </table>
       </div>
+      <div class="data-section Another" id="Another">
+        <h4>Another?</h4>
+      </div>
     </div>
   </div>
 
 <script>
-function dropdown_menu(button) {
-  document.querySelectorAll('.dropdown-content').forEach(menu =>{
+function dropdown_menu(button, dataset) {
+  document.querySelectorAll('.dropdown-content').forEach(menu => {
     if (!menu.previousElementSibling.isSameNode(button)) {
       menu.classList.remove('show');
     }
@@ -172,6 +175,14 @@ function dropdown_menu(button) {
 
   var dropdown = button.nextElementSibling;
   dropdown.classList.toggle("show");
+
+  document.querySelectorAll('.data-section').forEach(section => {
+    if (section.id === dataset) {
+      section.style.display = "block";
+    } else {
+      section.style.display = "none";
+    }
+  });
 }
 
 window.onclick = function(event) {
@@ -181,6 +192,7 @@ window.onclick = function(event) {
     });
   }
 }
+
 </script>
 
 </body>
