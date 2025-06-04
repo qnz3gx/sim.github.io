@@ -1,6 +1,7 @@
 body {
   background-color: white;
-  margin: auto;
+  margin-top: 205px;
+  margin-left: 131px;
   width: 690px;
 }
 
@@ -13,7 +14,7 @@ h1 {
 }
 
 h4 {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 h5{
@@ -40,7 +41,12 @@ p {
 
 ul {
   padding-left: 1em;
-  margin-top: 0;
+}
+
+ol {
+  padding-left: 1em;
+  margin: 5px;
+  list-style-type: none;
 }
 
 li {
@@ -48,23 +54,18 @@ li {
   font-size: 14px;
 }
 
-/* a {
-  display: inline-block;
-  background-color: #f0f0f0;
-  color: #333;
-  text-decoration: none;
-  padding: 1em;
-} */
-
 a:hover {
   color: #010177;
 }
 
 table, th, td {
   border: 1px solid black;
+  border-collapse: collapse;
   font-weight: normal;
-  padding: 10px;
+  font-size: 10px;
+  padding: 5px;
   border-spacing: 1px;
+  margin-bottom: 10px;
 }
 
 .dropdown-container {
@@ -117,3 +118,7 @@ table, th, td {
 }
 
 .show {display:block;}
+
+.sources-content p {
+  margin: 5px;
+}
