@@ -18,16 +18,23 @@ h3 {
     margin-top: 10px;
     margin-bottom: 10px;
     padding-left: 2em;
+    font-family: inherit;
 }
 
 h4 {
     margin-bottom: 15px;
+    margin-top: 20px;
+    font-size: 28px;
+    font-weight: normal;
+    color: #2c3e50;
+    font-family: Helvetica;
 }
 
 h5{
     margin: 0 0 20px;
     font-size: 14px;
     text-align: center;
+    font-family: inherit;
 }
 
 h6 {
@@ -35,6 +42,7 @@ h6 {
     margin-top: 15px;
     margin-bottom: 10px;
     font-size: 14px;
+    font-family: Helvetica;
 }
 
 hr {
@@ -52,6 +60,7 @@ p {
     color: rgb(44 61 80);
     font-size: 14px;
     margin-top: 20px;
+    font-family: inherit;
 }
 
 button {
@@ -65,7 +74,7 @@ button {
     border: 1px solid #ccc;
     border-radius: 5px;
     cursor: pointer;
-    margin-bottom: 5px;
+    margin-top: 20px;
 }
 
 button:hover {
