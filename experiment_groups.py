@@ -21,7 +21,7 @@ experiment_mapping = {
 }
 
 APD_df['Experiment'] = APD_df['Experiment'].replace(experiment_mapping)
-allData_df = APD_df.replace(-1000.0,'NaN')
+allData_df = APD_df.replace(-1000.0,'')
 allData_df.to_csv("allData.csv", index=False)
 
 

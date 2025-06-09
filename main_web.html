@@ -13,41 +13,19 @@
 <hr width="100%" size="3" color=#eeeeee>
 
   <div class="container">
-    <div class="dropdown-container">
-      <nav>
-          <div class="dropdown">
-            <button onclick="dropdown_menu(this,'Polarized3He')" class="dropbtn">Polarized <sup>3</sup>He</button>
-            <div class="dropdown-content">
-              <a href="./allData.csv" download="allData.csv">All Data</a>
-              <a href="./SLAC E142.csv" download="SLAC_E142.csv">SLAC E142</a>
-              <a href="./SLAC E154.csv" download="SLAC_E154.csv">SLAC E154</a>
-              <a href="./Zheng.csv" download="Zheng.csv">Zheng</a>
-              <a href="./Kramer.csv" download="Kramer.csv">Kramer</a>
-              <a href="./Flay.csv" download="Flay.csv">Flay</a>
-              <a href="./Solvignon.csv" download="Solvignon.csv">Solvignon</a>
-              <a href="./E97110.csv" download="E97110.csv">E97110</a>
-              <a href="./E94010.csv" download="E94010.csv">E94010</a>
-              <a href="./plotly_figure.html">plots</a>
-            </div>
-            <button onclick="dropdown_menu(this,'PolarizedNeutron')" class="dropbtn">Polarized Neutron</button>
-            <div class="dropdown-content">
-              <a href="./NeutronData.csv" download="neutronData.csv">All Data</a>
-              <a href="link">plots</a>
-            </div>
-          </div>
-      </nav>
-    </div>
-    
     <div class="text-content">
       <p>
-        Clicking on an item to the left will give options for downloading data and plots.<br>
+        Clicking on an item will download the data or plot.<br>
         The column heads for the data are boxed beneath the corresponding experiment.
       </p>
+      <button onclick="toggleText('Polarized3He')" class="btn">Polarized <sup>3</sup>He</button>
+      <button onclick="toggleText('Another')" class="btn">Another</button>
       <div class="data-section Polarized3He" id="Polarized3He">
-        <h4>
-        Polarized <sup>3</sup>He
-        </h4>
-        <p>&#8226 SLAC E142</p>
+        <h4>Polarized <sup>3</sup>He</h4>
+        <h5><pre><a href="./publishedData.csv" download="allData.csv">All <sup>3</sup>He</a>        <a href="./NeutronData.csv" download="NeutronData.csv">All Neutron</a>        <a href="./plotly_figure.html">Plot</a></pre></h5>
+        
+        <h6>&#8226 SLAC E142</h6>
+        <h3><pre><a href="./SLAC E142.csv" download="3He_SLAC_E142.csv"><sup>3</sup>He</a>        <a href="./neutron_SLAC E142.csv" download="neutron_SLAC_E142.csv">Neutron</a></pre></h3>
         <table>
           <tr>
             <th>Q<sup>2</sup></th>
@@ -58,7 +36,10 @@
             <th>G2.mes.err</th>
           </tr>
         </table>
-        <p>&#8226 SLAC E154</p>
+        <p><a href="https://arxiv.org/pdf/hep-ex/9610007">https://arxiv.org/pdf/hep-ex/9610007</a></p>
+
+        <h6>&#8226 SLAC E154</h6>
+        <h3><pre><a href="./SLAC E154.csv" download="3He_SLAC_E154.csv"><sup>3</sup>He</a>        <a href="./neutron_SLAC E154.csv" download="neutron_SLAC_E154.csv">Neutron</a></pre></h3>
         <table>
           <tr>
             <th>Q<sup>2</sup></th>
@@ -67,7 +48,10 @@
             <th>G1.mes.err</th>
           </tr>
         </table>
-        <p>&#8226 Zheng -- <a href = "https://journals.aps.org/prc/pdf/10.1103/PhysRevC.70.065207">https://journals.aps.org/prc/pdf/10.1103/PhysRevC.70.065207</a></p>
+        <p><a href="https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.79.26">https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.79.26</a></p>
+        
+        <h6>&#8226 Zheng</h6>
+        <h3><pre><a href="./Zheng.csv" download="3He_Zheng.csv"><sup>3</sup>He</a>        <a href="./neutron_Zheng.csv" download="neutron_Zheng.csv">Neutron</a></pre></h3>
         <table>
           <tr>
             <th>Q<sup>2</sup></th>
@@ -84,7 +68,10 @@
             <th>G2F1.mes.err</th>
           </tr>
         </table>
-        <p>&#8226 Kramer -- (Thesis) <a href = "https://scholarworks.wm.edu/cgi/viewcontent.cgi?article=3220&context=etd">https://scholarworks.wm.edu/cgi/viewcontent.cgi?article=3220&context=etd</a></p>
+        <p><a href = "https://journals.aps.org/prc/pdf/10.1103/PhysRevC.70.065207">https://journals.aps.org/prc/pdf/10.1103/PhysRevC.70.065207</a></p>
+        
+        <h6>&#8226 Kramer</h6>
+        <h3><pre><a href="./Kramer.csv" download="3He_Kramer.csv"><sup>3</sup>He</a>        <a href="./neutron_Kramer.csv" download="neutron_Kramer.csv">Neutron</a></pre></h3>
         <table>
           <tr>
             <th>Q<sup>2</sup></th>
@@ -95,7 +82,10 @@
             <th>G2.mes.err</th>
           </tr>
         </table>
-        <p>&#8226 Flay (E06-014) -- <a href = "https://journals.aps.org/prd/pdf/10.1103/PhysRevD.94.052003">https://journals.aps.org/prd/pdf/10.1103/PhysRevD.94.052003</a></p>
+        <p>(Thesis) <a href = "https://scholarworks.wm.edu/cgi/viewcontent.cgi?article=3220&context=etd">https://scholarworks.wm.edu/cgi/viewcontent.cgi?article=3220&context=etd</a></p>
+        
+        <h6>&#8226 Flay (E06-014)</h6>
+        <h3><pre><a href="./Flay.csv" download="3He_Flay.csv"><sup>3</sup>He</a>        <a href="./neutron_Flay.csv" download="neutron_f.csv">Neutron</a></pre></h3>
         <table>
           <tr>
             <th>Q<sup>2</sup></th>
@@ -109,25 +99,31 @@
             <th>G2F1.mes.err</th>
           </tr>
         </table>
-        <p>&#8226 Solvignon (E01-012) -- P Solvignon Thesis (Table F.1)</p>
+        <p><a href = "https://journals.aps.org/prd/pdf/10.1103/PhysRevD.94.052003">https://journals.aps.org/prd/pdf/10.1103/PhysRevD.94.052003</a></p>
+
+        <h6>&#8226 Solvignon (E01-012)</h6>
+        <h3><pre><a href="./Solvignon.csv" download="3He_Solvignon.csv"><sup>3</sup>He</a></pre></h3>
+        <table>
+          <tr>
+            <th>Q<sup>2</sup></th>
+            <th>X</th>
+            <th>W</th>
+            <th>G1.mes</th>
+            <th>G1.mes.err</th>
+            <th>G2.mes</th>
+            <th>G2.mes.err</th>
+          </tr>
+        </table>
+        <p>P Solvignon Thesis (Table F.1)</p>
         <ol><li>
           <ul>
             <li>publication (g1he3 plot, no data table) - <a href = "https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.101.182502">https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.101.182502</a></li>
             <li>publication (g1he3 plot, no data table) - <a href="https://journals.aps.org/prc/pdf/10.1103/PhysRevC.92.015208">https://journals.aps.org/prc/pdf/10.1103/PhysRevC.92.015208</a></li>
           </ul>
-          </li></ol>
-        <table>
-          <tr>
-            <th>Q<sup>2</sup></th>
-            <th>X</th>
-            <th>W</th>
-            <th>G1.mes</th>
-            <th>G1.mes.err</th>
-            <th>G2.mes</th>
-            <th>G2.mes.err</th>
-          </tr>
-        </table>
-        <p>&#8226 E97110 -- Data provided by Karl Slifer & Alexandre Deur</p>
+        </li></ol>
+
+        <!-- <h6>&#8226 E97110</h6>
+        <h3><pre><a href="./E97110.csv" download="3He_E97110.csv"><sup>3</sup>He</a></pre></h3>
         <table>
           <tr>
             <th>Q<sup>2</sup></th>
@@ -141,7 +137,10 @@
             <th>G2.mes.err</th>
           </tr>
         </table>
-        <p>&#8226 E94010 -- Data provided by Karl Slifer. sigma_LT, sigma_TT published in <a href="https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.101.022303">https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.101.022303</a></p>
+        <p>Data provided by Karl Slifer & Alexandre Deur</p> -->
+
+        <h6>&#8226 E94010</h6>
+        <h3><pre><a href="./E94010.csv" download="3He_E94010.csv"><sup>3</sup>He</a></pre></h3>
         <table>
           <tr>
             <th>Q<sup>2</sup></th>
@@ -159,24 +158,17 @@
             <th>&#963_TT.mes.err</th>
           </tr>
         </table>
+        <p><!--Data provided by Karl Slifer. sigma_LT, sigma_TT published in --><a href="https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.101.022303">https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.101.022303</a></p>
+
       </div>
-      <div class="data-section PolarizedNeutron" id="PolarizedNeutron">
-        <h4>Polarized Neutron</h4>
+      <div class="data-section Another" id="Another">
+        <h4>Another</h4>
       </div>
     </div>
   </div>
 
 <script>
-function dropdown_menu(button, dataset) {
-  document.querySelectorAll('.dropdown-content').forEach(menu => {
-    if (!menu.previousElementSibling.isSameNode(button)) {
-      menu.classList.remove('show');
-    }
-  });
-
-  var dropdown = button.nextElementSibling;
-  dropdown.classList.toggle("show");
-
+function toggleText(dataset) {
   document.querySelectorAll('.data-section').forEach(section => {
     if (section.id === dataset) {
       section.style.display = "block";
@@ -184,14 +176,6 @@ function dropdown_menu(button, dataset) {
       section.style.display = "none";
     }
   });
-}
-
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-    document.querySelectorAll('.dropdown-content').forEach(menu => {
-      menu.classList.remove('show');
-    });
-  }
 }
 
 </script>
