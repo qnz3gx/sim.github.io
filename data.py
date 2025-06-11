@@ -51,7 +51,7 @@ h_df = h_df.dropna(subset=['X_index'])
 h_df.loc[:, 'X_index'] = h_df['X_index'].astype(int)
 
 plot_df = h_df.copy()
-plot_df['G1(x,Q2)'] = plot_df['G1.mes'] + 12.1 - 0.7 * plot_df['X_index']
+plot_df['G1(x,Q2)'] = plot_df['G1.mes'] + 2.6 - 0.15 * plot_df['X_index']
 
 fig = go.Figure()
 
@@ -66,6 +66,12 @@ for exp in experiments:
         y=exp_df['G1(x,Q2)'],
         mode='markers',
         name=str(exp),
+        error_y=dict(
+        type='data',
+        array=exp_df['G1.mes.err'],
+        visible=True,
+        thickness=1
+    ),
         marker=dict(size=6),
         legendgroup=str(exp),
         showlegend=True
@@ -109,11 +115,35 @@ for bin_idx in bins:
         yshift=0,
         font=dict(size=10, color="black"),
         ))
+    
+top_point = plot_df.loc[plot_df['G1(x,Q2)'].idxmax()]
+annotations.append(dict(
+    x=top_point['Q2'],
+    y=top_point['G1(x,Q2)'],
+    text=f"(i={top_point['X_index']})",
+    showarrow=False,
+    xshift=90,
+    yshift=0,
+    font=dict(size=10, color="black", family='Arial Black'),
+))
+
+bin_12_df = plot_df[plot_df['X_index'] == 12]
+if not bin_12_df.empty:
+    bin_12_point = bin_12_df.loc[bin_12_df['Q2'].idxmax()]
+    annotations.append(dict(
+        x=bin_12_point['Q2'],
+        y=bin_12_point['G1(x,Q2)'],
+        text=f"(i=12)",
+        showarrow=False,
+        xshift=90,
+        yshift=0,
+        font=dict(size=10, color="black", family='Arial Black'),
+    ))
 
 fig.update_layout(
     title='g\u2081<sup><sup>3</sup>He</sup>(x,Q²) vs Q²',
     xaxis_title='Q² (GeV²)',
-    yaxis_title='g\u2081<sup><sup>3</sup>He</sup>(x,Q²) + 12.1 - 0.7i',
+    yaxis_title='g\u2081<sup><sup>3</sup>He</sup>(x,Q²) + 2.6 - 0.15i',
     template='plotly_white',
     annotations=annotations
 )
