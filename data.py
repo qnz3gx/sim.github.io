@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import plotly.express as px
 import plotly.graph_objects as go
+import plotly.io as pio
 from scipy.stats import linregress
 
 def import_csv_with_pandas(file_path,r):
@@ -118,3 +119,17 @@ fig.update_layout(
 )
 
 fig.write_html("g1(3He)_vs_Q2.html")
+
+pio.write_html(
+    fig,
+    file='g1(3He)_vs_Q2.html',
+    auto_open=True,
+    config={
+        'toImageButtonOptions': {
+            'filename': 'g1(3He)_vs_Q2_plot',  # ✅ Desired download filename
+            'height': 600,
+            'width': 800,
+            'scale': 2  # optional: higher = better quality
+        }
+    }
+)
