@@ -15,7 +15,7 @@ h1 {
 
 h3 {
     font-size: 14px;
-    margin-top: 10px;
+    margin-top: 0px;
     margin-bottom: 10px;
     padding-left: 2em;
     font-family: inherit;
@@ -40,7 +40,7 @@ h5{
 h6 {
     color: rgb(44 61 80);
     margin-top: 15px;
-    margin-bottom: 10px;
+    margin-bottom: 0px;
     font-size: 14px;
     font-family: Helvetica;
 }
@@ -66,9 +66,7 @@ p {
 button {
     background-color: #f0f0f0;
     color: black;
-    /* max-width: 135px; */
     height: 35px;
-    /* padding: 10px 15px; */
     font-size: 14px;
     width: 135px;
     border: 1px solid #ccc;
