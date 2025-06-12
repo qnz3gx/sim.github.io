@@ -14,4 +14,5 @@ experiment_groups = {
 }
 
 for experiment, df in experiment_groups.items():
-    experiment_groups[experiment].iloc[:, :-1].to_csv(f'neutron_{experiment}.csv', index=False)
+    df_to_save = df.iloc[:, :-1].dropna(axis=1, how='all')
+    df_to_save.to_csv(f'neutron_{experiment}.csv', index=False)

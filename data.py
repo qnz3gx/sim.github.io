@@ -16,6 +16,9 @@ APD_df = import_csv_with_pandas(file_path,10)
 columns_to_check = ['X', 'Q2', 'G1.mes']
 h_df = APD_df[~APD_df[columns_to_check].isin([-1000]).any(axis=1)]
 
+APD_df = APD_df.replace(-1000,'')
+APD_df.to_csv("allData.csv", index=False)
+
 experiment_mapping = {
     1: 'SLAC E142',
     2: 'SLAC E154',
@@ -156,10 +159,10 @@ pio.write_html(
     auto_open=True,
     config={
         'toImageButtonOptions': {
-            'filename': 'g1(3He)_vs_Q2_plot',  # ✅ Desired download filename
+            'filename': 'g1(3He)_vs_Q2_plot',
             'height': 600,
             'width': 800,
-            'scale': 2  # optional: higher = better quality
+            'scale': 2
         }
     }
 )
