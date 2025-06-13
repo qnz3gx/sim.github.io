@@ -6,12 +6,12 @@ import plotly.graph_objects as go
 import plotly.io as pio
 from scipy.stats import linregress
 
-def import_csv_with_pandas(file_path):
-    data = pd.read_csv(file_path)
+def import_csv_with_pandas(file_path,lines):
+    data = pd.read_csv(file_path, nrows=lines)
     return data
 
 file_path = '/Users/scarlettimorse/PycharmProjects/sim.github.io/NeutronData.csv'
-ND_df = import_csv_with_pandas(file_path)
+ND_df = import_csv_with_pandas(file_path,325)
 
 columns_to_check = ['X', 'Q2', 'G1.mes']
 h_df = ND_df.dropna(subset=columns_to_check)
@@ -84,6 +84,9 @@ for bin_idx in bins:
         y_label = line_y.iloc[-1]
     
     elif len(bin_df) == 1:
+        q2_val = bin_df['Q2'].iloc[0]
+        if q2_val < 4.5:
+            continue
         x_label = bin_df['Q2'].iloc[0]
         y_label = bin_df['G1(x,Q2)'].iloc[0]
 
@@ -112,16 +115,16 @@ annotations.append(dict(
     font=dict(size=10, color="black", family='Arial Black'),
 ))
 
-bin_11_df = plot_df[plot_df['X_index'] == 11]
-if not bin_11_df.empty:
-    bin_11_point = bin_11_df.loc[bin_11_df['Q2'].idxmax()]
+bin_df = plot_df[plot_df['X_index'] == 10]
+if not bin_df.empty:
+    bin_point = bin_df.loc[bin_df['Q2'].idxmax()]
     annotations.append(dict(
-        x=bin_11_point['Q2'],
-        y=bin_11_point['G1(x,Q2)'],
-        text=f"(i=11)",
+        x=bin_point['Q2'],
+        y=bin_point['G1(x,Q2)'],
+        text=f"(i=10)",
         showarrow=False,
         xshift=90,
-        yshift=0,
+        yshift=10,
         font=dict(size=10, color="black", family='Arial Black'),
     ))
 
