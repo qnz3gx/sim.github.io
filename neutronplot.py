@@ -43,8 +43,21 @@ experiments = plot_df['Experiment'].unique()
 bins = sorted(plot_df['X_index'].unique())
 annotations = []
 
+symbol_map = {
+    'SLAC_E154': 'circle',
+    'SLAC_E142': 'square',
+    'Zheng': 'star',
+    'Kramer': 'diamond',
+    'Flay': 'triangle-up',
+    'HERMES': 'pentagon',
+    'SMC': 'hexagon-open',
+    'SLAC_E143': 'hourglass-open',
+    'SLAC_E155': 'cross-open'
+}
+
 for exp in experiments:
     exp_df = plot_df[plot_df['Experiment'] == exp]
+    symbol = symbol_map.get(exp, 'circle')
     fig.add_trace(go.Scatter(
         x=exp_df['Q2'],
         y=exp_df['G1(x,Q2)'],
@@ -56,7 +69,7 @@ for exp in experiments:
         visible=True,
         thickness=1
     ),
-        marker=dict(size=6),
+        marker=dict(size=6, symbol=symbol),
         legendgroup=str(exp),
         showlegend=True
     ))
@@ -133,7 +146,35 @@ fig.update_layout(
     xaxis_title='Q² (GeV²)',
     yaxis_title='g\u2081<sup>n</sup>(x,Q²) + 5.2 - 0.3i',
     template='plotly_white',
-    annotations=annotations
+    annotations=annotations,
+    updatemenus=[
+        dict(
+            type="buttons",
+            direction="right",
+            showactive=True,
+            x=0.5,
+            xanchor="center",
+            y=1.1,
+            yanchor="top",
+            buttons=[
+                dict(
+                    label="Color",
+                    method="update",
+                    args=[{
+                        "marker.color": [trace.marker.color if hasattr(trace.marker, "color") else 'gray' for trace in fig.data]
+                    }],
+                ),
+                dict(
+                    label="No Color",
+                    method="update",
+                    args=[{
+                        "marker.color": ['gray' for trace in fig.data]  # Sets all markers to gray
+                    }],
+                ),
+            ],
+            pad={"r": 10, "t": 10},  # Padding for the button group
+        )
+    ]
 )
 
 fig.write_html("g1(n)_vs_Q2.html")
