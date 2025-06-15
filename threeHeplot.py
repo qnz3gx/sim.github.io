@@ -5,6 +5,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import plotly.io as pio
 from scipy.stats import linregress
+from scipy.optimize import curve_fit
 
 def import_csv_with_pandas(file_path,r):
     data = pd.read_csv(file_path, skiprows=r)
@@ -103,21 +104,30 @@ for exp in experiments:
         showlegend=True
     ))
 
-    slope, intercept, _, _, _ = linregress(w_df['Q2'], w_df['G1.mes'])
-    x_line = w_df['Q2']
-    y_line = slope * x_line + intercept
-    
-    fig.add_trace(go.Scatter(
-        x=x_line,
-        y=y_line,
-        mode='lines',
-        line=dict(color='red', width=1, dash='solid'),
-        name = "W = 2GeV",
-        showlegend=False
+    xdata = w_df['Q2'].values
+    ydata = w_df['G1.mes'].values
+    def reciprocal_func(x, a, b):
+        return a / x + b
+
+    try:
+        popt, _ = curve_fit(reciprocal_func, xdata, ydata, maxfev=10000)
+        x_line = np.linspace(xdata.min(), xdata.max(), 200)
+        y_line = reciprocal_func(x_line, *popt)
+
+        fig.add_trace(go.Scatter(
+            x=x_line,
+            y=y_line,
+            mode='lines',
+            line=dict(color='red', width=1, dash='solid'),
+            name="W = 2 GeV",
+            showlegend=False
         ))
+    except RuntimeError:
+        print("Fit failed for reciprocal function")
+
     annotations.append(dict(
-        x=x_line.iloc[0],
-        y=y_line.iloc[0],
+        x=x_line[0],
+        y=y_line[0],
         text=f"W = 2GeV",
         showarrow=False,
         xshift=-40,
