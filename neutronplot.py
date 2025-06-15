@@ -19,23 +19,36 @@ h_df = ND_df.dropna(subset=columns_to_check)
 centers = np.array([0.0036, 0.0045, 0.0055, 0.007, 0.009, 0.012, 0.017, 0.024,
                     0.035, 0.049, 0.077, 0.12, 0.17, 0.22, 0.29, 0.41, 0.57, 0.74])
 
-midpoints = (centers[:-1] + centers[1:]) / 2
-min_x = h_df['X'].min()
-max_x = h_df['X'].max()
+def xbins(set):
+    midpoints = (centers[:-1] + centers[1:]) / 2
+    min_x = set['X'].min()
+    max_x = set['X'].max()
 
-edges = np.concatenate([
-    [min(min_x, centers[0] - (centers[1] - centers[0]) / 2)],
-    midpoints,
-    [max(max_x, centers[-1] + (centers[-1] - centers[-2]) / 2)]
-])
+    edges = np.concatenate([
+        [min(min_x, centers[0] - (centers[1] - centers[0]) / 2)],
+        midpoints,
+        [max(max_x, centers[-1] + (centers[-1] - centers[-2]) / 2)]
+    ])
 
-bin_labels = np.arange(len(centers))
+    bin_labels = np.arange(len(centers))
 
-h_df = h_df.copy()
-h_df.loc[:, 'X_index'] = pd.cut(h_df['X'], bins=edges, labels=False, include_lowest=True)
+    set = set.copy()
+    set.loc[:, 'X_index'] = pd.cut(set['X'], bins=edges, labels=False, include_lowest=True)
+    return set
 
-plot_df = h_df.copy()
+plot_df = xbins(h_df)
 plot_df['G1(x,Q2)'] = plot_df['G1.mes'] + 5.2 - 0.3 * plot_df['X_index']
+
+def xW(Q2):
+    xW = Q2/(Q2 + 4 - 938.272/((3*10**8)**2))
+    return xW
+
+wtwo = pd.DataFrame()
+wtwo['Q2'] = plot_df['Q2']
+wtwo['X'] = xW(plot_df['Q2'])
+w_df = xbins(wtwo)
+g1s = plot_df.groupby('X_index')['G1(x,Q2)'].mean()
+w_df['G1.mes'] = w_df['X_index'].map(g1s)
 
 fig = go.Figure()
 
@@ -46,12 +59,12 @@ annotations = []
 symbol_map = {
     'SLAC_E154': 'circle',
     'SLAC_E142': 'square',
-    'Zheng': 'star',
+    'Zheng': 'hourglass',
     'Kramer': 'diamond',
     'Flay': 'triangle-up',
     'HERMES': 'pentagon',
     'SMC': 'hexagon-open',
-    'SLAC_E143': 'hourglass-open',
+    'SLAC_E143': 'star-open',
     'SLAC_E155': 'cross-open'
 }
 
@@ -59,7 +72,7 @@ for exp in experiments:
     exp_df = plot_df[plot_df['Experiment'] == exp]
     symbol = symbol_map.get(exp, 'circle')
     fig.add_trace(go.Scatter(
-        x=exp_df['Q2'],
+        x=np.log(exp_df['Q2']),
         y=exp_df['G1(x,Q2)'],
         mode='markers',
         name=str(exp),
@@ -74,13 +87,35 @@ for exp in experiments:
         showlegend=True
     ))
 
+    slope, intercept, _, _, _ = linregress(w_df['Q2'], w_df['G1.mes'])
+    x_line = np.log(w_df['Q2'])
+    y_line = slope * x_line + intercept
+    
+    fig.add_trace(go.Scatter(
+        x=x_line,
+        y=y_line,
+        mode='lines',
+        line=dict(color='red', width=1, dash='solid'),
+        name = "W = 2GeV",
+        showlegend=False
+        ))
+    annotations.append(dict(
+        x=x_line.iloc[0],
+        y=y_line.iloc[0],
+        text=f"W = 2GeV",
+        showarrow=False,
+        xshift=-150,
+        yshift=12,
+        font=dict(size=10, color="black"),
+        ))
+
 for bin_idx in bins:
     bin_df = plot_df[plot_df['X_index'] == bin_idx].sort_values(by='Q2')
 
     if len(bin_df) > 1:
-        slope, intercept, _, _, _ = linregress(bin_df['Q2'], bin_df['G1(x,Q2)'])
+        slope, intercept, _, _, _ = linregress(np.log(bin_df['Q2']), bin_df['G1(x,Q2)'])
         
-        line_x = bin_df['Q2']
+        line_x = np.log(bin_df['Q2'])
         line_y = slope * line_x + intercept
         
         fig.add_trace(go.Scatter(
@@ -100,7 +135,7 @@ for bin_idx in bins:
         q2_val = bin_df['Q2'].iloc[0]
         if q2_val < 4.5:
             continue
-        x_label = bin_df['Q2'].iloc[0]
+        x_label = np.log(bin_df['Q2'].iloc[0])
         y_label = bin_df['G1(x,Q2)'].iloc[0]
 
     else:
@@ -119,7 +154,7 @@ for bin_idx in bins:
 rightmost_by_bin = plot_df.loc[plot_df.groupby('X_index')['Q2'].idxmax()]
 top_point = rightmost_by_bin.loc[rightmost_by_bin['G1(x,Q2)'].idxmax()]
 annotations.append(dict(
-    x=top_point['Q2'],
+    x=np.log(top_point['Q2']),
     y=top_point['G1(x,Q2)'],
     text=f"(i={top_point['X_index']})",
     showarrow=False,
@@ -132,7 +167,7 @@ bin_df = plot_df[plot_df['X_index'] == 10]
 if not bin_df.empty:
     bin_point = bin_df.loc[bin_df['Q2'].idxmax()]
     annotations.append(dict(
-        x=bin_point['Q2'],
+        x=np.log(bin_point['Q2']),
         y=bin_point['G1(x,Q2)'],
         text=f"(i=10)",
         showarrow=False,
@@ -143,7 +178,7 @@ if not bin_df.empty:
 
 fig.update_layout(
     title='g\u2081<sup>n</sup>(x,Q²) vs Q²',
-    xaxis_title='Q² (GeV²)',
+    xaxis_title='log(Q²)',
     yaxis_title='g\u2081<sup>n</sup>(x,Q²) + 5.2 - 0.3i',
     template='plotly_white',
     annotations=annotations,
@@ -161,18 +196,20 @@ fig.update_layout(
                     label="Color",
                     method="update",
                     args=[{
-                        "marker.color": [trace.marker.color if hasattr(trace.marker, "color") else 'gray' for trace in fig.data]
+                        "marker.color": [trace.marker.color if hasattr(trace.marker, "color") else 'gray' for trace in fig.data],
+                        "line.color": [trace.line.color if hasattr(trace.line, "color") else 'gray' for trace in fig.data]
                     }],
                 ),
                 dict(
                     label="No Color",
                     method="update",
                     args=[{
-                        "marker.color": ['gray' for trace in fig.data]  # Sets all markers to gray
+                        "marker.color": ['gray' for trace in fig.data],
+                        "line.color": ['gray' for trace in fig.data]
                     }],
                 ),
             ],
-            pad={"r": 10, "t": 10},  # Padding for the button group
+            pad={"r": 10, "t": 10},
         )
     ]
 )

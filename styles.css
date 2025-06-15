@@ -1,7 +1,12 @@
-body {
+.page {
     background-color: white;
     margin-top: 205px;
     margin-left: 131px;
+    width: 1140px;
+}
+
+body {
+    background-color: #00065e;
     width: 690px;
 }
 
@@ -9,7 +14,7 @@ h1 {
     color: #404040;
     font-family: "Helvetica Neue", Verdana, Arial, sans-serif;
     font-weight: normal;
-    font-size:28px;
+    font-size:36px;
     margin: 0 0 10px;
 }
 
@@ -41,8 +46,9 @@ h6 {
     color: rgb(44 61 80);
     margin-top: 15px;
     margin-bottom: 0px;
-    font-size: 14px;
+    font-size: 30px;
     font-family: Helvetica;
+    font-weight: normal;
 }
 
 hr {
@@ -54,6 +60,8 @@ hr {
     align-items: flex-start;
     gap: 1em;
     max-width: 690px;
+    background-color: white;
+
 }
 
 p {
@@ -63,16 +71,28 @@ p {
     font-family: inherit;
 }
 
+.text-content {
+    margin-bottom: 20px;
+}
+
+.blurb {
+    position: right;
+}
+
 button {
     background-color: #f0f0f0;
     color: black;
     height: 35px;
     font-size: 14px;
-    width: 135px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    width: 100px;
+    border: 1px solid #eeeeee;
     cursor: pointer;
-    margin-top: 20px;
+}
+
+.dropdown-content button {
+    /* background-color: white; */
+    width: 150px;
+    border: none;
 }
 
 button:hover {
@@ -149,3 +169,37 @@ th, td {
 .data-section {
     display: none;
 }
+
+.header-section {
+    display: none;
+}
+
+#ThreeHe {
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+    background-color: #dcdcdc;
+    border-color: #a5a5a5;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    max-width: 110px;
+    top:100%;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content.show {
+    display: block;
+  }
