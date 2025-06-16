@@ -115,15 +115,61 @@ sigma=(1-1.5*wD)*CompassD['G1']*np.sqrt((1.5*wDerr/(1-1.5*wD))**2 + (CompassD['G
 neutron_COMPASS['G1.mes.err'] = np.sqrt((sigma)**2 + (CompassP['G1.err'])**2)
 
 # %%
-#export the data to neutron data
+def retrieve_g1(data_df,grid_df):
+    g1_values = []
+    for i in range(len(data_df)):
+        target_X = data_df['X'].iloc[i]
+        target_Q2 = data_df['Q2'].iloc[i]
+        
+        # Compute distances from all points in grid_df
+        distances = np.sqrt((grid_df['X'] - target_X)**2 + (grid_df['Q2'] - target_Q2)**2)
+        nearest_idx = distances.idxmin()
+        
+        # Get the corresponding W value
+        g1_values.append(grid_df.loc[nearest_idx, 'G1'])
+    return g1_values
+
+#looking for bad calculations
+checking = retrieve_g1(neutron_COMPASS,tableN) - neutron_COMPASS['G1.mes']
+
+#add direct calculation of G1n for row where X and Q2 were the same for G1d and p
+Sameneut = (1-1.5*wD)*CompassDsame['G1'] - CompassPsame['G1']
+sigmaSame=(1-1.5*wD)*CompassDsame['G1']*np.sqrt((1.5*wDerr/(1-1.5*wD))**2 + (CompassDsame['G1.err']/CompassDsame['G1'])**2)
+erroneous = np.sqrt((sigma)**2 + (CompassPsame['G1.err'])**2)
+neutron_COMPASS.loc[0,'G1.mes'] = Sameneut[0]
+neutron_COMPASS.loc[0,'G1.mes.err'] = erroneous[0]
+print(len(neutron_COMPASS))
+
+# %%
+spreadsheet = pd.DataFrame()
+spreadsheet['X'] = neutron_COMPASS['X']
+spreadsheet['Q2'] = neutron_COMPASS['Q2']
+spreadsheet['A1p'] = CompassP['A1']
+spreadsheet['A1p.err'] = CompassP['A1.err']
+spreadsheet['G1p'] = CompassP['G1']
+spreadsheet['G1p.err'] = CompassP['G1.err']
+spreadsheet['F1p'] = retrieve_f1(CompassP,tableP) 
+spreadsheet['G1n'] = neutron_COMPASS['G1.mes']
+spreadsheet['G1n.err'] = neutron_COMPASS['G1.mes.err']
+spreadsheet['F1n'] = retrieve_f1(neutron_COMPASS,tableN)
+spreadsheet['A1n'] = spreadsheet['G1n']/spreadsheet['F1n']
+spreadsheet['A1d'] = CompassD['A1']
+spreadsheet['A1d.err'] = CompassD['A1.err']
+spreadsheet['F1d'] = CompassD['F1']
+spreadsheet['G1d'] = CompassD['G1']
+spreadsheet['G1d.err'] = CompassD['G1.err']
+
+spreadsheet.to_csv('COMPASS.csv',index=False)
+# %%
+# export the data to neutron data
 nd_df = import_csv('NeutronData.csv')
-print(nd_df.loc[350:364])
+print(nd_df.loc[349:365])
 
-nd_df.loc[350:364, 'G1.mes'] = neutron_COMPASS['G1.mes'].values
-nd_df.loc[350:364, 'G1.mes.err'] = neutron_COMPASS['G1.mes.err'].values
-nd_df.loc[350:364, 'X'] = neutron_COMPASS['X'].values
-nd_df.loc[350:364, 'Q2'] = neutron_COMPASS['Q2'].values
-nd_df.loc[350:364, 'W'] = neutron_COMPASS['W'].values
+nd_df.loc[349:365, 'G1.mes'] = neutron_COMPASS['G1.mes'].values
+nd_df.loc[349:365, 'G1.mes.err'] = neutron_COMPASS['G1.mes.err'].values
+nd_df.loc[349:365, 'X'] = neutron_COMPASS['X'].values
+nd_df.loc[349:365, 'Q2'] = neutron_COMPASS['Q2'].values
+nd_df.loc[349:365, 'W'] = neutron_COMPASS['W'].values
 
-print(nd_df.loc[350:364])
 nd_df.to_csv('NeutronData.csv',index=False)
+# %%

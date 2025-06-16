@@ -62,11 +62,11 @@ symbol_map = {
     'SLAC_E142': 'square',
     'Zheng': 'hourglass',
     'Kramer': 'diamond',
-    'Flay': 'triangle-up',
     'HERMES': 'pentagon',
     'SMC': 'hexagon-open',
     'SLAC_E143': 'star-open',
-    'SLAC_E155': 'cross-open'
+    'SLAC_E155': 'cross-open',
+    'COMPASS': 'triangle-up-open'
 }
 
 for exp in experiments:
@@ -119,47 +119,47 @@ for exp in experiments:
         font=dict(size=10, color="black"),
         ))
 
-for bin_idx in bins:
-    bin_df = plot_df[plot_df['X_index'] == bin_idx].sort_values(by='Q2')
+# for bin_idx in bins:
+#     bin_df = plot_df[plot_df['X_index'] == bin_idx].sort_values(by='Q2')
 
-    if len(bin_df) > 1:
-        slope, intercept, _, _, _ = linregress(np.log(bin_df['Q2']), bin_df['G1(x,Q2)'])
+#     if len(bin_df) > 1:
+#         slope, intercept, _, _, _ = linregress(np.log(bin_df['Q2']), bin_df['G1(x,Q2)'])
         
-        line_x = np.log10(bin_df['Q2'])
-        line_y = slope * line_x + intercept
+#         line_x = np.log10(bin_df['Q2'])
+#         line_y = slope * line_x + intercept
         
-        fig.add_trace(go.Scatter(
-            x=line_x,
-            y=line_y,
-            mode='lines',
-            line=dict(color='gray', width=1, dash='solid'),
-            name=f'Best fit - X bin {bin_idx}',
-            legendgroup=f'bin_{bin_idx}',
-            showlegend=False
-        ))
+#         fig.add_trace(go.Scatter(
+#             x=line_x,
+#             y=line_y,
+#             mode='lines',
+#             line=dict(color='gray', width=1, dash='solid'),
+#             name=f'Best fit - X bin {bin_idx}',
+#             legendgroup=f'bin_{bin_idx}',
+#             showlegend=False
+#         ))
 
-        x_label = line_x.iloc[-1]
-        y_label = line_y.iloc[-1]
+#         x_label = line_x.iloc[-1]
+#         y_label = line_y.iloc[-1]
     
-    elif len(bin_df) == 1:
-        q2_val = bin_df['Q2'].iloc[0]
-        if q2_val < 4.5:
-            continue
-        x_label = np.log10(bin_df['Q2'].iloc[0])
-        y_label = bin_df['G1(x,Q2)'].iloc[0]
+#     elif len(bin_df) == 1:
+#         q2_val = bin_df['Q2'].iloc[0]
+#         if q2_val < 4.5:
+#             continue
+#         x_label = np.log10(bin_df['Q2'].iloc[0])
+#         y_label = bin_df['G1(x,Q2)'].iloc[0]
 
-    else:
-        continue
+#     else:
+#         continue
 
-    annotations.append(dict(
-        x=x_label,
-        y=y_label,
-        text=f"x = {centers[bin_idx]:.4f}",
-        showarrow=False,
-        xshift=40,
-        yshift=0,
-        font=dict(size=10, color="black"),
-        ))
+#     annotations.append(dict(
+#         x=x_label,
+#         y=y_label,
+#         text=f"x = {centers[bin_idx]:.4f}",
+#         showarrow=False,
+#         xshift=40,
+#         yshift=0,
+#         font=dict(size=10, color="black"),
+#         ))
     
 rightmost_by_bin = plot_df.loc[plot_df.groupby('X_index')['Q2'].idxmax()]
 top_point = rightmost_by_bin.loc[rightmost_by_bin['G1(x,Q2)'].idxmax()]
