@@ -7,12 +7,12 @@ import plotly.io as pio
 from scipy.stats import linregress
 from scipy.optimize import curve_fit
 
-def import_csv_with_pandas(file_path,lines):
-    data = pd.read_csv(file_path, nrows=lines)
+def import_csv_with_pandas(file_path):
+    data = pd.read_csv(file_path)
     return data
 
 file_path = '/Users/scarlettimorse/PycharmProjects/sim.github.io/NeutronData.csv'
-ND_df = import_csv_with_pandas(file_path,325)
+ND_df = import_csv_with_pandas(file_path)
 
 columns_to_check = ['X', 'Q2', 'G1.mes']
 h_df = ND_df.dropna(subset=columns_to_check)

@@ -24,13 +24,13 @@ import plotly.express as px
 # E94010_df.to_csv("publishedData.csv", index=False)
 
 nd_df = pd.read_csv('NeutronData.csv')
-# nd_df = nd_df.iloc[74:108]
-# nd_df = nd_df.dropna(axis=1, how='all')
-# nd_df.to_csv('neutron_SLAC_E155.csv')
+nd_df = nd_df.iloc[74:108]
+nd_df = nd_df.dropna(axis=1, how='all')
+nd_df.to_csv('neutron_SLAC_E155.csv')
 
-E155df = pd.read_csv('neutron_SLAC_E155.csv')
+# E155df = pd.read_csv('neutron_SLAC_E155.csv')
 
-nd_df.loc[84:107, 'G1.mes'] = E155df['G1.mes'].values
-nd_df.loc[84:107, 'G1.mes.err'] = E155df['G1.mes.err'].values
+# nd_df.loc[84:107, 'G1.mes'] = E155df['G1.mes'].values
+# nd_df.loc[84:107, 'G1.mes.err'] = E155df['G1.mes.err'].values
 
-nd_df.to_csv('NeutronData.csv')
+# nd_df.to_csv('NeutronData.csv')
