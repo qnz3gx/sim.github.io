@@ -110,12 +110,12 @@ for exp in experiments:
         print("Fit failed for reciprocal function")
 
     annotations.append(dict(
-        x=x_line[0],
-        y=y_line[0],
+        x=-0.240,
+        y=2.65,
         text=f"W = 2 GeV",
         showarrow=False,
-        xshift=-150,
-        yshift=-60,
+        xshift=0,
+        yshift=0,
         font=dict(size=10, color="black"),
         ))
 
