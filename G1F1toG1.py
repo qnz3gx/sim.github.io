@@ -1,17 +1,18 @@
 import pandas as pd
 import numpy as np
 
-dataset = 'Flay'
+dataset = 'neutron_SLAC_E155'
+skip=11
 
 #upload data to dataframes
-def import_csv(file_path):
-    data = pd.read_csv(file_path)
+def import_csv(file_path, lines):
+    data = pd.read_csv(file_path, skiprows=lines)
     return data
 
 grid_path = "/Users/scarlettimorse/PycharmProjects/sim.github.io/XZ_table_3He_JAM_smeared_kpsv_onshell_ipol1_ipolres1_IA14_SF23_AC11_mod.csv"
 G1_path = f"/Users/scarlettimorse/PycharmProjects/sim.github.io/{dataset}.csv"
-grid_df = import_csv(grid_path)
-data_df = import_csv(G1_path)
+grid_df = import_csv(grid_path, 0)
+data_df = import_csv(G1_path, 0)
 
 G1calc = []
 G1errcalc = []

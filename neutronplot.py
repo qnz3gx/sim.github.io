@@ -73,7 +73,7 @@ for exp in experiments:
     exp_df = plot_df[plot_df['Experiment'] == exp]
     symbol = symbol_map.get(exp, 'circle')
     fig.add_trace(go.Scatter(
-        x=np.log(exp_df['Q2']),
+        x=np.log10(exp_df['Q2']),
         y=exp_df['G1(x,Q2)'],
         mode='markers',
         name=str(exp),
@@ -99,7 +99,7 @@ for exp in experiments:
         y_line = reciprocal_func(x_line, *popt)
 
         fig.add_trace(go.Scatter(
-            x=np.log(x_line),
+            x=np.log10(x_line),
             y=y_line,
             mode='lines',
             line=dict(color='red', width=1, dash='solid'),
@@ -125,7 +125,7 @@ for bin_idx in bins:
     if len(bin_df) > 1:
         slope, intercept, _, _, _ = linregress(np.log(bin_df['Q2']), bin_df['G1(x,Q2)'])
         
-        line_x = np.log(bin_df['Q2'])
+        line_x = np.log10(bin_df['Q2'])
         line_y = slope * line_x + intercept
         
         fig.add_trace(go.Scatter(
@@ -145,7 +145,7 @@ for bin_idx in bins:
         q2_val = bin_df['Q2'].iloc[0]
         if q2_val < 4.5:
             continue
-        x_label = np.log(bin_df['Q2'].iloc[0])
+        x_label = np.log10(bin_df['Q2'].iloc[0])
         y_label = bin_df['G1(x,Q2)'].iloc[0]
 
     else:
@@ -164,7 +164,7 @@ for bin_idx in bins:
 rightmost_by_bin = plot_df.loc[plot_df.groupby('X_index')['Q2'].idxmax()]
 top_point = rightmost_by_bin.loc[rightmost_by_bin['G1(x,Q2)'].idxmax()]
 annotations.append(dict(
-    x=np.log(top_point['Q2']),
+    x=np.log10(top_point['Q2']),
     y=top_point['G1(x,Q2)'],
     text=f"(i={top_point['X_index']})",
     showarrow=False,
@@ -177,7 +177,7 @@ bin_df = plot_df[plot_df['X_index'] == 10]
 if not bin_df.empty:
     bin_point = bin_df.loc[bin_df['Q2'].idxmax()]
     annotations.append(dict(
-        x=np.log(bin_point['Q2']),
+        x=np.log10(bin_point['Q2']),
         y=bin_point['G1(x,Q2)'],
         text=f"(i=10)",
         showarrow=False,
