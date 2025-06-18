@@ -6,6 +6,7 @@ import plotly.graph_objects as go
 import plotly.io as pio
 from scipy.stats import linregress
 from scipy.optimize import curve_fit
+from sklearn.metrics import r2_score
 
 def import_csv_with_pandas(file_path):
     data = pd.read_csv(file_path)
@@ -38,7 +39,7 @@ def xbins(set):
     return set
 
 plot_df = xbins(h_df)
-plot_df['G1(x,Q2)'] = plot_df['G1.mes'] + 5.2 - 0.3 * plot_df['X_index']
+plot_df['G1(x,Q2)'] = plot_df['G1.mes'] + 12.1 - 0.71 * plot_df['X_index']
 
 def xW(Q2):
     xW = Q2/(Q2 + 4 - 938.272/((3*10**8)**2))
@@ -73,7 +74,7 @@ for exp in experiments:
     exp_df = plot_df[plot_df['Experiment'] == exp]
     symbol = symbol_map.get(exp, 'circle')
     fig.add_trace(go.Scatter(
-        x=np.log10(exp_df['Q2']),
+        x=exp_df['Q2'],
         y=exp_df['G1(x,Q2)'],
         mode='markers',
         name=str(exp),
@@ -90,16 +91,16 @@ for exp in experiments:
 
     xdata = w_df['Q2'].values
     ydata = w_df['G1.mes'].values
-    def reciprocal_func(x, a, b):
-        return a / x + b
+    def exponential(x, a, b, c):
+        return a*np.exp(-b*x) + c
 
     try:
-        popt, _ = curve_fit(reciprocal_func, xdata, ydata, maxfev=10000)
-        x_line = np.linspace(xdata.min(), xdata.max(), 200)
-        y_line = reciprocal_func(x_line, *popt)
+        popt, _ = curve_fit(exponential, xdata, ydata, bounds=(0, np.inf), maxfev=10000)
+        x_line = np.linspace(xdata.min(), xdata.max(), 229)
+        y_line = exponential(x_line, *popt)
 
         fig.add_trace(go.Scatter(
-            x=np.log10(x_line),
+            x=x_line,
             y=y_line,
             mode='lines',
             line=dict(color='red', width=1, dash='solid'),
@@ -109,9 +110,16 @@ for exp in experiments:
     except RuntimeError:
         print("Fit failed for reciprocal function")
 
+    # fig.add_trace(go.Scatter(
+    #     x=xdata,
+    #     y=ydata,
+    #     mode='markers',
+    #     showlegend=False
+    # ))
+
     annotations.append(dict(
         x=-0.240,
-        y=2.65,
+        y=1,
         text=f"W = 2 GeV",
         showarrow=False,
         xshift=0,
@@ -168,7 +176,7 @@ annotations.append(dict(
     y=top_point['G1(x,Q2)'],
     text=f"(i={top_point['X_index']})",
     showarrow=False,
-    xshift=90,
+    xshift=60,
     yshift=0,
     font=dict(size=10, color="black", family='Arial Black'),
 ))
@@ -181,8 +189,8 @@ if not bin_df.empty:
         y=bin_point['G1(x,Q2)'],
         text=f"(i=10)",
         showarrow=False,
-        xshift=90,
-        yshift=10,
+        xshift=40,
+        yshift=0,
         font=dict(size=10, color="black", family='Arial Black'),
     ))
 
@@ -192,6 +200,8 @@ fig.update_layout(
     yaxis_title='g\u2081<sup>n</sup>(x,Q²) + 5.2 - 0.3i',
     template='plotly_white',
     annotations=annotations,
+    xaxis=dict(type='log'),
+    yaxis=dict(range=[-2, 12.5]),
     updatemenus=[
         dict(
             type="buttons",
@@ -239,3 +249,5 @@ pio.write_html(
         }
     }
 )
+
+print(r2_score(ydata, y_line))

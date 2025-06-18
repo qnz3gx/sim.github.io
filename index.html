@@ -2,7 +2,7 @@
 <html>
 <head>
   <link rel="stylesheet" href="styles.css">
-<title>Data</title>
+<title>World Polarized Data</title>
 </head>
 
 <body>
@@ -10,194 +10,211 @@
     <div class="top-bar">
       <div class="dropdown">
         <button onclick="toggleText('Deuteron', 'deuteron')">Deuteron</button>
+        <button onclick="toggleText('Polarized3He', 'ThreeHe')">Helium-3</button>
         <button onclick="toggleText('Neutron', 'neutron')">Neutron</button>
-        <button onclick="toggleText('Polarized3He', 'ThreeHe')">Polarized <sup>3</sup>He</button>
         <button onclick="toggleText('Proton', 'proton')">Proton</button>
       </div>
     
       <div class="content-area">
         <div class="active-header">
           <div class="header-section ThreeHe" id="ThreeHe">
-            <header><h1>Polarized <sup>3</sup>He</h1></header>
+            <header><h1>Helium-3</header>
           </div>
           <div class="header-section Deuteron" id="deuteron">
             <header><h1>Deuteron</h1></header>
+          </div>
+          <div class="header-section Neutron" id="neutron">
+            <header><h1>Neutron</h1></header>
+          </div>
+          <div class="header-section Proton" id="proton">
+            <header><h1>Proton</h1></header>
           </div>
         </div>
     
         <hr>
     
         <div class="main-content">
-          <div class="container">
+          <div class="data-section Polarized3He" id="Polarized3He">
+            <h5><pre><a href="./publishedData.csv" download="allData.csv">Download Compiled <sup>3</sup>He Data</a>           Plots: <a href="./g1(3He)_vs_Q2.html">g<sub>1</sub> vs Q<sup>2</sup></a>    <a href="">A<sub>1</sub>, g<sub>1</sub>/F<sub>1</sub> vs Q<sup>2</sup></a></pre></h5>
+            
+            <hr width=800px>
 
-            <div class="data-section Polarized3He" id="Polarized3He">
-              <h5><pre><a href="./publishedData.csv" download="allData.csv">All <sup>3</sup>He</a> -- <a href="./g1(3He)_vs_Q2.html">Plot</a>        <a href="./NeutronData.csv" download="NeutronData.csv">All Neutron</a> -- <a href="./g1(n)_vs_Q2.html">Plot</a></pre></h5>
-              
-              <hr>
+            <h6>SLAC E142</h6>
+            <p>Format:</p>
+            <table>
+              <tr>
+                <th>Q<sup>2</sup></th>
+                <th>X</th>
+                <th>G1</th>
+                <th>G1.mes.err</th>
+                <th>G2</th>
+                <th>G2.mes.err</th>
+              </tr>
+            </table>
+            <h3><pre><a href="./SLAC E142.csv" download="3He_SLAC_E142.csv">Download SLAC E142</a>        <a href="./neutron_SLAC E142.csv" download="neutron_SLAC_E142.csv">Neutron</a></pre></h3>
+            <p>Source: <a href="https://arxiv.org/pdf/hep-ex/9610007">https://arxiv.org/pdf/hep-ex/9610007</a></p>
+            
+            <hr>
 
-              <h6>SLAC E142</h6>
-              <h3><pre><a href="./SLAC E142.csv" download="3He_SLAC_E142.csv"><sup>3</sup>He</a>        <a href="./neutron_SLAC E142.csv" download="neutron_SLAC_E142.csv">Neutron</a></pre></h3>
-              <table>
-                <tr>
-                  <th>Q<sup>2</sup></th>
-                  <th>X</th>
-                  <th>G1.mes</th>
-                  <th>G1.mes.err</th>
-                  <th>G2.mes</th>
-                  <th>G2.mes.err</th>
-                </tr>
-              </table>
-              <p><a href="https://arxiv.org/pdf/hep-ex/9610007">https://arxiv.org/pdf/hep-ex/9610007</a></p>
-              
-              <hr>
+            <h6>SLAC E154</h6>
+            <p>Format:</p>
+            <table>
+              <tr>
+                <th>Q<sup>2</sup></th>
+                <th>X</th>
+                <th>G1</th>
+                <th>G1.mes.err</th>
+              </tr>
+            </table>
+            <h3><pre><a href="./SLAC E154.csv" download="3He_SLAC_E154.csv">Download SLAC E154</a>        <a href="./neutron_SLAC E154.csv" download="neutron_SLAC_E154.csv">Neutron</a></pre></h3>
+            <p>Calculated from ... <a href="https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.79.26">https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.79.26</a></p>
+            
+            <hr>
 
-              <h6>SLAC E154</h6>
-              <h3><pre><a href="./SLAC E154.csv" download="3He_SLAC_E154.csv"><sup>3</sup>He</a>        <a href="./neutron_SLAC E154.csv" download="neutron_SLAC_E154.csv">Neutron</a></pre></h3>
-              <table>
-                <tr>
-                  <th>Q<sup>2</sup></th>
-                  <th>X</th>
-                  <th>G1.mes</th>
-                  <th>G1.mes.err</th>
-                </tr>
-              </table>
-              <p><a href="https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.79.26">https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.79.26</a></p>
-              
-              <hr>
+            <h6>Zheng</h6>
+            <p>Format:</p>
+            <table>
+              <tr>
+                <th>Q<sup>2</sup></th>
+                <th>X</th>
+                <th>&#952</th>
+                <th>Eb</th>
+                <th>G1</th>
+                <th>G1.mes.err</th>
+                <th>G2</th>
+                <th>G2.mes.err</th>
+                <th>G1/F1</th>
+                <th>G1F1.mes.err</th>
+                <th>G2/F1</th>
+                <th>G2F1.mes.err</th>
+              </tr>
+            </table>
+            <h3><pre><a href="./Zheng.csv" download="3He_Zheng.csv">Download Zheng</a>        <a href="./neutron_Zheng.csv" download="neutron_Zheng.csv">Neutron</a></pre></h3>
+            <p>Source: <a href = "https://journals.aps.org/prc/pdf/10.1103/PhysRevC.70.065207">https://journals.aps.org/prc/pdf/10.1103/PhysRevC.70.065207</a></p>
+            
+            <hr>
 
-              <h6>Zheng</h6>
-              <h3><pre><a href="./Zheng.csv" download="3He_Zheng.csv"><sup>3</sup>He</a>        <a href="./neutron_Zheng.csv" download="neutron_Zheng.csv">Neutron</a></pre></h3>
-              <table>
-                <tr>
-                  <th>Q<sup>2</sup></th>
-                  <th>X</th>
-                  <th>&#952</th>
-                  <th>Eb</th>
-                  <th>G1.mes</th>
-                  <th>G1.mes.err</th>
-                  <th>G2.mes</th>
-                  <th>G2.mes.err</th>
-                  <th>G1F1.mes</th>
-                  <th>G1F1.mes.err</th>
-                  <th>G2F1.mes</th>
-                  <th>G2F1.mes.err</th>
-                </tr>
-              </table>
-              <p><a href = "https://journals.aps.org/prc/pdf/10.1103/PhysRevC.70.065207">https://journals.aps.org/prc/pdf/10.1103/PhysRevC.70.065207</a></p>
-              
-              <hr>
+            <h6>Kramer</h6>
+            <p>Format:</p>
+            <table>
+              <tr>
+                <th>Q<sup>2</sup></th>
+                <th>X</th>
+                <th>G1</th>
+                <th>G1.mes.err</th>
+                <th>G2</th>
+                <th>G2.mes.err</th>
+              </tr>
+            </table>
+            <h3><pre><a href="./Kramer.csv" download="3He_Kramer.csv">Download Kramer</a>        <a href="./neutron_Kramer.csv" download="neutron_Kramer.csv">Neutron</a></pre></h3>
+            <p>Source: (Thesis) <a href = "https://scholarworks.wm.edu/cgi/viewcontent.cgi?article=3220&context=etd">https://scholarworks.wm.edu/cgi/viewcontent.cgi?article=3220&context=etd</a></p>
+            
+            <hr>
 
-              <h6>Kramer</h6>
-              <h3><pre><a href="./Kramer.csv" download="3He_Kramer.csv"><sup>3</sup>He</a>        <a href="./neutron_Kramer.csv" download="neutron_Kramer.csv">Neutron</a></pre></h3>
-              <table>
-                <tr>
-                  <th>Q<sup>2</sup></th>
-                  <th>X</th>
-                  <th>G1.mes</th>
-                  <th>G1.mes.err</th>
-                  <th>G2.mes</th>
-                  <th>G2.mes.err</th>
-                </tr>
-              </table>
-              <p>(Thesis) <a href = "https://scholarworks.wm.edu/cgi/viewcontent.cgi?article=3220&context=etd">https://scholarworks.wm.edu/cgi/viewcontent.cgi?article=3220&context=etd</a></p>
-              
-              <hr>
+            <h6>Flay (E06-014)</h6>
+            <p>Format:</p>
+            <table>
+              <tr>
+                <th>Q<sup>2</sup></th>
+                <th>X</th>
+                <th>W</th>
+                <th>&#952</th>
+                <th>Eb</th>
+                <th>G1/F1</th>
+                <th>G1F1.mes.err</th>
+                <th>G2/F1 <i>(<sup>3</sup>He)</i></th>
+                <th>G2F1.mes.err <i>(<sup>3</sup>He)</i></th>
+              </tr>
+            </table>
+            <h3><pre><a href="./Flay.csv" download="3He_Flay.csv">Download Flay</a>        <a href="./neutron_Flay.csv" download="neutron_f.csv">Neutron</a></pre></h3>
+            <p>Source: <a href = "https://journals.aps.org/prd/pdf/10.1103/PhysRevD.94.052003">https://journals.aps.org/prd/pdf/10.1103/PhysRevD.94.052003</a></p>
 
-              <h6>Flay (E06-014)</h6>
-              <h3><pre><a href="./Flay.csv" download="3He_Flay.csv"><sup>3</sup>He</a>        <a href="./neutron_Flay.csv" download="neutron_f.csv">Neutron</a></pre></h3>
-              <table>
-                <tr>
-                  <th>Q<sup>2</sup></th>
-                  <th>X</th>
-                  <th>W</th>
-                  <th>&#952</th>
-                  <th>Eb</th>
-                  <th>G1F1.mes</th>
-                  <th>G1F1.mes.err</th>
-                  <th>G2F1.mes <i>(<sup>3</sup>He)</i></th>
-                  <th>G2F1.mes.err <i>(<sup>3</sup>He)</i></th>
-                </tr>
-              </table>
-              <p><a href = "https://journals.aps.org/prd/pdf/10.1103/PhysRevD.94.052003">https://journals.aps.org/prd/pdf/10.1103/PhysRevD.94.052003</a></p>
+            <hr>
 
-              <hr>
+            <h6>Solvignon (E01-012)</h6>
+            <p>Format:</p>
+            <table>
+              <tr>
+                <th>Q<sup>2</sup></th>
+                <th>X</th>
+                <th>W</th>
+                <th>G1</th>
+                <th>G1.mes.err</th>
+                <th>G2</th>
+                <th>G2.mes.err</th>
+              </tr>
+            </table>
+            <h3><pre><a href="./Solvignon.csv" download="3He_Solvignon.csv">Download Solvignon</a></pre></h3>
+            <p>Source: P Solvignon Thesis (Table F.1) <a href="https://misportal.jlab.org/sti/publications/11860/attachments/16644/P_Solvignon_PhD_thesis.pdf">https://misportal.jlab.org/sti/publications/11860/attachments/16644/P_Solvignon_PhD_thesis.pdf</a></p>
 
-              <h6>Solvignon (E01-012)</h6>
-              <h3><pre><a href="./Solvignon.csv" download="3He_Solvignon.csv"><sup>3</sup>He</a></pre></h3>
-              <table>
-                <tr>
-                  <th>Q<sup>2</sup></th>
-                  <th>X</th>
-                  <th>W</th>
-                  <th>G1.mes</th>
-                  <th>G1.mes.err</th>
-                  <th>G2.mes</th>
-                  <th>G2.mes.err</th>
-                </tr>
-              </table>
-              <p>P Solvignon Thesis (Table F.1) <a href="https://misportal.jlab.org/sti/publications/11860/attachments/16644/P_Solvignon_PhD_thesis.pdf">https://misportal.jlab.org/sti/publications/11860/attachments/16644/P_Solvignon_PhD_thesis.pdf</a></p>
+            <hr>
 
-              <hr>
+            <h6>E97110</h6>
+            <p>Format:</p>
+            <table>
+              <tr>
+                <th>Q<sup>2</sup></th>
+                <th>X</th>
+                <th>W</th>
+                <th>Eb</th>
+                <th>&#957</th>
+                <th>G1</th>
+                <th>G1.mes.err</th>
+                <th>G2</th>
+                <th>G2.mes.err</th>
+              </tr>
+            </table>
+            <h3><pre><a href="./E97110.csv" download="3He_E97110.csv">Download E97110</a></pre></h3>
+            <p>Data provided by Karl Slifer & Alexandre Deur</p>
 
-              <h6>E97110</h6>
-              <h3><pre><a href="./E97110.csv" download="3He_E97110.csv"><sup>3</sup>He</a></pre></h3>
-              <table>
-                <tr>
-                  <th>Q<sup>2</sup></th>
-                  <th>X</th>
-                  <th>W</th>
-                  <th>Eb</th>
-                  <th>&#957</th>
-                  <th>G1.mes</th>
-                  <th>G1.mes.err</th>
-                  <th>G2.mes</th>
-                  <th>G2.mes.err</th>
-                </tr>
-              </table>
-              <p>Data provided by Karl Slifer & Alexandre Deur</p>
+            <hr>
 
-              <hr>
+            <h6>E94010</h6>
+            <p>Format:</p>
+            <table>
+              <tr>
+                <th>Q<sup>2</sup></th>
+                <th>W</th>
+                <th>&#952</th>
+                <th>Eb</th>
+                <th>&#957</th>
+                <th>G1</th>
+                <th>G1.mes.err</th>
+                <th>G2</th>
+                <th>G2.mes.err</th>
+                <th>&#963_LT</th>
+                <th>&#963_LT.mes.err</th>
+                <th>&#963_TT</th>
+                <th>&#963_TT.mes.err</th>
+              </tr>
+            </table>
+            <h3><pre><a href="./E94010.csv" download="3He_E94010.csv">Download E94010</a></pre></h3>
+            <p>Data provided by Karl Slifer. sigma_LT, sigma_TT published in <a href="https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.101.022303">https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.101.022303</a></p>
+            
+            <hr>
 
-              <h6>E94010</h6>
-              <h3><pre><a href="./E94010.csv" download="3He_E94010.csv"><sup>3</sup>He</a></pre></h3>
-              <table>
-                <tr>
-                  <th>Q<sup>2</sup></th>
-                  <th>W</th>
-                  <th>&#952</th>
-                  <th>Eb</th>
-                  <th>&#957</th>
-                  <th>G1.mes</th>
-                  <th>G1.mes.err</th>
-                  <th>G2.mes</th>
-                  <th>G2.mes.err</th>
-                  <th>&#963_LT.mes</th>
-                  <th>&#963_LT.mes.err</th>
-                  <th>&#963_TT.mes</th>
-                  <th>&#963_TT.mes.err</th>
-                </tr>
-              </table>
-              <p>Data provided by Karl Slifer. sigma_LT, sigma_TT published in <a href="https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.101.022303">https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.101.022303</a></p>
-              
-              <hr>
-
-              <h6>HERMES</h6>
-              <h3><pre><a href="./neutron_HERMES.csv" download="neutron_HERMES.csv">Neutron</a></pre></h3>
-              <table>
-                <tr>
-                  <th>Q<sup>2</sup></th>
-                  <th>X</th>
-                  <th>Eb</th>
-                  <th>G1.mes</th>
-                  <th>G1.mes.err</th>
-                </tr>
-              </table>
-              <p><a href="https://arxiv.org/abs/hep-ex/9703005">https://arxiv.org/abs/hep-ex/9703005</a></p>
-              
-            </div>
-            <div class="data-section Deuteron" id="Deuteron">
-              <h4>Deuteron</h4>
-            </div>
+            <h6>HERMES</h6>
+            <h3><pre><a href="./neutron_HERMES.csv" download="neutron_HERMES.csv">Neutron</a></pre></h3>
+            <table>
+              <tr>
+                <th>Q<sup>2</sup></th>
+                <th>X</th>
+                <th>Eb</th>
+                <th>G1</th>
+                <th>G1.mes.err</th>
+              </tr>
+            </table>
+            <p><a href="https://arxiv.org/abs/hep-ex/9703005">https://arxiv.org/abs/hep-ex/9703005</a></p>
+            
+          </div>
+          <div class="data-section Deuteron" id="Deuteron">
+            <h4>Deuteron</h4>
+          </div>
+          <div class="data-section Neutron" id="Neutron">
+            <h5><a href="./NeutronData.csv" download="NeutronData.csv">All Neutron</a> -- <a href="./g1(n)_vs_Q2.html">Plot</a></h5>
+          </div>
+          <div class="data-section Proton" id="Proton">
+            <h4>Proton</h4>
           </div>
         </div>
       </div>

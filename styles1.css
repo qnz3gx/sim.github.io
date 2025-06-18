@@ -5,6 +5,11 @@ body {
   width: 690px;
 }
 
+.main-content {
+  display: flex;
+  gap: 20px;
+}
+
 h1 {
   color: #404040;
   font-family: "Helvetica Neue", Verdana, Arial, sans-serif;
