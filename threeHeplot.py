@@ -14,24 +14,8 @@ def import_csv_with_pandas(file_path,r):
 file_path = '/Users/scarlettimorse/PycharmProjects/sim.github.io/threeHedata.csv'
 APD_df = import_csv_with_pandas(file_path,0)
 
-columns_to_check = ['X', 'Q2', 'G1.mes']
-h_df = APD_df[~APD_df[columns_to_check].isin([-1000]).any(axis=1)]
-
-APD_df = APD_df.replace(-1000,'')
-APD_df.to_csv("allData.csv", index=False)
-
-experiment_mapping = {
-    1: 'SLAC E142',
-    2: 'SLAC E154',
-    3: 'Zheng',
-    4: 'Kramer',
-    5: 'Flay',
-    6: 'Solvignon',
-    7: 'E97110',
-    8: 'E94010',
-}
-
-h_df['Experiment'] = h_df['Experiment'].replace(experiment_mapping)
+columns_to_check = ['X', 'Q2', 'g1']
+h_df = APD_df[APD_df['Experiment'] != 'E97110']
 
 centers = np.array([0.0036, 0.0045, 0.0055, 0.007, 0.009, 0.012, 0.017, 0.024,
                     0.035, 0.049, 0.077, 0.12, 0.17, 0.22, 0.29, 0.41, 0.57, 0.74])
@@ -57,7 +41,7 @@ def xbins(set):
     return set
 
 plot_df = xbins(h_df)
-plot_df['G1(x,Q2)'] = plot_df['G1.mes'] + 2.6 - 0.15 * plot_df['X_index']
+plot_df['G1(x,Q2)'] = pd.to_numeric(plot_df['g1'], errors='coerce') + 2.6 - 0.15 * pd.to_numeric(plot_df['X_index'], errors='coerce')
 
 def xW(Q2):
     xW = Q2/(Q2 + 4 - 938.272/((3*10**8)**2))
@@ -68,7 +52,7 @@ wtwo['Q2'] = plot_df['Q2']
 wtwo['X'] = xW(plot_df['Q2'])
 w_df = xbins(wtwo)
 g1s = plot_df.groupby('X_index')['G1(x,Q2)'].mean()
-w_df['G1.mes'] = w_df['X_index'].map(g1s)
+w_df['g1'] = w_df['X_index'].map(g1s)
 
 fig = go.Figure()
 
@@ -95,7 +79,7 @@ for exp in experiments:
         name=str(exp),
         error_y=dict(
         type='data',
-        array=exp_df['G1.mes.err'],
+        array=exp_df['dg1(tot)'],
         visible=True,
         thickness=1
     ),
@@ -105,14 +89,14 @@ for exp in experiments:
     ))
 
     xdata = w_df['Q2'].values
-    ydata = w_df['G1.mes'].values
-    def reciprocal_func(x, a, b):
-        return a / x + b
+    ydata = w_df['g1'].values
+    def exponential(x, a, b, c):
+        return a*np.exp(-b*x) + c
 
     try:
-        popt, _ = curve_fit(reciprocal_func, xdata, ydata, maxfev=10000)
-        x_line = np.linspace(xdata.min(), xdata.max(), 200)
-        y_line = reciprocal_func(x_line, *popt)
+        popt, _ = curve_fit(exponential, xdata, ydata, bounds=(0, np.inf), maxfev=10000)
+        x_line = np.linspace(xdata.min(), xdata.max(), 229)
+        y_line = exponential(x_line, *popt)
 
         fig.add_trace(go.Scatter(
             x=x_line,
@@ -126,59 +110,60 @@ for exp in experiments:
         print("Fit failed for reciprocal function")
 
     annotations.append(dict(
-        x=x_line[0],
+        x=0.57,
         y=y_line[0],
         text=f"W = 2GeV",
         showarrow=False,
-        xshift=-40,
-        yshift=20,
+        xshift=0,
+        yshift=10,
         font=dict(size=10, color="black"),
         ))
 
-for bin_idx in bins:
-    bin_df = plot_df[plot_df['X_index'] == bin_idx].sort_values(by='Q2')
+# for bin_idx in bins:
+#     bin_idx=int(bin_idx)
+#     bin_df = plot_df[plot_df['X_index'] == bin_idx].sort_values(by='Q2')
     
-    if len(bin_df) > 1:
-        slope, intercept, _, _, _ = linregress(bin_df['Q2'], bin_df['G1(x,Q2)'])
+#     if len(bin_df) > 1:
+#         slope, intercept, _, _, _ = linregress(bin_df['Q2'], bin_df['G1(x,Q2)'])
         
-        line_x = bin_df['Q2']
-        line_y = slope * line_x + intercept
+#         line_x = bin_df['Q2']
+#         line_y = slope * line_x + intercept
         
-        fig.add_trace(go.Scatter(
-            x=line_x,
-            y=line_y,
-            mode='lines',
-            line=dict(color='gray', width=1, dash='solid'),
-            name=f'Best fit - X bin {bin_idx}',
-            legendgroup=f'bin_{bin_idx}',
-            showlegend=False
-        ))
+#         fig.add_trace(go.Scatter(
+#             x=line_x,
+#             y=line_y,
+#             mode='lines',
+#             line=dict(color='gray', width=1, dash='solid'),
+#             name=f'Best fit - X bin {bin_idx}',
+#             legendgroup=f'bin_{bin_idx}',
+#             showlegend=False
+#         ))
 
-        x_label = line_x.iloc[-1]
-        y_label = line_y.iloc[-1]
+#         x_label = line_x.iloc[-1]
+#         y_label = line_y.iloc[-1]
     
-    elif len(bin_df) == 1:
-        x_label = bin_df['Q2'].iloc[0]
-        y_label = bin_df['G1(x,Q2)'].iloc[0]
+#     elif len(bin_df) == 1:
+#         x_label = bin_df['Q2'].iloc[0]
+#         y_label = bin_df['G1(x,Q2)'].iloc[0]
 
-    else:
-        continue
+#     else:
+#         continue
 
-    annotations.append(dict(
-        x=x_label,
-        y=y_label,
-        text=f"x = {centers[bin_idx]:.4f}",
-        showarrow=False,
-        xshift=40,
-        yshift=0,
-        font=dict(size=10, color="black"),
-        ))
+#     annotations.append(dict(
+#         x=x_label,
+#         y=y_label,
+#         text=f"x = {centers[bin_idx]:.4f}",
+#         showarrow=False,
+#         xshift=40,
+#         yshift=0,
+#         font=dict(size=10, color="black"),
+#         ))
     
 top_point = plot_df.loc[plot_df['G1(x,Q2)'].idxmax()]
 annotations.append(dict(
     x=top_point['Q2'],
     y=top_point['G1(x,Q2)'],
-    text=f"(i={top_point['X_index']})",
+    text=f"(i={int(top_point['X_index'])})",
     showarrow=False,
     xshift=90,
     yshift=0,
