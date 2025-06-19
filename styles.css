@@ -1,6 +1,19 @@
+.top-margin {
+    background-color: white;
+    width: 1156px;
+    height: 10px;
+    margin: 20px auto 0 auto;
+}
+.background {
+    margin: 0px auto 0 auto;
+    width: 1156px;
+    height: 254px;
+    background-color: white;
+}
+
 .page {
     background-color: white;
-    margin: 205px auto 0 auto;
+    margin: 0px auto 0 auto;
     width: 1140px;
     padding: 0.5em;
 }
@@ -10,7 +23,28 @@
     width: 100%;
     margin-left: 10px;
     margin-right: 0px;
+    margin-bottom: 20px;
   }
+
+.image {
+    margin: auto;
+    width: 1127px;
+    height: 250px;
+    border: 6px solid gray;
+    background-color: white;
+    overflow: hidden;
+    position: relative;
+}
+
+.image img {
+    position: absolute;
+    left: 0px;
+    top: -320px;
+}
+
+img {
+    width: 100%;
+}
 
 body {
     background-color: #00065e;
@@ -39,7 +73,7 @@ body {
 
 .active-header {
     flex-grow: 1;
-    margin-top: 10px;
+    margin-top: 20px;
     margin-left: 10px;
   }
 
@@ -73,8 +107,8 @@ h4 {
 }
 
 h5{
-    margin: 0 130px 20px;
-    font-size: 14px;
+    margin: 0 50px 25px;
+    font-size: 20px;
     font-family: inherit;
 }
 
@@ -88,9 +122,9 @@ h6 {
 }
 
 hr {
-    width: calc(100%-40px);
+    width: calc(100%-37px);
     margin-left: 10px;
-    margin-right: 30px;
+    margin-right: 27px;
     margin-top: 15px;
     border-style: inset;
     border-width: 5px;
@@ -98,6 +132,7 @@ hr {
 }
 
 .main-content hr {
+    width: 800px;
     border-width: 3px;
     margin: 20px 30px 10px;
 }
@@ -178,7 +213,7 @@ th, td {
     display: block;
 }
 
-.Polarized3He p {
+.main-content p {
     margin: 5px;
 }
 
@@ -206,7 +241,7 @@ th, td {
     display: flex;
     max-width: 110px;
     top:100%;
-    /* gap: 10px; */
+    margin-left: 1px;
     flex-direction: column;
 }
 

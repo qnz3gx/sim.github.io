@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css">
 <title>World Polarized Data</title>
 </head>
 
 <body>
+  <div class="top-margin"></div>
+  <div class="background">
+    <div class="image">
+      <img src="WebHeader.jpg" alt="Newton's cradle">
+    </div>
+  </div>
   <div class="page">
     <div class="top-bar">
       <div class="dropdown">
@@ -223,7 +229,7 @@
             <h4>Deuteron</h4>
           </div>
           <div class="data-section Neutron" id="Neutron">
-            <h5><pre><a href="./NeutronData.csv" download="NeutronData.csv">Download Compiled Neutron Data</a>           Plots: <a href="./g1(n)_vs_Q2.html">g<sub>1</sub> vs Q<sup>2</sup></a>    <a href="">g<sub>1</sub>/F<sub>1</sub>, A<sub>1</sub> vs Q<sup>2</sup></a></pre></h5>
+            <h5><pre><a href="./NeutronData.csv" download="NeutronData.csv">Download Compiled Neutron Data</a>       Plots: <a href="./g1(n)_vs_Q2.html">g<sub>1</sub> vs Q<sup>2</sup></a>    <a href="">g<sub>1</sub>/F<sub>1</sub>, A<sub>1</sub> vs Q<sup>2</sup></a></pre></h5>
             
             <hr width=800px>
 
@@ -235,8 +241,16 @@
                 <th>x</th>
                 <th>g1</th>
                 <th>dg1 (stat)</th>
+                <th>dg1 (sys)</th>
+                <th>dg1 (tot)</th>
                 <th>g2</th>
                 <th>dg2 (stat)</th>
+                <th>dg2 (sys)</th>
+                <th>dg2 (tot)</th>
+                <th>A1</th>
+                <th>dA1 (stat)</th>
+                <th>dA1 (sys)</th>
+                <th>dA1 (tot)</th>
               </tr>
             </table>
             <h3><a href="./neutron_SLAC E142.csv" download="neutron_SLAC_E142.csv">Download SLAC E142</a></h3>
@@ -250,14 +264,19 @@
               <tr>
                 <th>Q<sup>2</sup></th>
                 <th>x</th>
+                <th>Eb</th>
                 <th>g1</th>
                 <th>dg1 (stat)</th>
-                <th>g2</th>
-                <th>dg2 (stat)</th>
+                <th>dg1 (sys)</th>
+                <th>dg1 (tot)</th>
+                <th><sup>g1</sup>&frasl;<sub>F1</sub></th>
+                <th>d<sup>g1</sup>&frasl;<sub>F1</sub> (stat)</th>
+                <th>d<sup>g1</sup>&frasl;<sub>F1</sub> (sys)</th>
+                <th>d<sup>dg1</sup>&frasl;<sub>F1</sub> (tot)</th>
               </tr>
             </table>
             <h3><a href="./neutron_SLAC E143.csv" download="neutron_SLAC_E143.csv">Download SLAC E143</a></h3>
-            <p>Source: <a href=""></a></p>
+            <p>Source: <a href="https://arxiv.org/pdf/hep-ph/9802357">https://arxiv.org/pdf/hep-ph/9802357</a></p>
 
             <hr>
 
@@ -269,10 +288,16 @@
                 <th>x</th>
                 <th>g1</th>
                 <th>dg1 (stat)</th>
+                <th>dg1 (sys)</th>
+                <th>dg1 (tot)</th>
+                <th>A1</th>
+                <th>dA1 (stat)</th>
+                <th>dA1 (sys)</th>
+                <th>dA1 (tot)</th>
               </tr>
             </table>
             <h3><a href="./neutron_SLAC E154.csv" download="neutron_SLAC_E154.csv">Download SLAC E154</a></h3>
-            <p><a href="https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.79.26">https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.79.26</a></p>
+            <p>Source: <a href="https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.79.26">https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.79.26</a></p>
             
             <hr>
 
@@ -282,14 +307,17 @@
               <tr>
                 <th>Q<sup>2</sup></th>
                 <th>x</th>
+                <th>Eb</th>
                 <th>g1</th>
                 <th>dg1 (stat)</th>
-                <th>g2</th>
-                <th>dg2 (stat)</th>
+                <th><sup>g1</sup>&frasl;<sub>F1</sub></th>
+                <th>d<sup>g1</sup>&frasl;<sub>F1</sub> (stat)</th>
+                <th>d<sup>g1</sup>&frasl;<sub>F1</sub> (sys)</th>
+                <th>d<sup>dg1</sup>&frasl;<sub>F1</sub> (tot)</th>
               </tr>
             </table>
             <h3><a href="./neutron_SLAC E155.csv" download="neutron_SLAC_E155.csv">Download SLAC E155</a></h3>
-            <p>Source: <a href=""></a></p>
+            <p>Source: g1 -- <a href="https://www.slac.stanford.edu/exp/e155/e155_results/tables/g1_pdn_Q2_5_comb.txt">https://www.slac.stanford.edu/exp/e155/e155_results/tables/g1_pdn_Q2_5_comb.txt</a>; <sup>g1</sup>&frasl;<sub>F1</sub> -- <a href="https://arxiv.org/pdf/hep-ph/0007248">https://arxiv.org/pdf/hep-ph/0007248</a> </p>
 
             <hr>
 
@@ -313,6 +341,14 @@
                 <th>d<sup>g1</sup>&frasl;<sub>F1</sub> (stat)</th>
                 <th>d<sup>g1</sup>&frasl;<sub>F1</sub> (sys)</th>
                 <th>d<sup>dg1</sup>&frasl;<sub>F1</sub> (tot)</th>
+                <th>A1</th>
+                <th>dA1 (stat)</th>
+                <th>dA1 (sys)</th>
+                <th>dA1 (tot)</th>
+              </tr>
+            </table>
+            <table>
+              <tr>
                 <th><sup>g2</sup>&frasl;<sub>F1</sub></th>
                 <th>d<sup>g2</sup>&frasl;<sub>F1</sub> (stat)</th>
                 <th>d<sup>g2</sup>&frasl;<sub>F1</sub> (sys)</th>
@@ -355,17 +391,17 @@
                 <th>&#952</th>
                 <th>Eb</th>
                 <th>g1</th>
-                <th>g1 (stat)</th>
-                <th>g1 (sys)</th>
-                <th>g1 (tot)</th>
+                <th>dg1 (stat)</th>
+                <th>dg1 (sys)</th>
+                <th>dg1 (tot)</th>
                 <th><sup>g1</sup>&frasl;<sub>F1</sub></th>
                 <th>d<sup>g1</sup>&frasl;<sub>F1</sub> (stat)</th>
                 <th>d<sup>g1</sup>&frasl;<sub>F1</sub> (sys)</th>
                 <th>d<sup>g1</sup>&frasl;<sub>F1</sub> (tot)</th>
-                <th><sup>g2</sup>&frasl;<sub>F1</sub></th>
-                <th>d<sup>g2</sup>&frasl;<sub>F1</sub> (stat)</th>
-                <th>d<sup>g2</sup>&frasl;<sub>F1</sub> (sys)</th>
-                <th>d<sup>g2</sup>&frasl;<sub>F1</sub> (tot)</th>
+                <th>A1</th>
+                <th>dA1 (stat)</th>
+                <th>dA1 (sys)</th>
+                <th>dA1 (tot)</th>
               </tr>
             </table>
             <h3><a href="./neutron_Flay.csv" download="neutron_Flay.csv">Download Flay</a></h3>
@@ -380,12 +416,19 @@
                 <th>Q<sup>2</sup></th>
                 <th>X</th>
                 <th>Eb</th>
-                <th>G1</th>
-                <th>G1.mes.err</th>
+                <th>g1</th>
+                <th>dg1</th>
+                <th>dg1 (stat)</th>
+                <th>dg1 (sys)</th>
+                <th>dg1 (tot)</th>
+                <th>A1</th>
+                <th>dA1 (stat)</th>
+                <th>dA1 (sys)</th>
+                <th>dA1 (tot)</th>
               </tr>
             </table>
-            <h3><pre><a href="./neutron_HERMES.csv" download="neutron_HERMES.csv">Download HERMES</a></pre></h3>
-            <p><a href="https://arxiv.org/abs/hep-ex/9703005">https://arxiv.org/abs/hep-ex/9703005</a></p>
+            <h3><a href="./neutron_HERMES.csv" download="neutron_HERMES.csv">Download HERMES</a></h3>
+            <p>Source: <a href="https://arxiv.org/pdf/hep-ex/9703005.pdf">https://arxiv.org/pdf/hep-ex/9703005.pdf</a></p>
 
             <hr>
 
@@ -394,14 +437,15 @@
             <table>
               <tr>
                 <th>Q<sup>2</sup></th>
-                <th>X</th>
-                <th>Eb</th>
-                <th>G1</th>
-                <th>G1.mes.err</th>
+                <th>x</th>
+                <th>g1</th>
+                <th>dg1 (stat)</th>
+                <th>dg1 (sys)</th>
+                <th>dg1 (tot)</th>
               </tr>
             </table>
-            <h3><pre><a href="./neutron_SMC.csv" download="neutron_SMC.csv">Download SMC</a></pre></h3>
-            <p><a href="https://arxiv.org/abs/hep-ex/9703005">https://arxiv.org/abs/hep-ex/9703005</a></p>
+            <h3><a href="./neutron_SMC.csv" download="neutron_SMC.csv">Download SMC</a></h3>
+            <p>Source: <a href="https://cds.cern.ch/record/284908/files/ppe-95-097.pdf">https://cds.cern.ch/record/284908/files/ppe-95-097.pdf</a></p>
 
             <hr>
 
@@ -410,14 +454,17 @@
             <table>
               <tr>
                 <th>Q<sup>2</sup></th>
-                <th>X</th>
-                <th>Eb</th>
-                <th>G1</th>
-                <th>G1.mes.err</th>
+                <th>x</th>
+                <th>W</th>
+                <th>g1</th>
+                <th>dg1</th>
+                <th>dg1 (stat)</th>
+                <th>dg1 (sys)</th><!--not yet this and next-->
+                <th>dg1 (tot)</th>
               </tr>
             </table>
-            <h3><pre><a href="./neutron_COMPASS.csv" download="neutron_COMPASS.csv">Download COMPASS</a></pre></h3>
-            <p><a href=""></a></p>
+            <h3><a href="./neutron_COMPASS.csv" download="neutron_COMPASS.csv">Download COMPASS</a></h3>
+            <p>Calculated from COMPASS proton and deuteron data; <a href="https://arxiv.org/pdf/1503.08935">https://arxiv.org/pdf/1503.08935</a>, <a href="https://arxiv.org/pdf/1612.00620">https://arxiv.org/pdf/1612.00620</a></p>
           </div>
           <div class="data-section Proton" id="Proton">
             <h4>Proton</h4>
