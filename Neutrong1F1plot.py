@@ -206,15 +206,15 @@ fig.update_layout(
     ]
 )
 
-fig.write_html("g1F1(n)_vs_Q2.html")
+fig.write_html("g1F1,A1(n)_vs_Q2.html")
 
 pio.write_html(
     fig,
-    file='g1F1(n)_vs_Q2.html',
+    file='g1F1,A1(n)_vs_Q2.html',
     auto_open=True,
     config={
         'toImageButtonOptions': {
-            'filename': 'g1F1(n)_vs_Q2_plot',
+            'filename': 'g1F1,A1(n)_vs_Q2.html',
             'height': 600,
             'width': 800,
             'scale': 2
