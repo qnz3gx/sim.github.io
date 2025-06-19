@@ -81,8 +81,14 @@ experiment_mapping = {
 # mask3 = helium['Experiment'] == 'E94010'
 # helium.loc[mask3, ['dg1(stat)', 'dg1(tot)']] = helium.loc[mask3, ['dg1(tot)', 'dg1(stat)']].values
 
-# mask = helium['Experiment'] == 'SLAC E142'
-# helium.loc[mask, ['dg2(stat)', 'dg2(tot)']] = helium.loc[mask, ['dg2(tot)', 'dg2(stat)']].values
+mask = helium['Experiment'] == 'E97110'
+helium.loc[mask, ['dg2(stat)', 'dg2(tot)']] = helium.loc[mask, ['dg2(tot)', 'dg2(stat)']].values
+
+mask2 = helium['Experiment'] == 'E94010'
+helium.loc[mask2, ['dg2(stat)', 'dg2(tot)']] = helium.loc[mask2, ['dg2(tot)', 'dg2(stat)']].values
+helium.loc[mask2, ['dsigma_LT(stat)', 'dsigma_LT(tot)']] = helium.loc[mask2, ['dsigma_LT(tot)', 'dsigma_LT(stat)']].values
+helium.loc[mask2, ['dsigma_TT(stat)', 'dsigma_TT(tot)']] = helium.loc[mask2, ['dsigma_TT(tot)', 'dsigma_TT(stat)']].values
+
 
 # def quadrature_sum(df, col1, col2, result, experiments):
 #     mask = df['Experiment'].isin(experiments)
@@ -94,7 +100,7 @@ experiment_mapping = {
 # quadrature_sum(helium, 'dg1(stat)', 'dg1(sys)', 'dg1(tot)', experiments_to_update)
 # print(helium['dg1(tot)'].sample(20))
 # helium = helium.round(4)
-# helium.to_csv("threeHedata.csv", index=False)
+helium.to_csv("threeHedata.csv", index=False)
 
 for experiment in helium['Experiment'].unique():
     df_subset = helium[helium['Experiment'] == experiment]
@@ -102,3 +108,4 @@ for experiment in helium['Experiment'].unique():
     df_subset = df_subset.iloc[:, :-1]
     filename = f"{experiment}.csv"
     df_subset.to_csv(filename, index=False)
+
