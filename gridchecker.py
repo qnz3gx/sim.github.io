@@ -1,42 +1,15 @@
 # %%
 import pandas as pd
 import numpy as np
-
-def import_csv(file_path):
-    return pd.read_csv(file_path)
 # %%
 # Load tables
-tableP = import_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/proton_F1.csv")
-tableN = import_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/neutron_F1.csv")
-tableD = import_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/deuteron_F1.csv")
+tableP = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/table_P_sm0_ipol1_ipolres1_IA14_SF23_AC11_mod1.out") #used CT18NNLO
+tableN = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/table_N_sm0_ipol1_ipolres1_IA14_SF23_AC11_mod1.out")
+tableD = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/table_D_sm3_ipol1_ipolres1_IA14_SF23_AC11_mod1.out") #used CJ15nlo
 
 # Strip spaces from column names
 for df in [tableD, tableN, tableP]:
     df.columns = df.columns.str.strip()
-
-# Create keys for alignment
-for df in [tableD, tableN, tableP]:
-    df['key'] = list(zip(df['Q2'], df['x']))
-
-# Find shared Q2–X pairs
-common_keys = set(tableD['key']) & set(tableN['key']) & set(tableP['key'])
-
-# Filter all tables to common keys
-tableD = tableD[tableD['key'].isin(common_keys)].reset_index(drop=True)
-tableN = tableN[tableN['key'].isin(common_keys)].reset_index(drop=True)
-tableP = tableP[tableP['key'].isin(common_keys)].reset_index(drop=True)
-
-# Now drop 'key' column
-for df in [tableD, tableN, tableP]:
-    df.drop(columns='key', inplace=True)
-
-# Apply Q² > 1 and W² > 4 mask to all three tables
-# mask = (tableD['Q2'] > 1) & (tableD['W2'] > 4)
-
-# Apply the same mask to all three (since they're aligned now)
-# D = tableD[mask].reset_index(drop=True)
-# N = tableN[mask].reset_index(drop=True)
-# P = tableP[mask].reset_index(drop=True)
 
 # Calculate difference
 distance_F = tableD['F1'] - (tableN['F1'] + tableP['F1'])
@@ -45,8 +18,8 @@ distance_G = tableD['g1'] - (tableD['A1'] * tableD['F1'])
 # Report where the difference is large
 large_differencesF = distance_F[abs(distance_F) > 0.2]
 
-print(max(large_differencesF))
-print(max(distance_G),min(distance_G))
+#print(max(large_differencesF))
+#print(max(distance_G),min(distance_G))
 
 # %%
 wD = 0.056
@@ -55,18 +28,8 @@ wDerr = 0.01
 CompassP_path = "/Users/scarlettimorse/PycharmProjects/sim.github.io/CompassProton.csv"
 CompassD_path = "/Users/scarlettimorse/PycharmProjects/sim.github.io/CompassDeuteron.csv"
 
-CompassP = import_csv(CompassP_path)
-CompassD = import_csv(CompassD_path)
-
-for df in [CompassP,CompassD]:
-    df['key'] = list(zip(df['Q2'],df['X']))
-
-same_keys = set(CompassP['key']) & set(CompassD['key'])
-CompassPsame = CompassP[CompassP['key'].isin(same_keys)].reset_index(drop=True)
-CompassDsame = CompassD[CompassD['key'].isin(same_keys)].reset_index(drop=True)
-
-for df in [CompassP,CompassD,CompassPsame,CompassDsame]:
-    df.drop(columns='key', inplace=True)
+CompassP = pd.read_csv(CompassP_path)
+CompassD = pd.read_csv(CompassD_path)
 
 def retrieve_f1(data_df,grid_df):
     f1_values = []
@@ -87,6 +50,7 @@ CompassD['Q2'] = CompassP['Q2'].values
 CompassD['F1'] = retrieve_f1(CompassD,tableD)
 CompassD['G1'] = CompassD['A1'] * CompassD['F1']
 CompassD['G1.err'] = CompassD['A1.err']*CompassD['F1']
+CompassD['g1.err'] = CompassD['a1.err']*CompassD['F1']
 
 # %%
 #Create a neutron dataframe
@@ -134,13 +98,6 @@ def retrieve_g1(data_df,grid_df):
 #looking for bad calculations
 checking = retrieve_g1(neutron_COMPASS,tableN) - neutron_COMPASS['G1.mes']
 prop = retrieve_g1(neutron_COMPASS,tableN)/neutron_COMPASS['G1.mes']
-#add direct calculation of G1n for row where X and Q2 were the same for G1d and p
-# Sameneut = (1-1.5*wD)*CompassDsame['G1'] - CompassPsame['G1']
-# sigmaSame=(1-1.5*wD)*CompassDsame['G1']*np.sqrt((1.5*wDerr/(1-1.5*wD))**2 + (CompassDsame['G1.err']/CompassDsame['G1'])**2)
-# erroneous = np.sqrt((sigma)**2 + (CompassPsame['G1.err'])**2)
-# neutron_COMPASS.loc[0,'G1.mes'] = Sameneut[0]
-# neutron_COMPASS.loc[0,'G1.mes.err'] = erroneous[0]
-print(min(prop),max(prop))
 
 # %%
 spreadsheet = pd.DataFrame()
@@ -158,19 +115,19 @@ spreadsheet['dG1n(stat)'] = neutron_COMPASS['G1.mes.err']
 spreadsheet['dG1n(sys)'] = neutron_COMPASS['g1.mes.err']
 spreadsheet['F1n'] = retrieve_f1(neutron_COMPASS,tableN)
 spreadsheet['A1n'] = spreadsheet['G1n']/spreadsheet['F1n']
-spreadsheet['A1d'] = CompassD['A1']
-spreadsheet['dA1d(stat)'] = CompassD['A1.err']
-spreadsheet['dA1d(sys)'] = CompassD['a1.err']
-spreadsheet['F1d'] = CompassD['F1']
+spreadsheet['F1d'] = retrieve_f1(neutron_COMPASS, tableD)
 spreadsheet['G1d'] = CompassD['G1']
 spreadsheet['dG1d(stat)'] = CompassD['G1.err']
 spreadsheet['dG1d(sys)'] = CompassD['g1.err']
+spreadsheet['A1d'] = CompassD['G1']/spreadsheet['F1d']
+spreadsheet['dA1d(stat)'] = CompassD['G1.err']/spreadsheet['F1d']
+spreadsheet['dA1d(sys)'] = CompassD['g1.err']/spreadsheet['F1d']
 
 spreadsheet = spreadsheet.round(4)
-spreadsheet.to_csv('COMPASS2.csv',index=False)
+spreadsheet.to_csv('COMPASS.csv',index=False)
 # %%
 # export the data to neutron data
-nd_df = import_csv('NeutronData.csv')
+nd_df = pd.read_csv('NeutronData.csv')
 print(nd_df.loc[349:365])
 
 nd_df.loc[349:365, 'G1.mes'] = neutron_COMPASS['G1.mes'].values

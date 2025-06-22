@@ -32,3 +32,28 @@ def quadrature_sum(df,col1,col2,result):
     mask = df[col1].notna() & df[col2].notna()
     df.loc[mask, result] = np.sqrt(df.loc[mask, col1]**2 + df.loc[mask, col2]**2)
     return df
+
+X_target = 0.3
+Q2_target = 5.1
+
+tableP = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/p_F1.csv") #used CT18NNLO
+tableN = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/n_F1.csv")
+tableD = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/d_F1.csv")
+
+def retrieve_f1(grid_df, x_target, Q2_target):
+    distances = np.sqrt((grid_df['x'] - x_target)**2 + (grid_df['Q2'] - Q2_target)**2)
+    nearest_idx = distances.idxmin()
+    return grid_df.loc[nearest_idx, 'F1']
+
+def retrieve_g1(grid_df, x_target, Q2_target):
+    distances = np.sqrt((grid_df['x'] - x_target)**2 + (grid_df['Q2'] - Q2_target)**2)
+    nearest_idx = distances.idxmin()
+    return grid_df.loc[nearest_idx, 'g1']
+
+# Call with explicit coordinates
+f1p = retrieve_f1(tableP, X_target, Q2_target)
+f1n = retrieve_f1(tableN, X_target, Q2_target)
+g1p = retrieve_g1(tableP, X_target, Q2_target)
+g1n = retrieve_g1(tableN, X_target, Q2_target)
+
+print(f"F1p: {f1p:.4f}, g1p: {g1p:.4f}), F1n: {f1n:.4f}, g1n: {g1n:.4f}")

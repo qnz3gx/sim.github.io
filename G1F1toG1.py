@@ -12,7 +12,7 @@ def import_csv(file_path, lines):
     data.columns = data.columns.str.strip()
     return data
 
-grid_path = "/Users/scarlettimorse/PycharmProjects/sim.github.io/problemchild.csv"
+grid_path = "/Users/scarlettimorse/PycharmProjects/PDFs/problemchild.csv"
 G1_path = f"/Users/scarlettimorse/PycharmProjects/sim.github.io/{dataset}.csv"
 grid = import_csv(grid_path, 0)
 data_df = import_csv(G1_path, skip)

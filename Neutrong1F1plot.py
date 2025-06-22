@@ -38,8 +38,8 @@ def xbins(set):
     return set
 
 plot_df = xbins(h_df)
-plot_df['A1(x,Q2)'] = pd.to_numeric(plot_df['A1'], errors='coerce') + 2 - 0.12 * pd.to_numeric(plot_df['X_index'], errors='coerce')
-plot_df['G1F1(x,Q2)'] = pd.to_numeric(plot_df['g1/F1'], errors='coerce') + 2 - 0.12 * pd.to_numeric(plot_df['X_index'], errors='coerce')
+plot_df['A1(x,Q2)'] = pd.to_numeric(plot_df['A1'], errors='coerce')
+plot_df['G1F1(x,Q2)'] = pd.to_numeric(plot_df['g1/F1'], errors='coerce')
 
 def xW(Q2):
     xW = Q2/(Q2 + 4 - 938.272/((3*10**8)**2))
@@ -62,19 +62,45 @@ symbol_map = {
     'SLAC_E154': 'circle',
     'SLAC_E142': 'square',
     'Zheng': 'hourglass',
-    'Kramer': 'diamond',
     'HERMES': 'pentagon',
-    'SMC': 'hexagon-open',
     'SLAC_E143': 'star-open',
     'SLAC_E155': 'cross-open',
     'COMPASS': 'triangle-up-open'
 }
 
+color_map_g1f1= {
+    'SLAC_E154': 'brown',
+    'SLAC_E142': 'green',
+    'Zheng': 'purple',
+    'HERMES': 'pink',
+    'Flay': 'gold',
+    'SLAC_E143': 'blue',
+    'SLAC_E155': 'orange',
+    'COMPASS': 'darkred'
+}
+
+color_map_A1= {
+    'SLAC_E154': 'sienna',
+    'SLAC_E142': 'lightgreen',
+    'Zheng': 'magenta',
+    'HERMES': 'fuchsia',
+    'Flay': 'yellow',
+    'SLAC_E143': 'lightblue',
+    'SLAC_E155': 'peachpuff',
+    'COMPASS': 'firebrick'
+}
+
 for exp in experiments:
     exp_df = plot_df[plot_df['Experiment'] == exp]
+    if exp_df['G1F1(x,Q2)'].dropna().empty and exp_df['A1(x,Q2)'].dropna().empty:
+        continue
+
+    exp_df = plot_df[plot_df['Experiment'] == exp]
     symbol = symbol_map.get(exp, 'circle')
+    color1 = color_map_g1f1.get(exp,'black')
+    color2 = color_map_A1.get(exp,'black')
     fig.add_trace(go.Scatter(
-        x=exp_df['Q2'],
+        x=exp_df['x'],
         y=exp_df['G1F1(x,Q2)'],
         mode='markers',
         name=str(exp),
@@ -84,13 +110,13 @@ for exp in experiments:
         visible=True,
         thickness=1
     ),
-        marker=dict(size=6, symbol=symbol),
+        marker=dict(size=6, symbol=symbol, color = color1),
         legendgroup=str(exp),
         showlegend=True
     ))
 
     fig.add_trace(go.Scatter(
-        x=exp_df['Q2'],
+        x=exp_df['x'],
         y=exp_df['A1(x,Q2)'],
         mode='markers',
         name=str(exp),
@@ -100,80 +126,55 @@ for exp in experiments:
         visible=True,
         thickness=1
     ),
-        marker=dict(size=6, symbol=symbol),
+        marker=dict(size=6, symbol=symbol, color = color2),
         legendgroup=str(exp),
         showlegend=False
     ))
 
-    xdata = w_df['Q2'].values
+    xdata = w_df['x'].values
     ydata = w_df['g1/F1'].values
 
     mask = np.isfinite(xdata) & np.isfinite(ydata)
     xdata = xdata[mask]
     ydata = ydata[mask]
 
-    def exponential(x, a, b, c):
-        return a*np.exp(-b*x) + c
+    # def exponential(x, a, b, c):
+    #     return a*np.exp(-b*x) + c
 
-    try:
-        popt, _ = curve_fit(exponential, xdata, ydata, bounds=(0, np.inf), maxfev=10000)
-        x_line = np.linspace(xdata.min(), xdata.max(), 229)
-        y_line = exponential(x_line, *popt)
+    # try:
+    #     popt, _ = curve_fit(exponential, xdata, ydata, bounds=(0, np.inf), maxfev=10000)
+    #     x_line = np.linspace(xdata.min(), xdata.max(), 229)
+    #     y_line = exponential(x_line, *popt)
 
-        fig.add_trace(go.Scatter(
-            x=x_line,
-            y=y_line,
-            mode='lines',
-            line=dict(color='red', width=1, dash='solid'),
-            name="W = 2 GeV",
-            showlegend=False
-        ))
-    except RuntimeError:
-        print("Fit failed for reciprocal function")
+    #     fig.add_trace(go.Scatter(
+    #         x=x_line,
+    #         y=y_line,
+    #         mode='lines',
+    #         line=dict(color='red', width=1, dash='solid'),
+    #         name="W = 2 GeV",
+    #         showlegend=False
+    #     ))
+    # except RuntimeError:
+    #     print("Fit failed for reciprocal function")
 
-    annotations.append(dict(
-        x=-0.240,
-        y=1,
-        text=f"W = 2 GeV",
-        showarrow=False,
-        xshift=0,
-        yshift=0,
-        font=dict(size=10, color="black"),
-        ))
-    
-rightmost_by_bin = plot_df.loc[plot_df.groupby('X_index')['Q2'].idxmax()]
-top_point = rightmost_by_bin.loc[rightmost_by_bin['G1F1(x,Q2)'].idxmax()]
-annotations.append(dict(
-    x=np.log10(top_point['Q2']),
-    y=top_point['G1F1(x,Q2)'],
-    text=f"(i={int(top_point['X_index'])})",
-    showarrow=False,
-    xshift=60,
-    yshift=0,
-    font=dict(size=10, color="black", family='Arial Black'),
-))
-
-bin_df = plot_df[plot_df['X_index'] == 10]
-if not bin_df.empty:
-    bin_point = bin_df.loc[bin_df['Q2'].idxmax()]
-    annotations.append(dict(
-        x=np.log10(bin_point['Q2']),
-        y=bin_point['G1F1(x,Q2)'],
-        text=f"(i=10)",
-        showarrow=False,
-        xshift=40,
-        yshift=0,
-        font=dict(size=10, color="black", family='Arial Black'),
-    ))
+    # annotations.append(dict(
+    #     x=-0.240,
+    #     y=1,
+    #     text=f"W = 2 GeV",
+    #     showarrow=False,
+    #     xshift=0,
+    #     yshift=0,
+    #     font=dict(size=10, color="black"),
+    #     ))
 
 fig.update_layout(
-    title='g\u2081<sup>n</sup>/F\u2081(x,Q²) vs Q²',
-    xaxis_title='log(Q²)',
-    yaxis_title='g\u2081<sup>n</sup>/F\u2081(x,Q²) + 5.2 - 0.3i',
+    title='g\u2081<sup>n</sup>/F\u2081(x,Q²) vs X',
+    xaxis_title='log(X)',
+    yaxis_title='g\u2081<sup>n</sup>/F\u2081(x,Q²)',
     template='plotly_white',
     annotations=annotations,
-    xaxis=dict(type='log'),
-    yaxis=dict(range=[-0.7, 2.5]),
+    xaxis=dict(type='log',range=[-1.8,0.1]),
+    yaxis=dict(range=[-1.2, 1.2]),
     updatemenus=[
         dict(
             type="buttons",
@@ -206,15 +207,15 @@ fig.update_layout(
     ]
 )
 
-fig.write_html("g1F1,A1(n)_vs_Q2.html")
+fig.write_html("g1F1,A1(n)_vs_X.html")
 
 pio.write_html(
     fig,
-    file='g1F1,A1(n)_vs_Q2.html',
+    file='g1F1,A1(n)_vs_X.html',
     auto_open=True,
     config={
         'toImageButtonOptions': {
-            'filename': 'g1F1,A1(n)_vs_Q2.html',
+            'filename': 'g1F1,A1(n)_vs_X.html',
             'height': 600,
             'width': 800,
             'scale': 2
