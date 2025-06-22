@@ -63,31 +63,36 @@ symbol_map = {
     'SLAC_E142': 'square',
     'Zheng': 'hourglass',
     'HERMES': 'pentagon',
+    'Flay': 'triangle-left',
     'SLAC_E143': 'star-open',
     'SLAC_E155': 'cross-open',
-    'COMPASS': 'triangle-up-open'
+    'COMPASS': 'triangle-up-open',
+    'COMPASS(CJ15nlo)': 'x-open',
+    'COMPASS(CT18NNLO)': 'hexagon2-open'
 }
 
 color_map_g1f1= {
     'SLAC_E154': 'brown',
     'SLAC_E142': 'green',
     'Zheng': 'purple',
-    'HERMES': 'pink',
+    'HERMES': 'fuchsia',
     'Flay': 'gold',
     'SLAC_E143': 'blue',
     'SLAC_E155': 'orange',
-    'COMPASS': 'darkred'
+    'COMPASS(CJ15nlo)': 'darkred',
+    'COMPASS(CT18NNLO)': 'firebrick'
 }
 
 color_map_A1= {
     'SLAC_E154': 'sienna',
     'SLAC_E142': 'lightgreen',
     'Zheng': 'magenta',
-    'HERMES': 'fuchsia',
+    'HERMES': 'pink',
     'Flay': 'yellow',
     'SLAC_E143': 'lightblue',
     'SLAC_E155': 'peachpuff',
-    'COMPASS': 'firebrick'
+    'COMPASS(CJ15nlo)': 'darkred',
+    'COMPASS(CT18NNLO)': 'firebrick'
 }
 
 for exp in experiments:
@@ -167,10 +172,21 @@ for exp in experiments:
     #     font=dict(size=10, color="black"),
     #     ))
 
+annotations.append(dict(
+    x=0.025,
+    y=0.95,
+    xref='paper',
+    yref='paper',
+    showarrow=False,
+    text="Note: A₁(x,Q²) is plotted in a lighter shade of the same color for each experiment as g₁/F₁(x,Q²).",
+    font=dict(size=12, color="gray"),
+    align="center"
+))
+
 fig.update_layout(
-    title='g\u2081<sup>n</sup>/F\u2081(x,Q²) vs X',
+    title='g\u2081<sup>n</sup>/F\u2081(x,Q²) and A\u2081<sup>n</sup>(x,Q²) vs X',
     xaxis_title='log(X)',
-    yaxis_title='g\u2081<sup>n</sup>/F\u2081(x,Q²)',
+    yaxis_title='g\u2081<sup>n</sup>/F\u2081, A\u2081<sup>n</sup>',
     template='plotly_white',
     annotations=annotations,
     xaxis=dict(type='log',range=[-1.8,0.1]),
