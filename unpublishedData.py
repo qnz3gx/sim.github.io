@@ -73,8 +73,8 @@ three = [zheng,cj15nlo,ct18nnlo]
 def maxerr(datasets,column):
     maximum_error = []
     for i in range(len(datasets[0])):
-        maximum = np.max([datasets[0].iloc[i][column], datasets[1].iloc[i][column], datasets[2].iloc[i][column]])
-        maximum_error.append(3*maximum/2)
+        maximum = np.max([abs(datasets[0].iloc[i][column]-datasets[1].iloc[i][column]), abs(datasets[1].iloc[i][column]-datasets[2].iloc[i][column]), abs(datasets[2].iloc[i][column]-datasets[0].iloc[i][column]-datasets[1].iloc[i][column])])
+        maximum_error.append(maximum/2)
     return maximum_error
 
 compass['dg1(model)'] = maxerr(three,'g1')
