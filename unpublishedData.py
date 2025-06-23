@@ -25,7 +25,8 @@ def sort(df):
 
 def replace_exp(main_df, exp_df, exp):
     common_cols = main_df.columns.intersection(exp_df.columns)
-    main_df.loc[394:408, common_cols] = exp_df[common_cols].values   
+    main_df.loc[379:393, common_cols] = exp_df[common_cols].values
+    main_df.loc[379:393,'Experiment'] = exp
     print(f"Replaced columns: {list(common_cols)}")
     return main_df
 
@@ -58,10 +59,31 @@ def replace_exp(main_df, exp_df, exp):
 # g1n = retrieve_g1(tableN, X_target, Q2_target)
 
 # print(f"F1p: {f1p:.4f}, g1p: {g1p:.4f}), F1n: {f1n:.4f}, g1n: {g1n:.4f}")
-help = ['COMPASS(CJ15nlo)','COMPASS(CT18NNLO)']
-quadrature_sum(neutron, 'dg1/F1(stat)', 'dg1/F1(sys)', 'dg1/F1(tot)', help)
-quadrature_sum(neutron, 'dg1(stat)', 'dg1(sys)', 'dg1(tot)', help)
 
+zheng = pd.read_csv("neutron_COMPzheng.csv")
+cj15nlo = pd.read_csv("neutron_CJ15nlo.csv")
+ct18nnlo = pd.read_csv("neutron_CT18NNLO.csv")
+
+compass = (zheng + cj15nlo + ct18nnlo)/3
+compass['x'] = zheng['x']
+compass['Q2'] = zheng['Q2']
+
+three = [zheng,cj15nlo,ct18nnlo]
+
+def maxerr(datasets,column):
+    maximum_error = []
+    for i in range(len(datasets[0])):
+        maximum = np.max([datasets[0].iloc[i][column], datasets[1].iloc[i][column], datasets[2].iloc[i][column]])
+        maximum_error.append(3*maximum/2)
+    return maximum_error
+
+compass['dg1(model)'] = maxerr(three,'g1')
+compass['dg1/F1(model)'] = maxerr(three,'g1/F1')
+
+compass['dg1(tot)'] = np.sqrt((compass['dg1(stat)'].values ** 2) + (compass['dg1(sys)'].values ** 2) + (compass['dg1(model)'].values ** 2))
+compass['dg1/F1(tot)'] = np.sqrt((compass['dg1/F1(stat)'].values ** 2) + (compass['dg1/F1(sys)'].values ** 2) + (compass['dg1/F1(model)'].values ** 2))
+
+replace_exp(neutron,compass, "COMPASS")
 print(neutron.tail())
 
 neutron = neutron.round(4)

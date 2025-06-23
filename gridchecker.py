@@ -4,12 +4,15 @@ import numpy as np
 # %%
 # Load tables
 # tableD = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/deu_F1.csv") #CJ15nlo
-# tableN = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/CJ15nlon_F1.csv")
+# tableN = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/CJ15nlon_F1.csv") #CJ15nlo
 # tableP = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/CJ15nlop_F1.csv")
 
-tableD = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/deu_F1.csv")
-tableN = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/CT18NNLOn_F1.csv") #CT18NNLO
-tableP = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/CT18NNLOp_F1.csv")
+# tableN = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/CT18NNLOn_F1.csv") #CT18NNLO
+# tableP = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/CT18NNLOp_F1.csv")
+
+tableD = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/table_D_sm3_ipol1_ipolres1_IA14_SF23_AC11_mod1.out") #Zheng
+tableN = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/table_N_sm0_ipol1_ipolres1_IA14_SF23_AC11_mod1.out")
+tableP = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/table_P_sm0_ipol1_ipolres1_IA14_SF23_AC11_mod1.out")
 
 CompassP_path = "/Users/scarlettimorse/PycharmProjects/sim.github.io/CompassProton.csv"
 CompassD_path = "/Users/scarlettimorse/PycharmProjects/sim.github.io/CompassDeuteron.csv"
@@ -123,7 +126,7 @@ spreadsheet['dA1n(stat)'] = spreadsheet['dG1n(stat)']/spreadsheet['F1n']
 spreadsheet['dA1n(sys)'] = spreadsheet['dG1n(sys)']/spreadsheet['F1n']
 
 spreadsheet = spreadsheet.round(4)
-#spreadsheet.to_csv('COMPASS.csv',index=False)
+spreadsheet.to_csv('COMPASS_recalculated_Zheng.csv',index=False)
 # %%
 # export separate neutron df
 neutron = pd.DataFrame()
@@ -137,6 +140,6 @@ neutron['g1/F1'] = spreadsheet['G1n']/spreadsheet['F1n']
 neutron['dg1/F1(stat)'] = spreadsheet['dG1n(stat)']/spreadsheet['F1n']
 neutron['dg1/F1(sys)'] = spreadsheet['dG1n(sys)']/spreadsheet['F1n']
 
-neutron.round(4)
-neutron.to_csv('neutron_CT18NNLO.csv',index=False)
+neutron = neutron.round(4)
+neutron.to_csv('neutron_COMPASS.csv',index=False)
 # %%

@@ -55,6 +55,18 @@ w_df['g1/F1'] = w_df['X_index'].map(g1s)
 fig = go.Figure()
 
 experiments = plot_df['Experiment'].unique()
+g1f1exp = []
+a1exp = []
+
+# Loop through each experiment
+for exp in experiments:
+    df_exp = plot_df[plot_df['Experiment'] == exp]
+    
+    if not df_exp['G1F1(x,Q2)'].dropna().empty:
+        g1f1exp.append(exp)
+    
+    if not df_exp['A1(x,Q2)'].dropna().empty:
+        a1exp.append(exp)
 bins = sorted(plot_df['X_index'].unique())
 annotations = []
 
@@ -79,8 +91,7 @@ color_map_g1f1= {
     'Flay': 'gold',
     'SLAC_E143': 'blue',
     'SLAC_E155': 'orange',
-    'COMPASS(CJ15nlo)': 'darkred',
-    'COMPASS(CT18NNLO)': 'firebrick'
+    'COMPASS': 'darkred',
 }
 
 color_map_A1= {
@@ -91,24 +102,31 @@ color_map_A1= {
     'Flay': 'yellow',
     'SLAC_E143': 'lightblue',
     'SLAC_E155': 'peachpuff',
-    'COMPASS(CJ15nlo)': 'darkred',
-    'COMPASS(CT18NNLO)': 'firebrick'
+    'COMPASS': 'firebrick'
 }
 
-for exp in experiments:
+fig.add_trace(go.Scatter(
+    x=[None],
+    y=[None],
+    mode='markers',
+    marker=dict(size=0, opacity=0, color='rgba(0,0,0,0)'),
+    name='— g\u2081/F\u2081 —',
+    showlegend=True
+))
+
+for exp in sorted(g1f1exp):
     exp_df = plot_df[plot_df['Experiment'] == exp]
-    if exp_df['G1F1(x,Q2)'].dropna().empty and exp_df['A1(x,Q2)'].dropna().empty:
+    if exp_df['G1F1(x,Q2)'].dropna().empty:
         continue
 
-    exp_df = plot_df[plot_df['Experiment'] == exp]
+    #exp_df = plot_df[plot_df['Experiment'] == exp]
     symbol = symbol_map.get(exp, 'circle')
     color1 = color_map_g1f1.get(exp,'black')
-    color2 = color_map_A1.get(exp,'black')
     fig.add_trace(go.Scatter(
         x=exp_df['x'],
         y=exp_df['G1F1(x,Q2)'],
         mode='markers',
-        name=str(exp),
+        name=f"{str(exp)} ",
         error_y=dict(
         type='data',
         array=exp_df['dg1/F1(tot)'],
@@ -116,32 +134,49 @@ for exp in experiments:
         thickness=1
     ),
         marker=dict(size=6, symbol=symbol, color = color1),
-        legendgroup=str(exp),
+        legendgroup=f"{str(exp)} ",
         showlegend=True
-    ))
+))
 
+fig.add_trace(go.Scatter(
+    x=[None],
+    y=[None],
+    mode='markers',
+    marker=dict(size=0, opacity=0, color='rgba(0,0,0,0)'),
+    name='— A\u2081 —',
+    showlegend=True
+))
+
+for exp2 in sorted(a1exp):
+    exp2_df = plot_df[plot_df['Experiment'] == exp2]
+    if exp2_df['A1(x,Q2)'].dropna().empty:
+        continue
+
+    #exp2_df = plot_df[plot_df['Experiment'] == exp2]
+    symbol = symbol_map.get(exp2, 'circle')
+    color2 = color_map_A1.get(exp2,'black')
     fig.add_trace(go.Scatter(
-        x=exp_df['x'],
-        y=exp_df['A1(x,Q2)'],
+        x=exp2_df['x'],
+        y=exp2_df['A1(x,Q2)'],
         mode='markers',
-        name=str(exp),
+        name=str(exp2),
         error_y=dict(
         type='data',
-        array=exp_df['dA1(tot)'],
+        array=exp2_df['dA1(tot)'],
         visible=True,
         thickness=1
     ),
         marker=dict(size=6, symbol=symbol, color = color2),
-        legendgroup=str(exp),
-        showlegend=False
-    ))
+        legendgroup=str(exp2),
+        showlegend=True
+))
 
-    xdata = w_df['x'].values
-    ydata = w_df['g1/F1'].values
+    # xdata = w_df['x'].values
+    # ydata = w_df['g1/F1'].values
 
-    mask = np.isfinite(xdata) & np.isfinite(ydata)
-    xdata = xdata[mask]
-    ydata = ydata[mask]
+    # mask = np.isfinite(xdata) & np.isfinite(ydata)
+    # xdata = xdata[mask]
+    # ydata = ydata[mask]
 
     # def exponential(x, a, b, c):
     #     return a*np.exp(-b*x) + c
@@ -171,17 +206,6 @@ for exp in experiments:
     #     yshift=0,
     #     font=dict(size=10, color="black"),
     #     ))
-
-annotations.append(dict(
-    x=0.025,
-    y=0.95,
-    xref='paper',
-    yref='paper',
-    showarrow=False,
-    text="Note: A₁(x,Q²) is plotted in a lighter shade of the same color for each experiment as g₁/F₁(x,Q²).",
-    font=dict(size=12, color="gray"),
-    align="center"
-))
 
 fig.update_layout(
     title='g\u2081<sup>n</sup>/F\u2081(x,Q²) and A\u2081<sup>n</sup>(x,Q²) vs X',
@@ -213,8 +237,8 @@ fig.update_layout(
                     label="No Color",
                     method="update",
                     args=[{
-                        "marker.color": ['gray' for trace in fig.data],
-                        "line.color": ['gray' for trace in fig.data]
+                        "marker.color": ['gray'],
+                        "line.color": ['gray']
                     }],
                 ),
             ],
