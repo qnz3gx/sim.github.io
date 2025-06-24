@@ -67,6 +67,8 @@ ct18nnlo = pd.read_csv("neutron_CT18NNLO.csv")
 compass = (zheng + cj15nlo + ct18nnlo)/3
 compass['x'] = zheng['x']
 compass['Q2'] = zheng['Q2']
+compass['dg1(stat)'] = 1/3 * np.sqrt(zheng['dg1(stat)'].values ** 2 + cj15nlo['dg1(stat)'].values ** 2 + ct18nnlo['dg1(stat)'].values ** 2)
+compass['dg1(sys)'] = 1/3 * np.sqrt(zheng['dg1(sys)'].values ** 2 + cj15nlo['dg1(sys)'].values ** 2 + ct18nnlo['dg1(sys)'].values ** 2)
 
 three = [zheng,cj15nlo,ct18nnlo]
 
