@@ -4,6 +4,8 @@ import plotly.express as px
 
 helium = pd.read_csv("threeHedata.csv")
 neutron = pd.read_csv("NeutronData.csv")
+deuteron = pd.read_csv("DeuteronData.csv")
+proton = pd.read_csv("ProtonData.csv")
 
 def add_column(df,existing,new):
     insert_index = df.columns.get_loc(existing)
@@ -20,7 +22,7 @@ def sort(df):
         df_subset = df[df['Experiment'] == experiment]
         df_subset = df_subset.dropna(axis=1, how='all')
         df_subset = df_subset.iloc[:, :-1]
-        filename = f"neutron_{experiment}.csv" #don't forget to change this
+        filename = f"deuteron_{experiment}.csv" #don't forget to change this
         df_subset.to_csv(filename, index=False)
 
 def replace_exp(main_df, exp_df, exp):
@@ -60,33 +62,46 @@ def replace_exp(main_df, exp_df, exp):
 
 # print(f"F1p: {f1p:.4f}, g1p: {g1p:.4f}), F1n: {f1n:.4f}, g1n: {g1n:.4f}")
 
-zheng = pd.read_csv("neutron_COMPzheng.csv")
-cj15nlo = pd.read_csv("neutron_CJ15nlo.csv")
-ct18nnlo = pd.read_csv("neutron_CT18NNLO.csv")
+# zheng = pd.read_csv("neutron_COMPzheng.csv")
+# cj15nlo = pd.read_csv("neutron_CJ15nlo.csv")
+# ct18nnlo = pd.read_csv("neutron_CT18NNLO.csv")
 
-compass = (zheng + cj15nlo + ct18nnlo)/3
-compass['x'] = zheng['x']
-compass['Q2'] = zheng['Q2']
-compass['dg1(stat)'] = 1/3 * np.sqrt(zheng['dg1(stat)'].values ** 2 + cj15nlo['dg1(stat)'].values ** 2 + ct18nnlo['dg1(stat)'].values ** 2)
-compass['dg1(sys)'] = 1/3 * np.sqrt(zheng['dg1(sys)'].values ** 2 + cj15nlo['dg1(sys)'].values ** 2 + ct18nnlo['dg1(sys)'].values ** 2)
+# compass = (zheng + cj15nlo + ct18nnlo)/3
+# compass['x'] = zheng['x']
+# compass['Q2'] = zheng['Q2']
+# compass['dg1(stat)'] = 1/3 * np.sqrt(zheng['dg1(stat)'].values ** 2 + cj15nlo['dg1(stat)'].values ** 2 + ct18nnlo['dg1(stat)'].values ** 2)
+# compass['dg1(sys)'] = 1/3 * np.sqrt(zheng['dg1(sys)'].values ** 2 + cj15nlo['dg1(sys)'].values ** 2 + ct18nnlo['dg1(sys)'].values ** 2)
 
-three = [zheng,cj15nlo,ct18nnlo]
+# three = [zheng,cj15nlo,ct18nnlo]
 
-def maxerr(datasets,column):
-    maximum_error = []
-    for i in range(len(datasets[0])):
-        maximum = np.max([abs(datasets[0].iloc[i][column]-datasets[1].iloc[i][column]), abs(datasets[1].iloc[i][column]-datasets[2].iloc[i][column]), abs(datasets[2].iloc[i][column]-datasets[0].iloc[i][column]-datasets[1].iloc[i][column])])
-        maximum_error.append(maximum/2)
-    return maximum_error
+# def maxerr(datasets,column):
+#     maximum_error = []
+#     for i in range(len(datasets[0])):
+#         maximum = np.max([abs(datasets[0].iloc[i][column]-datasets[1].iloc[i][column]), abs(datasets[1].iloc[i][column]-datasets[2].iloc[i][column]), abs(datasets[2].iloc[i][column]-datasets[0].iloc[i][column]-datasets[1].iloc[i][column])])
+#         maximum_error.append(maximum/2)
+#     return maximum_error
 
-compass['dg1(model)'] = maxerr(three,'g1')
-compass['dg1/F1(model)'] = maxerr(three,'g1/F1')
+# compass['dg1(model)'] = maxerr(three,'g1')
+# compass['dg1/F1(model)'] = maxerr(three,'g1/F1')
 
-compass['dg1(tot)'] = np.sqrt((compass['dg1(stat)'].values ** 2) + (compass['dg1(sys)'].values ** 2) + (compass['dg1(model)'].values ** 2))
-compass['dg1/F1(tot)'] = np.sqrt((compass['dg1/F1(stat)'].values ** 2) + (compass['dg1/F1(sys)'].values ** 2) + (compass['dg1/F1(model)'].values ** 2))
+# compass['dg1(tot)'] = np.sqrt((compass['dg1(stat)'].values ** 2) + (compass['dg1(sys)'].values ** 2) + (compass['dg1(model)'].values ** 2))
+# compass['dg1/F1(tot)'] = np.sqrt((compass['dg1/F1(stat)'].values ** 2) + (compass['dg1/F1(sys)'].values ** 2) + (compass['dg1/F1(model)'].values ** 2))
 
-replace_exp(neutron,compass, "COMPASS")
-print(neutron.tail())
+# replace_exp(neutron,compass, "COMPASS")
+# print(neutron.tail())
 
-neutron = neutron.round(4)
-neutron.to_csv('NeutronData.csv', index=False)
+# neutron = neutron.round(4)
+# neutron.to_csv('NeutronData.csv', index=False)
+
+# eg4 = pd.read_csv('proton_CLAS_EG4.csv')
+# eg4['Experiment'] = 'CLAS_EG4'
+# proton = pd.concat([proton,eg4])
+
+# sort(deuteron)
+
+compass = pd.read_csv('proton_COMPASS.csv')
+compass=compass.drop(columns='dA1(model)')
+proton.loc[proton['Experiment'] == 'COMPASS', 'dA1(model)'] = np.nan
+proton=proton.dropna(axis=1, how='all')
+compass.to_csv('proton_COMPASS.csv')
+proton.to_csv('ProtonData.csv')

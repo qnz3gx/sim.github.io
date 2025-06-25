@@ -3,21 +3,21 @@ import pandas as pd
 import numpy as np
 # %%
 # Load tables
-tableD = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/deu_F1.csv") #CJ15nlo
+# tableD = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/deu_F1.csv") #CJ15nlo
 # tableN = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/CJ15nlon_F1.csv") #CJ15nlo
 # tableP = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/CJ15nlop_F1.csv")
-F1d_err = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/d_err.csv")
+# F1d_err = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/d_err.csv")
 # F1n_err = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/CJn_err.csv")
 # F1p_err = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/CJp_err.csv")
 
-tableN = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/CT18NNLOn_F1.csv") #CT18NNLO
-tableP = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/CT18NNLOp_F1.csv")
-F1n_err = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/CTn_err.csv")
-F1p_err = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/CTp_err.csv")
+# tableN = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/CT18NNLOn_F1.csv") #CT18NNLO
+# tableP = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/CT18NNLOp_F1.csv")
+# F1n_err = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/CTn_err.csv")
+# F1p_err = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/CTp_err.csv")
 
-# tableD = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/table_D_sm3_ipol1_ipolres1_IA14_SF23_AC11_mod1.out") #Zheng
-# tableN = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/table_N_sm0_ipol1_ipolres1_IA14_SF23_AC11_mod1.out")
-# tableP = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/table_P_sm0_ipol1_ipolres1_IA14_SF23_AC11_mod1.out")
+tableD = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/table_D_sm3_ipol1_ipolres1_IA14_SF23_AC11_mod1.out") #Zheng
+tableN = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/table_N_sm0_ipol1_ipolres1_IA14_SF23_AC11_mod1.out")
+tableP = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/table_P_sm0_ipol1_ipolres1_IA14_SF23_AC11_mod1.out")
 
 CompassP_path = "/Users/scarlettimorse/PycharmProjects/sim.github.io/CompassProton.csv"
 CompassD_path = "/Users/scarlettimorse/PycharmProjects/sim.github.io/CompassDeuteron.csv"
@@ -135,7 +135,7 @@ spreadsheet['dg1/F1n(stat)'] = spreadsheet['g1/F1n'] * np.sqrt((spreadsheet['dG1
 spreadsheet['dg1/F1n(sys)'] = spreadsheet['dG1n(sys)']/spreadsheet['F1n']
 
 spreadsheet = spreadsheet.round(4)
-spreadsheet.to_csv('COMPASS_recalculated_CT18NNLO.csv',index=False)
+#spreadsheet.to_csv('COMPASS_recalculated_CT18NNLO.csv',index=False)
 # %%
 # export separate neutron df
 neutron = pd.DataFrame()
@@ -151,5 +151,36 @@ neutron['dg1/F1(stat)'] = spreadsheet['dG1n(stat)']/spreadsheet['F1n']
 neutron['dg1/F1(sys)'] = spreadsheet['dG1n(sys)']/spreadsheet['F1n']
 
 neutron = neutron.round(4)
-neutron.to_csv('neutron_CT18NNLO.csv',index=False)
+#neutron.to_csv('neutron_CT18NNLO.csv',index=False)
 # %%
+#export separate proton df
+proton = pd.DataFrame()
+proton['x'] = spreadsheet['x']
+proton['Q2'] = spreadsheet['Q2']
+proton['g1'] = spreadsheet['G1p']
+proton['dg1(stat)'] = spreadsheet['dG1p(stat)']
+proton['dg1(sys)'] = spreadsheet['dG1p(sys)']
+proton['F1'] = spreadsheet['F1p']
+proton['dF1(tot)'] = CompassP['F1.err']
+proton['A1'] = spreadsheet['A1p']
+proton['dA1(stat)'] = spreadsheet['dA1p(stat)']
+proton['dA1(sys)'] = spreadsheet['dA1p(sys)']
+
+proton = proton.round(4)
+proton.to_csv('proton_COMPzheng.csv',index=False)
+# %%
+#export separate proton df
+deuteron = pd.DataFrame()
+deuteron['x'] = spreadsheet['x']
+deuteron['Q2'] = spreadsheet['Q2']
+deuteron['g1'] = spreadsheet['G1d']
+deuteron['dg1(stat)'] = spreadsheet['dG1d(stat)']
+deuteron['dg1(sys)'] = spreadsheet['dG1d(sys)']
+deuteron['F1'] = spreadsheet['F1d']
+deuteron['dF1(tot)'] = CompassD['F1.err']
+deuteron['A1'] = spreadsheet['A1d']
+deuteron['dA1(stat)'] = spreadsheet['dA1d(stat)']
+deuteron['dA1(sys)'] = spreadsheet['dA1d(sys)']
+
+deuteron = deuteron.round(4)
+proton.to_csv('deuteron_COMPzheng.csv',index=False)
