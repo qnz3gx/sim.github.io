@@ -23,112 +23,131 @@ h_df.dropna(subset=['A1', 'g1/F1'], how='all', inplace=True)
 h_df['g1/F1(x,Q2)'] = pd.to_numeric(h_df['g1/F1'], errors='coerce')
 h_df['A1(x,Q2)'] = pd.to_numeric(h_df['A1'], errors='coerce')
 
-def xW(Q2):
-    xW = Q2/(Q2 + 4 - 938.272/((3*10**8)**2))
-    return xW
-
-# wtwo = pd.DataFrame()
-# wtwo['X'] = xW(h_df['X'])
-# #w_df = xbins(wtwo)
-# g1F1 = h_df.groupby('X_index')['g1/F1(x,Q2)'].mean()
-# w_df['g1/F1'] = wtwo['X_index'].map(g1s)
-# w_df.dropna(subset='g1/F1', inplace=True)
-
 fig = go.Figure()
 
 experiments = h_df['Experiment'].unique()
+g1f1exp = []
+a1exp = []
+
+for exp in experiments:
+    df_exp = h_df[h_df['Experiment'] == exp]
+
+    if not df_exp['g1/F1(x,Q2)'].dropna().empty:
+        g1f1exp.append(exp)
+    
+    if not df_exp['A1(x,Q2)'].dropna().empty:
+        a1exp.append(exp)
+
 annotations = []
 
 symbol_map = {
+    'SLAC E142': 'diamond',
     'Zheng': 'circle',
     'Solvignon': 'triangle-up',
     'Flay': 'square'
 }
 
 open_symbol_map = {
+    'SLAC E142': 'diamond-open',
     'Zheng': 'circle-open',
     'Solvignon': 'triangle-up-open',
     'Flay': 'square-open'
 }
 
 colors = {
+    'SLAC E142': 'coral',
     'Zheng': 'cornflowerblue',
     'Solvignon': 'blueviolet',
-    'Flay': 'goldenrod'
+    'Flay': 'burlywood'
 }
 
-for exp in experiments:
-    exp_df = h_df[h_df['Experiment'] == exp]
-    symbol = symbol_map.get(exp, 'circle')
-    color = colors.get(exp, 'black')
-    fig.add_trace(go.Scatter(
-        x=exp_df['X'],
-        y=exp_df['g1/F1(x,Q2)'],
+g1f1_trace_idxs = []
+a1_trace_idxs = []
+default_modes = []
+
+fig.add_trace(go.Scatter(
+    x=[None],
+    y=[None],
+    mode='markers',
+    marker=dict(size=0, opacity=0, color='rgba(0,0,0,0)'),
+    name='                  ',
+    legendgroup='g1f1title',
+    showlegend=True
+))
+default_modes.append('markers')
+
+for exp1 in sorted(g1f1exp):
+    exp1_df = h_df[h_df['Experiment'] == exp1]
+    if exp1_df['g1/F1(x,Q2)'].dropna().empty:
+        continue
+
+    symbol = symbol_map.get(exp1, 'circle')
+    color = colors.get(exp1, 'black')
+    trace = go.Scatter(
+        x=exp1_df['X'],
+        y=exp1_df['g1/F1(x,Q2)'],
         mode='markers',
-        name=str(exp),
+        name=f"{str(exp1)}",
         error_y=dict(
         type='data',
-        array=exp_df['dg1/F1(tot)'],
+        array=exp1_df['dg1/F1(tot)'],
         visible=True,
         thickness=1
     ),
         marker=dict(size=6, symbol=symbol, color=color),
-        legendgroup=str(exp),
+        legendgroup=f"{exp1}_g1f1",
         showlegend=True
-    ))
+    )
+    fig.add_trace(trace)
+    g1f1_trace_idxs.append(len(fig.data)-1)
+    default_modes.append('markers')
+
+fig.add_trace(go.Scatter(
+    x=[None],
+    y=[None],
+    mode='markers',
+    marker=dict(size=0, opacity=0, color='rgba(0,0,0,0)'),
+    name='           ',
+    legendgroup='a1title',
+    showlegend=True
+))
+default_modes.append('markers')
+
+for exp2 in sorted(a1exp):
+    exp2_df = h_df[h_df['Experiment'] == exp2]
+    if exp2_df['A1(x,Q2)'].dropna().empty:
+        continue
     
-    symbol2 = open_symbol_map.get(exp, 'circle')
-    fig.add_trace(go.Scatter(
-        x=exp_df['X'],
-        y=exp_df['A1(x,Q2)'],
+    symbol2 = open_symbol_map.get(exp2, 'circle')
+    color=colors.get(exp2,'black')
+    trace = go.Scatter(
+        x=exp2_df['X'],
+        y=exp2_df['A1(x,Q2)'],
         mode='markers',
-        name=str(exp),
+        name=f"{str(exp2)}",
         error_y=dict(
         type='data',
-        array=exp_df['dA1(tot)'],
+        array=exp2_df['dA1(tot)'],
         visible=True,
         thickness=1
     ),
         marker=dict(size=6, symbol=symbol2, color=color),
-        legendgroup=str(exp),
-        showlegend=False
-    ))
+        legendgroup=f"{exp2}_a1",
+        showlegend=True
+    )
+    fig.add_trace(trace)
+    a1_trace_idxs.append(len(fig.data)-1)
+    default_modes.append('markers')
 
-    # xdata = w_df['Q2'].values
-    # ydata = w_df['g1/F1'].values
-    # def exponential(x, a, b, c):
-    #     return a*np.exp(-b*x) + c
-
-    # try:
-    #     popt, _ = curve_fit(exponential, xdata, ydata, bounds=(0, np.inf), maxfev=10000)
-    #     x_line = np.linspace(xdata.min(), xdata.max(), 229)
-    #     y_line = exponential(x_line, *popt)
-
-    #     fig.add_trace(go.Scatter(
-    #         x=x_line,
-    #         y=y_line,
-    #         mode='lines',
-    #         line=dict(color='red', width=1, dash='solid'),
-    #         name="W = 2 GeV",
-    #         showlegend=False
-    #     ))
-    # except RuntimeError:
-    #     print("Fit failed for reciprocal function")
-
-    # annotations.append(dict(
-    #     x=x_line[0],
-    #     y=y_line[0],
-    #     text=f"W = 2GeV",
-    #     showarrow=False,
-    #     xshift=0,
-    #     yshift=10,
-    #     font=dict(size=10, color="black"),
-    #     ))
+error_y_values = [
+    {"type": "data", "array": trace.error_y["array"], "thickness": 1} if "error_y" in trace else None
+    for trace in fig.data
+]
 
 fig.update_layout(
-    title='g\u2081<sup><sup>3</sup>He</sup>/F\u2081(x,Q²) vs Q²',
-    xaxis_title='Q² (GeV²)',
-    yaxis_title='g\u2081<sup><sup>3</sup>He</sup>/F\u2081 + 2.6 - 0.15i',
+    title='g\u2081<sup><sup>3</sup>He</sup>/F\u2081(x,Q²) vs X',
+    xaxis_title='x',
+    yaxis_title='g\u2081<sup><sup>3</sup>He</sup>/F\u2081',
     template='plotly_white',
     annotations=annotations,
     updatemenus=[
@@ -159,19 +178,85 @@ fig.update_layout(
                 ),
             ],
             pad={"r": 10, "t": 10},
+        ),
+        dict(
+            type="buttons",
+            direction="down",
+            xanchor="left",
+            x=1.04,
+            y=1.00,
+            yanchor="top",
+            showactive=False,
+            buttons=[
+                dict(
+                    label="— g₁/F₁ —",
+                    method="update",
+                    args=[{
+                        "mode": default_modes,
+                        "error_y": [{"visible": True, "array": error_y_values[i]["array"], "thickness": 1} for i in range(len(fig.data))]
+                    }],
+                    args2=[{
+                        "mode": [
+                            'none' if (trace.legendgroup and trace.legendgroup.endswith('_a1')) else default_modes[i]
+                            for i, trace in enumerate(fig.data)
+                        ],
+                        "error_y": [
+                            {"visible": False, "array": error_y_values[i]["array"], "thickness": 1} if (trace.legendgroup and trace.legendgroup.endswith('_a1')) else {"visible": True, "array": error_y_values[i]["array"], "thickness": 1}
+                            for i, trace in enumerate(fig.data)
+                        ]
+                    }],
+                ),
+            ],
+            pad={"r": 0, "t": 0},
+            bgcolor="rgba(0,0,0,0)",
+            borderwidth=0,
+            font=dict(size=12, color="black")
+        ),
+        dict(
+            type="buttons",
+            direction="down",
+            x=1.045,
+            xanchor="left",
+            y=0.84,
+            yanchor="top",
+            showactive=False,
+            buttons=[
+                dict(
+                    label="— A₁ —",
+                    method="update",
+                    args=[{
+                        "mode": default_modes,
+                        "error_y": [{"visible": True, "array": error_y_values[i]["array"], "thickness": 1} for i in range(len(fig.data))]
+                    }],
+                    args2=[{
+                        "mode": [
+                            'none' if (trace.legendgroup and trace.legendgroup.endswith('_g1f1')) else default_modes[i]
+                            for i, trace in enumerate(fig.data)
+                        ],
+                        "error_y": [
+                            {"visible": False, "array": error_y_values[i]["array"], "thickness": 1} if (trace.legendgroup and trace.legendgroup.endswith('_g1f1')) else {"visible": True, "array": error_y_values[i]["array"], "thickness": 1}
+                            for i, trace in enumerate(fig.data)
+                        ]
+                    }],
+                ),
+            ],
+            pad={"r": 0, "t": 0},
+            bgcolor="rgba(0,0,0,0)",
+            borderwidth=0,
+            font=dict(size=12, color="black")
         )
     ]
 )
 
-fig.write_html("g1F1(3He)_vs_Q2.html")
+fig.write_html("g1F1(3He)_vs_X.html")
 
 pio.write_html(
     fig,
-    file='g1F1(3He)_vs_Q2.html',
+    file='g1F1(3He)_vs_X.html',
     auto_open=True,
     config={
         'toImageButtonOptions': {
-            'filename': 'g1F1(3He)_vs_Q2_plot',
+            'filename': 'g1F1(3He)_vs_X_plot',
             'height': 600,
             'width': 800,
             'scale': 2

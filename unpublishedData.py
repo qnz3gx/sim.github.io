@@ -11,11 +11,11 @@ def add_column(df,existing,new):
     insert_index = df.columns.get_loc(existing)
     df.insert(loc=insert_index, column=new, value=np.nan)
 
-def quadrature_sum(df, col1, col2, result, experiments):
-    mask = df['Experiment'].isin(experiments)
-    col1_numeric = pd.to_numeric(df.loc[mask, col1], errors='coerce')
-    col2_numeric = pd.to_numeric(df.loc[mask, col2], errors='coerce')
-    df.loc[mask, result] = np.sqrt(col1_numeric**2 + col2_numeric**2)
+# def quadrature_sum(df, col1, col2, result, experiments):
+#     mask = df['Experiment'].isin(experiments)
+#     col1_numeric = pd.to_numeric(df.loc[mask, col1], errors='coerce')
+#     col2_numeric = pd.to_numeric(df.loc[mask, col2], errors='coerce')
+#     df.loc[mask, result] = np.sqrt(col1_numeric**2 + col2_numeric**2)
 
 def sort(df):
     for experiment in df['Experiment'].unique():
@@ -25,17 +25,17 @@ def sort(df):
         filename = f"deuteron_{experiment}.csv" #don't forget to change this
         df_subset.to_csv(filename, index=False)
 
-def replace_exp(main_df, exp_df, exp):
+def replace_exp(main_df, exp_df, exp,rowa,rowb):
     common_cols = main_df.columns.intersection(exp_df.columns)
-    main_df.loc[379:393, common_cols] = exp_df[common_cols].values
-    main_df.loc[379:393,'Experiment'] = exp
+    main_df.loc[rowa:rowb, common_cols] = exp_df[common_cols].values
+    main_df.loc[rowa:rowb,'Experiment'] = exp
     print(f"Replaced columns: {list(common_cols)}")
     return main_df
 
-# def quadrature_sum(df,col1,col2,result):
-#     mask = df[col1].notna() & df[col2].notna()
-#     df.loc[mask, result] = np.sqrt(df.loc[mask, col1]**2 + df.loc[mask, col2]**2)
-#     return df
+def quadrature_sum(df,col1,col2,result):
+    mask = df[col1].notna() & df[col2].notna()
+    df.loc[mask, result] = np.sqrt(df.loc[mask, col1]**2 + df.loc[mask, col2]**2)
+    return df
 
 # X_target = 0.3
 # Q2_target = 5.1
@@ -99,9 +99,10 @@ def replace_exp(main_df, exp_df, exp):
 
 # sort(deuteron)
 
-compass = pd.read_csv('proton_COMPASS.csv')
-compass=compass.drop(columns='dA1(model)')
-proton.loc[proton['Experiment'] == 'COMPASS', 'dA1(model)'] = np.nan
-proton=proton.dropna(axis=1, how='all')
-compass.to_csv('proton_COMPASS.csv')
-proton.to_csv('ProtonData.csv')
+slac=pd.read_csv('SLAC E142.csv')
+quadrature_sum(slac,'dA1(stat)','dA1(sys)','dA1(tot)')
+slac=slac.round(4)
+slac.to_csv('SLAC E142.csv', index=False)
+
+helium=replace_exp(helium,slac,'SLAC E142',0,7)
+helium.to_csv('threeHeData.csv', index=False)

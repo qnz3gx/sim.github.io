@@ -16,41 +16,10 @@ file_path = '/Users/scarlettimorse/PycharmProjects/sim.github.io/NeutronData.csv
 ND_df = import_csv_with_pandas(file_path)
 
 columns_to_check = ['x', 'Q2']
-h_df = ND_df.dropna(subset=columns_to_check)
+plot_df = ND_df.dropna(subset=columns_to_check)
 
-centers = np.array([0.02, 0.06, 0.1, 0.14, 0.18, 0.22, 0.26, 0.3, 0.34, 0.38, 0.42, 0.46, 0.5, 0.54, 0.58, 0.62, 0.66, 0.7])
-
-def xbins(set):
-    midpoints = (centers[:-1] + centers[1:]) / 2
-    min_x = set['x'].min()
-    max_x = set['x'].max()
-
-    edges = np.concatenate([
-        [min(min_x, centers[0] - (centers[1] - centers[0]) / 2)],
-        midpoints,
-        [max(max_x, centers[-1] + (centers[-1] - centers[-2]) / 2)]
-    ])
-
-    bin_labels = np.arange(len(centers))
-
-    set = set.copy()
-    set.loc[:, 'X_index'] = pd.cut(set['x'], bins=edges, labels=False, include_lowest=True)
-    return set
-
-plot_df = xbins(h_df)
 plot_df['A1(x,Q2)'] = pd.to_numeric(plot_df['A1'], errors='coerce')
 plot_df['G1F1(x,Q2)'] = pd.to_numeric(plot_df['g1/F1'], errors='coerce')
-
-def xW(Q2):
-    xW = Q2/(Q2 + 4 - 938.272/((3*10**8)**2))
-    return xW
-
-wtwo = pd.DataFrame()
-wtwo['Q2'] = plot_df['Q2']
-wtwo['x'] = xW(plot_df['Q2'])
-w_df = xbins(wtwo)
-g1s = plot_df.groupby('X_index')['G1F1(x,Q2)'].mean()
-w_df['g1/F1'] = w_df['X_index'].map(g1s)
 
 fig = go.Figure()
 
@@ -58,7 +27,6 @@ experiments = plot_df['Experiment'].unique()
 g1f1exp = []
 a1exp = []
 
-# Loop through each experiment
 for exp in experiments:
     df_exp = plot_df[plot_df['Experiment'] == exp]
     
@@ -67,7 +35,7 @@ for exp in experiments:
     
     if not df_exp['A1(x,Q2)'].dropna().empty:
         a1exp.append(exp)
-bins = sorted(plot_df['X_index'].unique())
+
 annotations = []
 
 symbol_map = {
@@ -105,24 +73,29 @@ color_map_A1= {
     'COMPASS': 'firebrick'
 }
 
+g1f1_trace_idxs = []
+a1_trace_idxs = []
+default_modes = []
+
 fig.add_trace(go.Scatter(
     x=[None],
     y=[None],
     mode='markers',
     marker=dict(size=0, opacity=0, color='rgba(0,0,0,0)'),
-    name='— g\u2081/F\u2081 —',
+    name='                  ',
+    legendgroup='g1f1title',
     showlegend=True
 ))
+default_modes.append('markers')
 
 for exp in sorted(g1f1exp):
     exp_df = plot_df[plot_df['Experiment'] == exp]
     if exp_df['G1F1(x,Q2)'].dropna().empty:
         continue
 
-    #exp_df = plot_df[plot_df['Experiment'] == exp]
     symbol = symbol_map.get(exp, 'circle')
     color1 = color_map_g1f1.get(exp,'black')
-    fig.add_trace(go.Scatter(
+    trace = go.Scatter(
         x=exp_df['x'],
         y=exp_df['G1F1(x,Q2)'],
         mode='markers',
@@ -134,28 +107,32 @@ for exp in sorted(g1f1exp):
         thickness=1
     ),
         marker=dict(size=6, symbol=symbol, color = color1),
-        legendgroup=f"{str(exp)} ",
+        legendgroup=f"{exp}_g1f1",
         showlegend=True
-))
+    )
+    fig.add_trace(trace)
+    g1f1_trace_idxs.append(len(fig.data)-1)
+    default_modes.append('markers')
 
 fig.add_trace(go.Scatter(
     x=[None],
     y=[None],
     mode='markers',
     marker=dict(size=0, opacity=0, color='rgba(0,0,0,0)'),
-    name='— A\u2081 —',
+    name='           ',
+    legendgroup='a1title',
     showlegend=True
 ))
+default_modes.append('markers')
 
 for exp2 in sorted(a1exp):
     exp2_df = plot_df[plot_df['Experiment'] == exp2]
     if exp2_df['A1(x,Q2)'].dropna().empty:
         continue
 
-    #exp2_df = plot_df[plot_df['Experiment'] == exp2]
     symbol = symbol_map.get(exp2, 'circle')
     color2 = color_map_A1.get(exp2,'black')
-    fig.add_trace(go.Scatter(
+    trace = go.Scatter(
         x=exp2_df['x'],
         y=exp2_df['A1(x,Q2)'],
         mode='markers',
@@ -167,45 +144,17 @@ for exp2 in sorted(a1exp):
         thickness=1
     ),
         marker=dict(size=6, symbol=symbol, color = color2),
-        legendgroup=str(exp2),
+        legendgroup=f"{exp2}_a1",
         showlegend=True
-))
+    )
+    fig.add_trace(trace)
+    a1_trace_idxs.append(len(fig.data)-1)
+    default_modes.append('markers')
 
-    # xdata = w_df['x'].values
-    # ydata = w_df['g1/F1'].values
-
-    # mask = np.isfinite(xdata) & np.isfinite(ydata)
-    # xdata = xdata[mask]
-    # ydata = ydata[mask]
-
-    # def exponential(x, a, b, c):
-    #     return a*np.exp(-b*x) + c
-
-    # try:
-    #     popt, _ = curve_fit(exponential, xdata, ydata, bounds=(0, np.inf), maxfev=10000)
-    #     x_line = np.linspace(xdata.min(), xdata.max(), 229)
-    #     y_line = exponential(x_line, *popt)
-
-    #     fig.add_trace(go.Scatter(
-    #         x=x_line,
-    #         y=y_line,
-    #         mode='lines',
-    #         line=dict(color='red', width=1, dash='solid'),
-    #         name="W = 2 GeV",
-    #         showlegend=False
-    #     ))
-    # except RuntimeError:
-    #     print("Fit failed for reciprocal function")
-
-    # annotations.append(dict(
-    #     x=-0.240,
-    #     y=1,
-    #     text=f"W = 2 GeV",
-    #     showarrow=False,
-    #     xshift=0,
-    #     yshift=0,
-    #     font=dict(size=10, color="black"),
-    #     ))
+error_y_values = [
+    {"type": "data", "array": trace.error_y["array"], "thickness": 1} if "error_y" in trace else None
+    for trace in fig.data
+]
 
 fig.update_layout(
     title='g\u2081<sup>n</sup>/F\u2081(x,Q²) and A\u2081<sup>n</sup>(x,Q²) vs X',
@@ -243,6 +192,72 @@ fig.update_layout(
                 ),
             ],
             pad={"r": 10, "t": 10},
+        ),
+        dict(
+            type="buttons",
+            direction="down",
+            xanchor="left",
+            x=1.04,
+            y=1.00,
+            yanchor="top",
+            showactive=False,
+            buttons=[
+                dict(
+                    label="— g₁/F₁ —",
+                    method="update",
+                    args=[{
+                        "mode": default_modes,
+                        "error_y": [{"visible": True, "array": error_y_values[i]["array"], "thickness": 1} for i in range(len(fig.data))]
+                    }],
+                    args2=[{
+                        "mode": [
+                            'none' if (trace.legendgroup and trace.legendgroup.endswith('_a1')) else default_modes[i]
+                            for i, trace in enumerate(fig.data)
+                        ],
+                        "error_y": [
+                            {"visible": False, "array": error_y_values[i]["array"], "thickness": 1} if (trace.legendgroup and trace.legendgroup.endswith('_a1')) else {"visible": True, "array": error_y_values[i]["array"], "thickness": 1}
+                            for i, trace in enumerate(fig.data)
+                        ]
+                    }],
+                ),
+            ],
+            pad={"r": 0, "t": 0},
+            bgcolor="rgba(0,0,0,0)",
+            borderwidth=0,
+            font=dict(size=12, color="black")
+        ),
+        dict(
+            type="buttons",
+            direction="down",
+            x=1.045,
+            xanchor="left",
+            y=0.675,
+            yanchor="top",
+            showactive=False,
+            buttons=[
+                dict(
+                    label="— A₁ —",
+                    method="update",
+                    args=[{
+                        "mode": default_modes,
+                        "error_y": [{"visible": True, "array": error_y_values[i]["array"], "thickness": 1} for i in range(len(fig.data))]
+                    }],
+                    args2=[{
+                        "mode": [
+                            'none' if (trace.legendgroup and trace.legendgroup.endswith('_g1f1')) else default_modes[i]
+                            for i, trace in enumerate(fig.data)
+                        ],
+                        "error_y": [
+                            {"visible": False, "array": error_y_values[i]["array"], "thickness": 1} if (trace.legendgroup and trace.legendgroup.endswith('_g1f1')) else {"visible": True, "array": error_y_values[i]["array"], "thickness": 1}
+                            for i, trace in enumerate(fig.data)
+                        ]
+                    }],
+                ),
+            ],
+            pad={"r": 0, "t": 0},
+            bgcolor="rgba(0,0,0,0)",
+            borderwidth=0,
+            font=dict(size=12, color="black")
         )
     ]
 )
