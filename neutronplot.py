@@ -220,7 +220,7 @@ if not bin_df.empty:
 fig.update_layout(
     title='g\u2081<sup>n</sup>(x,Q²) vs Q²',
     xaxis_title='log(Q²)',
-    yaxis_title='g\u2081<sup>n</sup>(x,Q²) + 5.2 - 0.3i',
+    yaxis_title='g\u2081<sup>n</sup>(x,Q²) + 12.1 - 0.71i',
     template='plotly_white',
     annotations=annotations,
     xaxis=dict(type='log'),
