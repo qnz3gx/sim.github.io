@@ -107,7 +107,8 @@ h4 {
 }
 
 h5{
-    margin: 0 50px 25px;
+    text-align: center;
+    margin-left: -50px;
     font-size: 20px;
     font-family: inherit;
 }
@@ -164,6 +165,11 @@ button:hover {
     border-color: #a5a5a5;
 }
 
+.button.active {
+    background-color: #dcdcdc;
+    border-color: #a5a5a5;
+}
+
 h3 a {
     color: #888888;
     text-decoration: none;
@@ -180,6 +186,14 @@ h3 a:visited {
 
 h5 a:visited {
     color: #686666;
+}
+
+h3 a:hover {
+    color: #010177
+}
+
+h5 a:hover {
+    color: #010177
 }
 
 a {
