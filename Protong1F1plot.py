@@ -262,8 +262,6 @@ pio.write_html(
     config={
         'toImageButtonOptions': {
             'filename': 'g1F1,A1(p)_vs_X.html',
-            'height': 600,
-            'width': 800,
             'scale': 2
         }
     }

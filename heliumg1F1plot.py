@@ -257,8 +257,6 @@ pio.write_html(
     config={
         'toImageButtonOptions': {
             'filename': 'g1F1(3He)_vs_X_plot',
-            'height': 600,
-            'width': 800,
             'scale': 2
         }
     }
