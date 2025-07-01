@@ -157,9 +157,9 @@ error_y_values = [
 ]
 
 fig.update_layout(
-    title='g\u2081<sup>n</sup>/F\u2081(x,Q²) and A\u2081<sup>n</sup>(x,Q²) vs X',
+    title='g\u2081<sup>n</sup>/F\u2081<sup>n</sup>(x,Q²) and A\u2081<sup>n</sup>(x,Q²) vs X',
     xaxis_title='log(X)',
-    yaxis_title='g\u2081<sup>n</sup>/F\u2081, A\u2081<sup>n</sup>',
+    yaxis_title='g\u2081<sup>n</sup>/F\u2081<sup>n</sup>, A\u2081<sup>n</sup>',
     template='plotly_white',
     annotations=annotations,
     xaxis=dict(type='log',range=[-1.8,0.1]),

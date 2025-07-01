@@ -145,9 +145,9 @@ error_y_values = [
 ]
 
 fig.update_layout(
-    title='g\u2081<sup><sup>3</sup>He</sup>/F\u2081(x,Q²) vs X',
+    title='g\u2081<sup><sup>3</sup>He</sup>/F\u2081<sup><sup>3</sup>He</sup>(x,Q²) vs X',
     xaxis_title='x',
-    yaxis_title='g\u2081<sup><sup>3</sup>He</sup>/F\u2081',
+    yaxis_title='g\u2081<sup><sup>3</sup>He</sup>/F\u2081<sup><sup>3</sup>He</sup>',
     template='plotly_white',
     annotations=annotations,
     updatemenus=[
