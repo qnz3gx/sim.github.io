@@ -294,3 +294,12 @@ th, td {
     padding: 0;
     display: none;
 }
+
+.me {
+    text-align: right;
+    margin-left: 750px;
+    margin-bottom:0;
+    font-weight: bold;
+    display: flex;
+    border:#404040;
+}

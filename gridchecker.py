@@ -103,7 +103,6 @@ stat=(1-1.5*wD)*CompassD['G1']*np.sqrt((1.5*wDerr/(1-1.5*wD))**2 + (CompassD['G1
 sys=(1-1.5*wD)*CompassD['G1']*np.sqrt((1.5*wDerr/(1-1.5*wD))**2 + (CompassD['g1.err']/CompassD['G1'])**2)
 neutron_COMPASS['G1.mes.err'] = np.sqrt((stat)**2 + (CompassP['G1.err'])**2)
 neutron_COMPASS['g1.mes.err'] = np.sqrt((sys)**2 + (CompassP['g1.err'])**2)
-
 # %%
 spreadsheet = pd.DataFrame()
 spreadsheet['x'] = neutron_COMPASS['X']
@@ -135,7 +134,7 @@ spreadsheet['dg1/F1n(stat)'] = spreadsheet['dG1n(stat)']/spreadsheet['F1n']#spre
 spreadsheet['dg1/F1n(sys)'] = spreadsheet['dG1n(sys)']/spreadsheet['F1n']#spreadsheet['dG1n(sys)']/spreadsheet['F1n']
 
 spreadsheet = spreadsheet.round(4)
-spreadsheet.to_csv('OriginalPDg1F1.csv',index=False)
+#spreadsheet.to_csv('OriginalPDg1F1.csv',index=False)
 # %%
 # export separate neutron df
 neutron = pd.DataFrame()
