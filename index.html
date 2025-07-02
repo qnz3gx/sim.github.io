@@ -875,9 +875,9 @@
     });
   }
 
-  document.addEventListener("DOMContentLoaded", function() {
+  window.onload = function(event) {
     toggleText("Polarized3He", "ThreeHe");
-  });
+  };
 
   function dropdown_menu(button) {
     document.querySelectorAll('.dropdown-content').forEach(menu => {
