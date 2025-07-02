@@ -149,6 +149,7 @@ fig.update_layout(
     xaxis_title='x',
     yaxis_title='g\u2081<sup><sup>3</sup>He</sup>/F\u2081<sup><sup>3</sup>He</sup>',
     template='plotly_white',
+    margin=dict(t=100, b=80, l=80, r=150),
     annotations=annotations,
     updatemenus=[
         dict(
@@ -248,7 +249,7 @@ fig.update_layout(
     ]
 )
 
-fig.write_html("g1F1(3He)_vs_X.html")
+fig.write_html("g1F1(3He)_vs_X.html", full_html=True, include_plotlyjs='cdn', config={'responsive': True})
 
 pio.write_html(
     fig,

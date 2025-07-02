@@ -18,6 +18,21 @@
     padding: 0.5em;
 }
 
+.plot-frame{
+    display: flex;
+    visibility: hidden;
+    margin-bottom: 20px;
+    overflow: visible;
+    width: 100%;
+    overflow: auto;
+}
+
+iframe {
+    width: 100%;
+    height: 725px;
+    width: 950px;
+  }
+
 .main-content {
     display: flex;
     width: 100%;
@@ -72,6 +87,7 @@ body {
 }
 
 .active-header {
+    width: 100%;
     flex-grow: 1;
     margin-top: 20px;
     margin-left: 10px;
@@ -107,10 +123,12 @@ h4 {
 }
 
 h5{
+    width: 100%;
     text-align: center;
-    margin-left: -50px;
+    margin-left: -17.5px;
     font-size: 22px;
     font-family: inherit;
+    box-sizing: border-box;
 }
 
 h6 {
@@ -221,7 +239,7 @@ th, td {
     border-spacing: 1px;
 }
 
-#Deuteron {
+#Polarized3He {
     margin: 0;
     padding: 0;
     display: block;
@@ -239,7 +257,7 @@ th, td {
     display: none;
 }
 
-#deuteron {
+#ThreeHe {
     margin: 0;
     padding: 0;
     display: block;
@@ -271,7 +289,7 @@ th, td {
     display: block;
   }
 
-  #Polarized3He, #ThreeHe, #Neutron, #neutron, #Proton, #proton {
+  #Deuteron, #deuteron, #Neutron, #neutron, #Proton, #proton {
     margin: 0;
     padding: 0;
     display: none;

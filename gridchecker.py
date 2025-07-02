@@ -79,18 +79,18 @@ def retrieve_g1(data_df,grid_df):
 #Get the F1, G1, and G1 error values for the deuteron
 CompassD['Q2'] = CompassP['Q2'].values
 CompassD['F1'] = retrieve_f1(CompassD,tableD)
-CompassD['F1.err'] = F1d_err['dF1(tot)']
-CompassD['G1'] = CompassD['A1'] * CompassD['F1']
+#CompassD['F1.err'] = F1d_err['dF1(tot)']
+CompassD['G1'] = CompassD['G1']#CompassD['A1'] * CompassD['F1']
 #error for division: g1*sqrt((a1err/a1)^2 + (f1err/f1)^2)
-CompassD['G1.err'] = CompassD['G1'] * np.sqrt((CompassD['A1.err'].values/CompassD['A1'].values)**2 + (CompassD['F1.err'].values/CompassD['F1'].values)**2)
-CompassD['g1.err'] = CompassD['G1'] * np.sqrt((CompassD['a1.err'].values/CompassD['A1'].values)**2 + (CompassD['F1.err'].values/CompassD['F1'].values)**2)
+CompassD['G1.err'] = CompassD['G1.err']#CompassD['G1'] * np.sqrt((CompassD['A1.err'].values/CompassD['A1'].values)**2 + (CompassD['F1.err'].values/CompassD['F1'].values)**2)
+CompassD['g1.err'] = CompassD['g1.err']#CompassD['G1'] * np.sqrt((CompassD['a1.err'].values/CompassD['A1'].values)**2 + (CompassD['F1.err'].values/CompassD['F1'].values)**2)
 
 #Get F1, G1, and G1 error values for the proton
 CompassP['F1'] = retrieve_f1(CompassP,tableP)
-CompassP['F1.err'] = F1p_err['dF1(tot)']
-CompassP['G1'] = CompassP['A1'] * CompassP['F1']
-CompassP['G1.err'] = CompassP['G1'] * np.sqrt((CompassP['A1.err'].values/CompassP['A1'].values)**2 + (CompassP['F1.err'].values/CompassP['F1'].values)**2)
-CompassP['g1.err'] = CompassP['G1'] * np.sqrt((CompassP['a1.err'].values/CompassP['A1'].values)**2 + (CompassP['F1.err'].values/CompassP['F1'].values)**2)
+#CompassP['F1.err'] = F1p_err['dF1(tot)']
+CompassP['G1'] = CompassP['G1']#CompassP['A1'] * CompassP['F1']
+CompassP['G1.err'] = CompassP['G1.err']#CompassP['G1'] * np.sqrt((CompassP['A1.err'].values/CompassP['A1'].values)**2 + (CompassP['F1.err'].values/CompassP['F1'].values)**2)
+CompassP['g1.err'] = CompassP['g1.err']#CompassP['G1'] * np.sqrt((CompassP['a1.err'].values/CompassP['A1'].values)**2 + (CompassP['F1.err'].values/CompassP['F1'].values)**2)
 
 #Create a neutron dataframe
 neutron_COMPASS = pd.DataFrame()
@@ -109,33 +109,33 @@ spreadsheet = pd.DataFrame()
 spreadsheet['x'] = neutron_COMPASS['X']
 spreadsheet['Q2'] = neutron_COMPASS['Q2']
 
-spreadsheet['G1p'] = CompassP['G1']
-spreadsheet['dG1p(stat)'] = CompassP['G1.err']
-spreadsheet['dG1p(sys)'] = CompassP['g1.err']
-spreadsheet['F1p'] = CompassP['F1']
-spreadsheet['A1p'] = CompassP['A1']
-spreadsheet['dA1p(stat)'] = CompassP['A1.err']
-spreadsheet['dA1p(sys)'] = CompassP['a1.err']
+# spreadsheet['G1p'] = CompassP['G1']
+# spreadsheet['dG1p(stat)'] = CompassP['G1.err']
+# spreadsheet['dG1p(sys)'] = CompassP['g1.err']
+# spreadsheet['F1p'] = CompassP['F1']
+# spreadsheet['A1p'] = CompassP['A1']
+# spreadsheet['dA1p(stat)'] = CompassP['A1.err']
+# spreadsheet['dA1p(sys)'] = CompassP['a1.err']
 
-spreadsheet['G1d'] = CompassD['G1']
-spreadsheet['dG1d(stat)'] = CompassD['G1.err']
-spreadsheet['dG1d(sys)'] = CompassD['g1.err']
-spreadsheet['F1d'] = CompassD['F1']
-spreadsheet['A1d'] = CompassD['G1']/spreadsheet['F1d']
-spreadsheet['dA1d(stat)'] = CompassD['G1.err']/spreadsheet['F1d']
-spreadsheet['dA1d(sys)'] = CompassD['g1.err']/spreadsheet['F1d']
+# spreadsheet['G1d'] = CompassD['G1']
+# spreadsheet['dG1d(stat)'] = CompassD['G1.err']
+# spreadsheet['dG1d(sys)'] = CompassD['g1.err']
+# spreadsheet['F1d'] = CompassD['F1']
+# spreadsheet['A1d'] = CompassD['G1']/spreadsheet['F1d']
+# spreadsheet['dA1d(stat)'] = CompassD['G1.err']/spreadsheet['F1d']
+# spreadsheet['dA1d(sys)'] = CompassD['g1.err']/spreadsheet['F1d']
 
 spreadsheet['G1n'] = neutron_COMPASS['G1.mes']
 spreadsheet['dG1n(stat)'] = neutron_COMPASS['G1.mes.err']
 spreadsheet['dG1n(sys)'] = neutron_COMPASS['g1.mes.err']
 spreadsheet['F1n'] = retrieve_f1(neutron_COMPASS,tableN)
-spreadsheet['dF1n(tot)'] = F1n_err['dF1(tot)']
+#spreadsheet['dF1n(tot)'] = F1n_err['dF1(tot)']
 spreadsheet['g1/F1n'] = spreadsheet['G1n']/spreadsheet['F1n']
-spreadsheet['dg1/F1n(stat)'] = spreadsheet['g1/F1n'] * np.sqrt((spreadsheet['dG1n(stat)'].values/spreadsheet['G1n'].values) ** 2 + (spreadsheet['dF1n(tot)'].values/spreadsheet['F1n'].values) ** 2)#spreadsheet['dG1n(stat)']/spreadsheet['F1n']
-spreadsheet['dg1/F1n(sys)'] = spreadsheet['dG1n(sys)']/spreadsheet['F1n']
+spreadsheet['dg1/F1n(stat)'] = spreadsheet['dG1n(stat)']/spreadsheet['F1n']#spreadsheet['g1/F1n'] * np.sqrt((spreadsheet['dG1n(stat)'].values/spreadsheet['G1n'].values) ** 2 + (spreadsheet['dF1n(tot)'].values/spreadsheet['F1n'].values) ** 2)#spreadsheet['dG1n(stat)']/spreadsheet['F1n']
+spreadsheet['dg1/F1n(sys)'] = spreadsheet['dG1n(sys)']/spreadsheet['F1n']#spreadsheet['dG1n(sys)']/spreadsheet['F1n']
 
 spreadsheet = spreadsheet.round(4)
-#spreadsheet.to_csv('COMPASS_recalculated_CT18NNLO.csv',index=False)
+spreadsheet.to_csv('OriginalPDg1F1.csv',index=False)
 # %%
 # export separate neutron df
 neutron = pd.DataFrame()
@@ -167,7 +167,7 @@ proton['dA1(stat)'] = spreadsheet['dA1p(stat)']
 proton['dA1(sys)'] = spreadsheet['dA1p(sys)']
 
 proton = proton.round(4)
-proton.to_csv('proton_COMPzheng.csv',index=False)
+#proton.to_csv('proton_COMPzheng.csv',index=False)
 # %%
 #export separate proton df
 deuteron = pd.DataFrame()
@@ -183,4 +183,4 @@ deuteron['dA1(stat)'] = spreadsheet['dA1d(stat)']
 deuteron['dA1(sys)'] = spreadsheet['dA1d(sys)']
 
 deuteron = deuteron.round(4)
-proton.to_csv('deuteron_COMPzheng.csv',index=False)
+#proton.to_csv('deuteron_COMPzheng.csv',index=False)

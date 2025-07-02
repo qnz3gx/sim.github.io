@@ -15,9 +15,9 @@
   <div class="page">
     <div class="top-bar">
       <div class="dropdown">
-        <button class="button" onclick="toggleText('Deuteron', 'deuteron')">Deuteron</button>
         <button class="button" onclick="toggleText('Polarized3He', 'ThreeHe')">Helium-3</button>
         <button class="button" onclick="toggleText('Neutron', 'neutron')">Neutron</button>
+        <button class="button" onclick="toggleText('Deuteron', 'deuteron')">Deuteron</button>
         <button class="button" onclick="toggleText('Proton', 'proton')">Proton</button>
       </div>
     
@@ -36,13 +36,56 @@
             <header><h1>Proton</h1></header>
           </div>
         </div>
-    
+
         <hr>
+
+        <div class="plot-frame" id="3he-g1" style="width: 100%; overflow: auto;">
+          <iframe src="./g1(3He)_vs_Q2.html" width="950" height="725" style="border: none;" scrolling="no"
+          allowfullscreen></iframe>
+        </div>
+
+        <div class="plot-frame" id="3he-g1f1" style="width: 100%; overflow: auto;">
+          <iframe src="./g1F1(3He)_vs_X.html" width="950" height="725" autosize=True style="border: none;" scrolling="no"
+          allowfullscreen></iframe>
+        </div>
+        
+        <div class="plot-frame" id="neutron-g1f1" style="width: 100%; overflow: auto;">
+          <iframe src="./g1F1,A1(n)_vs_X.html" width="950" height="725" autosize=True style="border: none;" scrolling="no"
+          allowfullscreen></iframe>
+        </div>
+
+        <div class="plot-frame" id="neutron-g1" style="width: 100%; overflow: auto;">
+          <iframe src="./g1(n)_vs_Q2.html" width="950" height="725" style="border: none;" scrolling="no"
+          allowfullscreen></iframe>
+        </div>
+
+        <div class="plot-frame" id="deuteron-g1f1" style="width: 100%; overflow: auto;">
+          <iframe src="./g1F1,A1(d)_vs_X.html" width="950" height="725" autosize=True style="border: none;" scrolling="no"
+          allowfullscreen></iframe>
+        </div>
+
+        <div class="plot-frame" id="deuteron-g1" style="width: 100%; overflow: auto;">
+          <iframe src="./g1(d)_vs_Q2.html" width="950" height="725" style="border: none;" scrolling="no"
+          allowfullscreen></iframe>
+        </div>
+
+        <div class="plot-frame" id="proton-g1f1" style="width: 100%; overflow: auto;">
+          <iframe src="./g1F1,A1(p)_vs_X.html" width="950" height="725" autosize=True style="border: none;" scrolling="no"
+          allowfullscreen></iframe>
+        </div>
+
+        <div class="plot-frame" id="proton-g1" style="width: 100%; overflow: auto;">
+          <iframe src="./g1(p)_vs_Q2.html" width="950" height="725" style="border: none;" scrolling="no"
+          allowfullscreen></iframe>
+        </div>
     
         <div class="main-content">
           <div class="data-section Polarized3He" id="Polarized3He">
             <h5><a href="./threeHedata.csv" download="3HeData.csv">Download Compiled <sup>3</sup>He Data</a></h5>
-            <h5>Plots: <a href="./g1(3He)_vs_Q2.html" style="margin-right: 20px;">g<sub>1</sub> vs Q<sup>2</sup></a>    <a href="g1F1(3He)_vs_X.html">g<sub>1</sub>/F<sub>1</sub>, A<sub>1</sub> vs X</a></pre></h5>
+            <h5>Plots: 
+              <button class="button" onclick="togglePlot('3he-g1')">g<sub>1</sub> vs Q<sup>2</sup></button>
+              <button class="button" onclick="togglePlot('3he-g1f1')">g<sub>1</sub>/F<sub>1</sub>, A<sub>1</sub> vs X</button>
+            </h5>
             
             <hr width=800px>
 
@@ -228,8 +271,11 @@
           </div>
           <div class="data-section Deuteron" id="Deuteron">
             <h5><a href="./DeuteronData.csv" download="DeuteronData.csv">Download Compiled Deuteron Data</a></h5>
-            <h5>Plots: <a href="./g1(d)_vs_Q2.html" style="margin-right: 20px">g<sub>1</sub> vs Q<sup>2</sup></a>    <a href="./g1F1,A1(d)_vs_X.html">g<sub>1</sub>/F<sub>1</sub>, A<sub>1</sub> vs X</a></h5>
-            
+            <h5>Plots: 
+              <button class="button" onclick="togglePlot('deuteron-g1')">g<sub>1</sub> vs Q<sup>2</sup></button>
+              <button class="button" onclick="togglePlot('deuteron-g1f1')">g<sub>1</sub>/F<sub>1</sub>, A<sub>1</sub> vs X</button>
+            </h5>
+
             <hr width=800px>
 
             <h6>CLAS EG1</h6>
@@ -385,8 +431,11 @@
           </div>
           <div class="data-section Neutron" id="Neutron">
             <h5><a href="./NeutronData.csv" download="NeutronData.csv">Download Compiled Neutron Data</a></h5>
-            <h5>Plots: <a href="./g1(n)_vs_Q2.html" style="margin-right: 20px">g<sub>1</sub> vs Q<sup>2</sup></a>    <a href="./g1F1,A1(n)_vs_X.html">g<sub>1</sub>/F<sub>1</sub>, A<sub>1</sub> vs X</a></h5>
-            
+            <h5>Plots: 
+              <button class="button" onclick="togglePlot('neutron-g1')">g<sub>1</sub> vs Q<sup>2</sup></button>
+              <button class="button" onclick="togglePlot('neutron-g1f1')">g<sub>1</sub>/F<sub>1</sub>, A<sub>1</sub> vs X</button>
+            </h5>
+
             <hr width=800px>
 
             <h6>SLAC E142</h6>
@@ -628,8 +677,11 @@
           </div>
           <div class="data-section Proton" id="Proton">
             <h5><a href="./ProtonData.csv" download="ProtonData.csv">Download Compiled Proton Data</a></h5>
-            <h5>Plots: <a href="./g1(p)_vs_Q2.html" style="margin-right: 20px">g<sub>1</sub> vs Q<sup>2</sup></a>    <a href="./g1F1,A1(p)_vs_X.html">g<sub>1</sub>/F<sub>1</sub>, A<sub>1</sub> vs X</a></h5>
-            
+            <h5>Plots: 
+              <button class="button" onclick="togglePlot('proton-g1')">g<sub>1</sub> vs Q<sup>2</sup></button>
+              <button class="button" onclick="togglePlot('proton-g1f1')">g<sub>1</sub>/F<sub>1</sub>, A<sub>1</sub> vs X</button>
+            </h5>
+
             <hr width=800px>
 
             <h6>CLAS EG1</h6>
@@ -805,17 +857,31 @@
   </div>
 
 <script>
+window.onload = function() {
+    document.querySelectorAll('.plot-frame').forEach(frame => {
+      frame.style.display = 'none';
+    });
+  };
+
 function toggleText(id1, id2) {
     const visibleIds = [id1, id2];
 
+    document.querySelector('.main-content').style.display = "block";
+
+    // document.querySelector('.active-header').style.display = "block";
+
     document.querySelectorAll('.data-section, .header-section').forEach(section => {
-      if (visibleIds.includes(section.id)) {
-        section.style.display = "block";
-      } else {
-        section.style.display = "none";
-      }
+        if (visibleIds.includes(section.id)) {
+            section.style.display = "block";
+        } else {
+            section.style.display = "none";
+        }
     });
-  }
+
+    document.querySelectorAll('.plot-frame').forEach(frame => {
+        frame.style.display = "none";
+    });
+}
 
   function dropdown_menu(button) {
     document.querySelectorAll('.dropdown-content').forEach(menu => {
@@ -844,6 +910,39 @@ buttons.forEach(button => {
         button.classList.add('active');
     });
 });
+
+function togglePlot(plotId) {
+  const mainContent = document.querySelector('.main-content');
+    if (mainContent) {
+      mainContent.style.display = 'none';
+    }
+
+    document.querySelectorAll('.plot-frame').forEach(frame => {
+      frame.style.display = 'none';
+      frame.style.visibility = 'hidden';
+    });
+
+    if (plotId !== 'none') {
+      const plot = document.getElementById(plotId);
+      if (plot) {
+        plot.style.display = 'block';
+        plot.style.visibility = 'visible';
+      }
+    }
+  }
+
+function resetH5Margins() {
+  document.querySelectorAll('h5').forEach((el) => {
+      el.style.marginLeft = '-55px';  
+  });
+}
+
+document.querySelectorAll('.button').forEach((button) => {
+    button.addEventListener('click', () => {
+        resetH5Margins();
+    });
+});
+
 </script>
 
 </body>
