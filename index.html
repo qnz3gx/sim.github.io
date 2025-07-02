@@ -857,18 +857,10 @@
   </div>
 
 <script>
-window.onload = function() {
-    document.querySelectorAll('.plot-frame').forEach(frame => {
-      frame.style.display = 'none';
-    });
-  };
-
-function toggleText(id1, id2) {
+  function toggleText(id1, id2) {
     const visibleIds = [id1, id2];
 
     document.querySelector('.main-content').style.display = "block";
-
-    // document.querySelector('.active-header').style.display = "block";
 
     document.querySelectorAll('.data-section, .header-section').forEach(section => {
         if (visibleIds.includes(section.id)) {
@@ -881,7 +873,11 @@ function toggleText(id1, id2) {
     document.querySelectorAll('.plot-frame').forEach(frame => {
         frame.style.display = "none";
     });
-}
+  }
+
+  window.onload = function() {
+    toggleText("Polarized3He", "ThreeHe");
+  };
 
   function dropdown_menu(button) {
     document.querySelectorAll('.dropdown-content').forEach(menu => {
