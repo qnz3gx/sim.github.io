@@ -62,36 +62,35 @@ def quadrature_sum(df,col1,col2,result):
 
 # print(f"F1p: {f1p:.4f}, g1p: {g1p:.4f}), F1n: {f1n:.4f}, g1n: {g1n:.4f}")
 
-# zheng = pd.read_csv("neutron_COMPzheng.csv")
-# cj15nlo = pd.read_csv("neutron_CJ15nlo.csv")
-# ct18nnlo = pd.read_csv("neutron_CT18NNLO.csv")
+cj15nlo = pd.read_csv("deuteron_CJ15nlo.csv")
+ct18nnlo = pd.read_csv("deuteron_CT18NNLO.csv")
 
-# compass = (zheng + cj15nlo + ct18nnlo)/3
-# compass['x'] = zheng['x']
-# compass['Q2'] = zheng['Q2']
-# compass['dg1(stat)'] = 1/3 * np.sqrt(zheng['dg1(stat)'].values ** 2 + cj15nlo['dg1(stat)'].values ** 2 + ct18nnlo['dg1(stat)'].values ** 2)
-# compass['dg1(sys)'] = 1/3 * np.sqrt(zheng['dg1(sys)'].values ** 2 + cj15nlo['dg1(sys)'].values ** 2 + ct18nnlo['dg1(sys)'].values ** 2)
+compass = (cj15nlo + ct18nnlo)/2
+compass['x'] = cj15nlo['x']
+compass['Q2'] = cj15nlo['Q2']
+compass['dg1(stat)'] = 1/2 * np.sqrt(cj15nlo['dg1(stat)'].values ** 2 + ct18nnlo['dg1(stat)'].values ** 2)
+compass['dg1(sys)'] = 1/2 * np.sqrt(cj15nlo['dg1(sys)'].values ** 2 + ct18nnlo['dg1(sys)'].values ** 2)
 
-# three = [zheng,cj15nlo,ct18nnlo]
+three = [cj15nlo,ct18nnlo]
 
-# def maxerr(datasets,column):
-#     maximum_error = []
-#     for i in range(len(datasets[0])):
-#         maximum = np.max([abs(datasets[0].iloc[i][column]-datasets[1].iloc[i][column]), abs(datasets[1].iloc[i][column]-datasets[2].iloc[i][column]), abs(datasets[2].iloc[i][column]-datasets[0].iloc[i][column]-datasets[1].iloc[i][column])])
-#         maximum_error.append(maximum/2)
-#     return maximum_error
+def maxerr(datasets,column):
+    maximum_error = []
+    for i in range(len(datasets[0])):
+        maximum = np.max([abs(datasets[0].iloc[i][column]-datasets[1].iloc[i][column]), abs(datasets[1].iloc[i][column]-datasets[0].iloc[i][column])])
+        maximum_error.append(maximum/2)
+    return maximum_error
 
-# compass['dg1(model)'] = maxerr(three,'g1')
-# compass['dg1/F1(model)'] = maxerr(three,'g1/F1')
+compass['dg1(model)'] = maxerr(three,'g1')
+#compass['dg1/F1(model)'] = maxerr(three,'g1/F1')
 
-# compass['dg1(tot)'] = np.sqrt((compass['dg1(stat)'].values ** 2) + (compass['dg1(sys)'].values ** 2) + (compass['dg1(model)'].values ** 2))
-# compass['dg1/F1(tot)'] = np.sqrt((compass['dg1/F1(stat)'].values ** 2) + (compass['dg1/F1(sys)'].values ** 2) + (compass['dg1/F1(model)'].values ** 2))
+compass['dg1(tot)'] = np.sqrt((compass['dg1(stat)'].values ** 2) + (compass['dg1(sys)'].values ** 2) + (compass['dg1(model)'].values ** 2))
+#compass['dg1/F1(tot)'] = np.sqrt((compass['dg1/F1(stat)'].values ** 2) + (compass['dg1/F1(sys)'].values ** 2) + (compass['dg1/F1(model)'].values ** 2))
 
-# replace_exp(neutron,compass, "COMPASS")
-# print(neutron.tail())
+replace_exp(deuteron,compass, "COMPASS",7642,7656)
+print(deuteron.tail())
 
-# neutron = neutron.round(4)
-# neutron.to_csv('NeutronData.csv', index=False)
+deuteron = deuteron.round(4)
+deuteron.to_csv('DeuteronData.csv', index=False)
 
 # eg4 = pd.read_csv('proton_CLAS_EG4.csv')
 # eg4['Experiment'] = 'CLAS_EG4'
@@ -99,10 +98,10 @@ def quadrature_sum(df,col1,col2,result):
 
 # sort(deuteron)
 
-slac=pd.read_csv('SLAC E142.csv')
-quadrature_sum(slac,'dA1(stat)','dA1(sys)','dA1(tot)')
-slac=slac.round(4)
-slac.to_csv('SLAC E142.csv', index=False)
+# slac=pd.read_csv('SLAC E142.csv')
+# quadrature_sum(slac,'dA1(stat)','dA1(sys)','dA1(tot)')
+# slac=slac.round(4)
+# slac.to_csv('SLAC E142.csv', index=False)
 
-helium=replace_exp(helium,slac,'SLAC E142',0,7)
-helium.to_csv('threeHeData.csv', index=False)
+# helium=replace_exp(helium,slac,'SLAC E142',0,7)
+# helium.to_csv('threeHeData.csv', index=False)
