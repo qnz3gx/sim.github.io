@@ -17,12 +17,12 @@ def add_column(df,existing,new):
 #     col2_numeric = pd.to_numeric(df.loc[mask, col2], errors='coerce')
 #     df.loc[mask, result] = np.sqrt(col1_numeric**2 + col2_numeric**2)
 
-def sort(df):
+def sort(df, particle):
     for experiment in df['Experiment'].unique():
         df_subset = df[df['Experiment'] == experiment]
         df_subset = df_subset.dropna(axis=1, how='all')
         df_subset = df_subset.iloc[:, :-1]
-        filename = f"deuteron_{experiment}.csv" #don't forget to change this
+        filename = f"{particle}_{experiment}.csv"
         df_subset.to_csv(filename, index=False)
 
 def replace_exp(main_df, exp_df, exp,rowa,rowb):
@@ -80,28 +80,26 @@ def maxerr(datasets,column):
         maximum_error.append(maximum/2)
     return maximum_error
 
-compass['dg1(model)'] = maxerr(three,'g1')
-#compass['dg1/F1(model)'] = maxerr(three,'g1/F1')
+jamn=pd.read_csv('neutron_JAM22.csv')
+quadrature_sum(jamn,'dg1(stat)','dg1(sys)','dg1(tot)')
+quadrature_sum(jamn,'dg1/F1(stat)','dg1/F1(sys)','dg1/F1(tot)')
+jamn=jamn.round(4)
+jamn.to_csv('neutron_JAM22.csv', index=False)
+neutron=replace_exp(neutron,jamn,'COMPASS(JAM22)',394,408)
+neutron.to_csv("NeutronData.csv", index=False)
 
-compass['dg1(tot)'] = np.sqrt((compass['dg1(stat)'].values ** 2) + (compass['dg1(sys)'].values ** 2) + (compass['dg1(model)'].values ** 2))
-#compass['dg1/F1(tot)'] = np.sqrt((compass['dg1/F1(stat)'].values ** 2) + (compass['dg1/F1(sys)'].values ** 2) + (compass['dg1/F1(model)'].values ** 2))
+jamp=pd.read_csv('proton_JAM22.csv')
+quadrature_sum(jamp,'dg1(stat)','dg1(sys)','dg1(tot)')
+quadrature_sum(jamp,'dA1(stat)','dA1(sys)','dA1(tot)')
+jamp=jamp.round(4)
+jamp.to_csv('proton_JAM22.csv', index=False)
+proton=replace_exp(proton,jamp,'COMPASS(JAM22)',3029,3043)
+proton.to_csv("ProtonData.csv", index=False)
 
-replace_exp(deuteron,compass, "COMPASS",7642,7656)
-print(deuteron.tail())
-
-deuteron = deuteron.round(4)
-deuteron.to_csv('DeuteronData.csv', index=False)
-
-# eg4 = pd.read_csv('proton_CLAS_EG4.csv')
-# eg4['Experiment'] = 'CLAS_EG4'
-# proton = pd.concat([proton,eg4])
-
-# sort(deuteron)
-
-# slac=pd.read_csv('SLAC E142.csv')
-# quadrature_sum(slac,'dA1(stat)','dA1(sys)','dA1(tot)')
-# slac=slac.round(4)
-# slac.to_csv('SLAC E142.csv', index=False)
-
-# helium=replace_exp(helium,slac,'SLAC E142',0,7)
-# helium.to_csv('threeHeData.csv', index=False)
+jamd=pd.read_csv('deuteron_JAM22.csv')
+quadrature_sum(jamd,'dg1(stat)','dg1(sys)','dg1(tot)')
+quadrature_sum(jamd,'dA1(stat)','dA1(sys)','dA1(tot)')
+jamd=jamd.round(4)
+jamd.to_csv('deuteron_JAM22.csv', index=False)
+deuteron=replace_exp(deuteron,jamd,'COMPASS(JAM22)',7967,7981)
+deuteron.to_csv("DeuteronData.csv", index=False)

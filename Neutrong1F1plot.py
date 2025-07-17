@@ -47,8 +47,7 @@ symbol_map = {
     'SLAC_E143': 'star-open',
     'SLAC_E155': 'cross-open',
     'COMPASS': 'triangle-up-open',
-    'COMPASS(CJ15nlo)': 'x-open',
-    'COMPASS(CT18NNLO)': 'hexagon2-open'
+    'COMPASS(JAM22)': 'x-open'
 }
 
 color_map_g1f1= {
@@ -60,6 +59,7 @@ color_map_g1f1= {
     'SLAC_E143': 'blue',
     'SLAC_E155': 'orange',
     'COMPASS': 'darkred',
+    'COMPASS(JAM22)': 'red'
 }
 
 color_map_A1= {
@@ -70,7 +70,8 @@ color_map_A1= {
     'Flay': 'yellow',
     'SLAC_E143': 'lightblue',
     'SLAC_E155': 'peachpuff',
-    'COMPASS': 'firebrick'
+    'COMPASS': 'firebrick',
+    'COMPASS(JAM22)': 'red'
 }
 
 g1f1_trace_idxs = []
