@@ -1,0 +1,305 @@
+.top-margin {
+    background-color: white;
+    width: 1156px;
+    height: 10px;
+    margin: 20px auto 0 auto;
+}
+.background {
+    margin: 0px auto 0 auto;
+    width: 1156px;
+    height: 254px;
+    background-color: white;
+}
+
+.page {
+    background-color: white;
+    margin: 0px auto 0 auto;
+    width: 1140px;
+    padding: 0.5em;
+}
+
+.plot-frame{
+    display: flex;
+    visibility: hidden;
+    margin-bottom: 20px;
+    overflow: visible;
+    width: 100%;
+    overflow: auto;
+}
+
+iframe {
+    width: 100%;
+    height: 725px;
+    width: 950px;
+  }
+
+.main-content {
+    display: flex;
+    width: 100%;
+    margin-left: 10px;
+    margin-right: 0px;
+    margin-bottom: 20px;
+  }
+
+.image {
+    margin: auto;
+    width: 1127px;
+    height: 250px;
+    border: 6px solid gray;
+    background-color: white;
+    overflow: hidden;
+    position: relative;
+}
+
+.image img {
+    position: absolute;
+    left: 0px;
+    top: -320px;
+}
+
+img {
+    width: 100%;
+}
+
+body {
+    background-color: #00065e;
+}
+
+.top-bar {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+}
+
+.content-area {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+.header-wrapper {
+    display: flex;
+}
+
+.header-section header h1 {
+    margin: 0;
+    white-space: nowrap;
+}
+
+.active-header {
+    width: 100%;
+    flex-grow: 1;
+    margin-top: 20px;
+    margin-left: 10px;
+  }
+
+.header-section:has(h1) {
+    display: block;
+}
+
+h1 {
+    color: #404040;
+    font-family: "Helvetica Neue", Verdana, Arial, sans-serif;
+    font-weight: normal;
+    font-size:36px;
+    margin: 0 0 10px;
+}
+
+h3 {
+    font-size: 14px;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    padding-left: 2em;
+    font-family: inherit;
+}
+
+h4 {
+    margin-bottom: 15px;
+    margin-top: 20px;
+    font-size: 28px;
+    font-weight: normal;
+    color: #2c3e50;
+    font-family: Helvetica;
+}
+
+h5{
+    width: 100%;
+    text-align: center;
+    margin-left: -55px;
+    font-size: 22px;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+h6 {
+    color: rgb(44 61 80);
+    margin-top: 15px;
+    margin-bottom: 0px;
+    font-size: 25px;
+    font-family: Helvetica;
+    font-weight: normal;
+}
+
+hr {
+    width: calc(100%-37px);
+    margin-left: 10px;
+    margin-right: 27px;
+    margin-top: 15px;
+    border-style: inset;
+    border-width: 5px;
+    border-color: lightgray;
+}
+
+.main-content hr {
+    width: 800px;
+    border-width: 3px;
+    margin: 20px 30px 10px;
+}
+
+p {
+    color: rgb(44 61 80);
+    font-size: 14px;
+    margin-top: 20px;
+    font-family: inherit;
+}
+
+button {
+    background-color: #f0f0f0;
+    color: black;
+    height: 35px;
+    font-size: 14px;
+    width: 120px;
+    border: 1px solid #eeeeee;
+    cursor: pointer;
+}
+
+.dropdown-content button {
+    width: 150px;
+    border: none;
+}
+
+button:hover {
+    background-color: #dcdcdc;
+    border-color: #a5a5a5;
+}
+
+.button.active {
+    background-color: #dcdcdc;
+    border-color: #a5a5a5;
+}
+
+h3 a {
+    color: #888888;
+    text-decoration: none;
+}
+
+h5 a {
+    color: #888888;
+    text-decoration: none;
+}
+
+h3 a:visited {
+    color: #686666;
+}
+
+h5 a:visited {
+    color: #686666;
+}
+
+h3 a:hover {
+    color: #010177
+}
+
+h5 a:hover {
+    color: #010177
+}
+
+a {
+    color: #0000FF;
+}
+
+a:visited {
+    color: #0000FF;
+}
+
+a:hover {
+    color: #010177;
+}
+
+table {
+    border-collapse: collapse;
+    margin-bottom: 10px;
+}
+
+th, td {
+    border: 1px solid black;
+    font-weight: normal;
+    font-size: 12px;
+    padding: 5px;
+    border-spacing: 1px;
+}
+
+#Polarized3He {
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+
+.main-content p {
+    margin: 5px;
+}
+
+.data-section {
+    display: none;
+}
+
+.header-section {
+    display: none;
+}
+
+#ThreeHe {
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+    background-color: #dcdcdc;
+    border-color: #a5a5a5;
+}
+
+.dropdown {
+    position: relative;
+    display: flex;
+    max-width: 110px;
+    top:100%;
+    margin-left: 1px;
+    flex-direction: column;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content.show {
+    display: block;
+  }
+
+  #Deuteron, #deuteron, #Neutron, #neutron, #Proton, #proton {
+    margin: 0;
+    padding: 0;
+    display: none;
+}
+
+.me {
+    text-align: right;
+    margin-left: 750px;
+    margin-bottom:0;
+    font-weight: bold;
+    display: flex;
+    border:#404040;
+}

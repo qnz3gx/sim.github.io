@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<link rel="stylesheet" href="test_styles.css">
+<link rel="stylesheet" href="styles.css">
 <title>World Data on Nucleon Polarized Structure Functions</title>
 </head>
 
@@ -24,7 +24,7 @@
       <div class="content-area">
         <div class="active-header">
           <div class="header-section ThreeHe" id="ThreeHe">
-            <header><h1>Helium-3</h1></header>
+            <header><h1>Helium-3</header>
           </div>
           <div class="header-section Deuteron" id="deuteron">
             <header><h1>Deuteron</h1></header>
@@ -40,42 +40,42 @@
         <hr>
 
         <div class="plot-frame" id="3he-g1" style="width: 100%; overflow: auto;">
-          <iframe src="./g1(3He)_vs_Q2.html" width="950" height="725" style="border: none;"
+          <iframe src="./g1(3He)_vs_Q2.html" width="950" height="725" style="border: none;" scrolling="no"
           allowfullscreen></iframe>
         </div>
 
         <div class="plot-frame" id="3he-g1f1" style="width: 100%; overflow: auto;">
-          <iframe src="./g1F1(3He)_vs_X.html" width="950" height="725" style="border: none;"
+          <iframe src="./g1F1(3He)_vs_X.html" width="950" height="725" autosize=True style="border: none;" scrolling="no"
           allowfullscreen></iframe>
         </div>
         
         <div class="plot-frame" id="neutron-g1f1" style="width: 100%; overflow: auto;">
-          <iframe src="./g1F1,A1(n)_vs_X.html" width="950" height="725" style="border: none;"
+          <iframe src="./g1F1,A1(n)_vs_X.html" width="950" height="725" autosize=True style="border: none;" scrolling="no"
           allowfullscreen></iframe>
         </div>
 
         <div class="plot-frame" id="neutron-g1" style="width: 100%; overflow: auto;">
-          <iframe src="./g1(n)_vs_Q2.html" width="950" height="725" style="border: none;"
+          <iframe src="./g1(n)_vs_Q2.html" width="950" height="725" style="border: none;" scrolling="no"
           allowfullscreen></iframe>
         </div>
 
         <div class="plot-frame" id="deuteron-g1f1" style="width: 100%; overflow: auto;">
-          <iframe src="./g1F1,A1(d)_vs_X.html" width="950" height="725" style="border: none;"
+          <iframe src="./g1F1,A1(d)_vs_X.html" width="950" height="725" autosize=True style="border: none;" scrolling="no"
           allowfullscreen></iframe>
         </div>
 
         <div class="plot-frame" id="deuteron-g1" style="width: 100%; overflow: auto;">
-          <iframe src="./g1(d)_vs_Q2.html" width="950" height="725" style="border: none;"
+          <iframe src="./g1(d)_vs_Q2.html" width="950" height="725" style="border: none;" scrolling="no"
           allowfullscreen></iframe>
         </div>
 
         <div class="plot-frame" id="proton-g1f1" style="width: 100%; overflow: auto;">
-          <iframe src="./g1F1,A1(p)_vs_X.html" width="950" height="725" style="border: none;"
+          <iframe src="./g1F1,A1(p)_vs_X.html" width="950" height="725" autosize=True style="border: none;" scrolling="no"
           allowfullscreen></iframe>
         </div>
 
         <div class="plot-frame" id="proton-g1" style="width: 100%; overflow: auto;">
-          <iframe src="./g1(p)_vs_Q2.html" width="950" height="725" style="border: none;"
+          <iframe src="./g1(p)_vs_Q2.html" width="950" height="725" style="border: none;" scrolling="no"
           allowfullscreen></iframe>
         </div>
     
@@ -87,7 +87,7 @@
               <button class="button" onclick="togglePlot('3he-g1f1')">g<sub>1</sub>/F<sub>1</sub>, A<sub>1</sub> vs X</button>
             </h5>
             
-            <hr>
+            <hr width=800px>
 
             <h6>SLAC E142</h6>
             <p>Format:</p>
@@ -101,7 +101,7 @@
                 <th>dg2 (stat)</th>
               </tr>
             </table>
-            <h3><a href="./SLAC_E142.csv" download="3He_SLAC_E142.csv">Download SLAC E142</a></h3>
+            <h3><a href="./SLAC E142.csv" download="3He_SLAC_E142.csv">Download SLAC E142</a></h3>
             <p>Source: <a href="https://arxiv.org/pdf/hep-ex/9610007">https://arxiv.org/pdf/hep-ex/9610007</a></p>
             
             <hr>
@@ -116,8 +116,8 @@
                 <th>dg1 (stat)</th>
               </tr>
             </table>
-            <h3><a href="./SLAC_E154.csv" download="3He_SLAC_E154.csv">Download SLAC E154</a></h3>
-            <p>Computed from A<sub>||</sub> and A<sub>&perp;</sub> (<sup>3</sup>He) in Yury Kolomensky PhD thesis (UMass Amherst, 1997), <a href="https://inspirehep.net/files/5837438e365534e9d3fc7225f13260dd">https://inspirehep.net/files/5837438e365534e9d3fc7225f13260dd</a></p>
+            <h3><a href="./SLAC E154.csv" download="3He_SLAC_E154.csv">Download SLAC E154</a></h3>
+            <p>Computed from A<sub>||</sub> and A<sub>ㅗ</sub> (<sup>3</sup>He) in Yury Kolomensky PhD thesis (UMass Amherst, 1997), <a href="https://inspirehep.net/files/5837438e365534e9d3fc7225f13260dd">https://inspirehep.net/files/5837438e365534e9d3fc7225f13260dd</a></a></p>
             
             <hr>
 
@@ -127,7 +127,7 @@
               <tr>
                 <th>Q<sup>2</sup></th>
                 <th>x</th>
-                <th>&#952;</th>
+                <th>&#952</th>
                 <th>Eb</th>
                 <th>g1</th>
                 <th>dg1 (stat)</th>
@@ -180,7 +180,7 @@
                 <th>Q<sup>2</sup></th>
                 <th>x</th>
                 <th>W</th>
-                <th>&#952;</th>
+                <th>&#952</th>
                 <th>Eb</th>
                 <th>g1</th>
                 <th>g1 (stat)</th>
@@ -222,7 +222,7 @@
                 <th>dA1 (tot)</th>
               </tr>
             </table>
-            <h3><a href="./Solvignon.csv" download="3He_Solvignon.csv">Download Solvignon</a></h3>
+            <h3><pre><a href="./Solvignon.csv" download="3He_Solvignon.csv">Download Solvignon</a></pre></h3>
             <p>Source: P Solvignon Thesis (Table F.1) <a href="https://misportal.jlab.org/sti/publications/11860/attachments/16644/P_Solvignon_PhD_thesis.pdf">https://misportal.jlab.org/sti/publications/11860/attachments/16644/P_Solvignon_PhD_thesis.pdf</a></p>
 
             <hr>
@@ -235,14 +235,14 @@
                 <th>x</th>
                 <th>W</th>
                 <th>Eb</th>
-                <th>&#957;</th>
+                <th>&#957</th>
                 <th>g1</th>
                 <th>dg1 (tot)</th>
                 <th>g2</th>
                 <th>dg2 (tot)</th>
               </tr>
             </table>
-            <h3><a href="./E97110.csv" download="3He_E97110.csv">Download E97110</a></h3>
+            <h3><pre><a href="./E97110.csv" download="3He_E97110.csv">Download E97110</a></pre></h3>
             <p>Data provided by Karl Slifer & Alexandre Deur</p>
 
             <hr>
@@ -253,20 +253,20 @@
               <tr>
                 <th>Q<sup>2</sup></th>
                 <th>W</th>
-                <th>&#952;</th>
+                <th>&#952</th>
                 <th>Eb</th>
-                <th>&#957;</th>
+                <th>&#957</th>
                 <th>g1</th>
                 <th>dg1 (tot)</th>
                 <th>g2</th>
                 <th>dg2 (tot)</th>
-                <th>&#963;_LT</th>
-                <th>d&#963;_LT(tot)</th>
-                <th>&#963;_TT</th>
-                <th>d&#963;_TT (tot)</th>
+                <th>&#963_LT</th>
+                <th>d&#963_LT(tot)</th>
+                <th>&#963_TT</th>
+                <th>d&#963_TT (tot)</th>
               </tr>
             </table>
-            <h3><a href="./E94010.csv" download="3He_E94010.csv">Download E94010</a></h3>
+            <h3><pre><a href="./E94010.csv" download="3He_E94010.csv">Download E94010</a></pre></h3>
             <p>Data provided by Karl Slifer. sigma_LT, sigma_TT published in <a href="https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.101.022303">https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.101.022303</a></p>
           </div>
           <div class="data-section Deuteron" id="Deuteron">
@@ -276,7 +276,7 @@
               <button class="button" onclick="togglePlot('deuteron-g1f1')">g<sub>1</sub>/F<sub>1</sub>, A<sub>1</sub> vs X</button>
             </h5>
 
-            <hr>
+            <hr width=800px>
 
             <h6>CLAS EG1</h6>
             <p>Format:</p>
@@ -291,7 +291,7 @@
                 <th>dg1/F1 (tot)</th>
               </tr>
             </table>
-            <h3><a href="./deuteron_CLAS_EG1.csv" download="deuteron_CLAS_EG1.csv">Download CLAS EG1</a></h3>
+            <h3><a href="./deuteron_CLAS EG1.csv" download="deuteron_CLAS_EG1.csv">Download CLAS EG1</a></h3>
             <p>Source: <a href="https://arxiv.org/pdf/1404.6231">https://arxiv.org/pdf/1404.6231</a></p>
             
             <hr>
@@ -318,7 +318,7 @@
                 <th>dA1(tot)</th>
               </tr>
             </table>
-            <h3><a href="./deuteron_CLAS_EG1b.csv" download="deuteron_CLAS_EG1b.csv">Download CLAS EG1b</a></h3>
+            <h3><a href="./deuteron_CLAS EG1b.csv" download="deuteron_CLAS_EG1b.csv">Download CLAS EG1b</a></h3>
             <p>Source: <a href="https://clas.sinp.msu.ru/cgi-bin/jlab/publ.cgi?eid=95&pid=1">https://clas.sinp.msu.ru/cgi-bin/jlab/publ.cgi?eid=95&pid=1</a></p>
 
             <hr>
@@ -436,7 +436,7 @@
               <button class="button" onclick="togglePlot('neutron-g1f1')">g<sub>1</sub>/F<sub>1</sub>, A<sub>1</sub> vs X</button>
             </h5>
 
-            <hr>
+            <hr width=800px>
 
             <h6>SLAC E142</h6>
             <p>Format:</p>
@@ -458,7 +458,7 @@
                 <th>dA1 (tot)</th>
               </tr>
             </table>
-            <h3><a href="./neutron_SLAC_E142.csv" download="neutron_SLAC_E142.csv">Download SLAC E142</a></h3>
+            <h3><a href="./neutron_SLAC E142.csv" download="neutron_SLAC_E142.csv">Download SLAC E142</a></h3>
             <p>Source: <a href="https://arxiv.org/pdf/hep-ex/9610007">https://arxiv.org/pdf/hep-ex/9610007</a></p>
             
             <hr>
@@ -480,7 +480,7 @@
                 <th>d<sup>dg1</sup>&frasl;<sub>F1</sub> (tot)</th>
               </tr>
             </table>
-            <h3><a href="./neutron_SLAC_E143.csv" download="neutron_SLAC_E143.csv">Download SLAC E143</a></h3>
+            <h3><a href="./neutron_SLAC E143.csv" download="neutron_SLAC_E143.csv">Download SLAC E143</a></h3>
             <p>Source: <a href="https://arxiv.org/pdf/hep-ph/9802357">https://arxiv.org/pdf/hep-ph/9802357</a></p>
 
             <hr>
@@ -501,7 +501,7 @@
                 <th>dA1 (tot)</th>
               </tr>
             </table>
-            <h3><a href="./neutron_SLAC_E154.csv" download="neutron_SLAC_E154.csv">Download SLAC E154</a></h3>
+            <h3><a href="./neutron_SLAC E154.csv" download="neutron_SLAC_E154.csv">Download SLAC E154</a></h3>
             <p>Source: <a href="https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.79.26">https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.79.26</a></p>
             
             <hr>
@@ -521,7 +521,7 @@
                 <th>d<sup>dg1</sup>&frasl;<sub>F1</sub> (tot)</th>
               </tr>
             </table>
-            <h3><a href="./neutron_SLAC_E155.csv" download="neutron_SLAC_E155.csv">Download SLAC E155</a></h3>
+            <h3><a href="./neutron_SLAC E155.csv" download="neutron_SLAC_E155.csv">Download SLAC E155</a></h3>
             <p>Source: g1 -- <a href="https://www.slac.stanford.edu/exp/e155/e155_results/tables/g1_pdn_Q2_5_comb.txt">https://www.slac.stanford.edu/exp/e155/e155_results/tables/g1_pdn_Q2_5_comb.txt</a>; <sup>g1</sup>&frasl;<sub>F1</sub> -- <a href="https://arxiv.org/pdf/hep-ph/0007248">https://arxiv.org/pdf/hep-ph/0007248</a> </p>
 
             <hr>
@@ -532,7 +532,7 @@
               <tr>
                 <th>Q<sup>2</sup></th>
                 <th>x</th>
-                <th>&#952;</th>
+                <th>&#952</th>
                 <th>Eb</th>
                 <th>g1</th>
                 <th>dg1 (stat)</th>
@@ -593,7 +593,7 @@
                 <th>Q<sup>2</sup></th>
                 <th>x</th>
                 <th>W</th>
-                <th>&#952;</th>
+                <th>&#952</th>
                 <th>Eb</th>
                 <th>g1</th>
                 <th>dg1 (stat)</th>
@@ -672,7 +672,7 @@
                 <th>dg1/F1 (tot)</th>
               </tr>
             </table>
-            <h3><a href="./neutron_CJ15nlo.csv" download="CJ15nlo_COMPASS.csv">Download COMPASS (CJ15nlo)</a>    <a href="./neutron_CT18NNLO.csv" download="CT18NNLO_COMPASS.csv">Download COMPASS (CT18NNLO)</a></h3>
+            <h3><pre><a href="./neutron_CJ15nlo.csv" download="CJ15nlo_COMPASS.csv">Download COMPASS (CJ15nlo)</a>    <a href="./neutron_CT18NNLO.csv" download="CT18NNLO_COMPASS.csv">Download COMPASS (CT18NNLO)</a></pre></h3>
             <p>Calculated from CJ15nlo and CT18NNLO PDFs using COMPASS proton and deuteron A<sub>1</sub> data; <a href="https://arxiv.org/pdf/1503.08935">https://arxiv.org/pdf/1503.08935</a>, <a href="https://arxiv.org/pdf/1612.00620">https://arxiv.org/pdf/1612.00620</a></p>
           </div>
           <div class="data-section Proton" id="Proton">
@@ -682,7 +682,7 @@
               <button class="button" onclick="togglePlot('proton-g1f1')">g<sub>1</sub>/F<sub>1</sub>, A<sub>1</sub> vs X</button>
             </h5>
 
-            <hr>
+            <hr width=800px>
 
             <h6>CLAS EG1</h6>
             <p>Format:</p>
@@ -697,7 +697,7 @@
                 <th>dg1/F1 (tot)</th>
               </tr>
             </table>
-            <h3><a href="./proton_CLAS_EG1.csv" download="proton_CLAS_EG1.csv">Download CLAS EG1</a></h3>
+            <h3><a href="./proton_CLAS EG1.csv" download="proton_CLAS_EG1.csv">Download CLAS EG1</a></h3>
             <p>Source: <a href="https://arxiv.org/pdf/1404.6231.pdf">https://arxiv.org/pdf/1404.6231.pdf</a></p>
             
             <hr>
@@ -724,7 +724,7 @@
                 <th>dA1(tot)</th>
               </tr>
             </table>
-            <h3><a href="./proton_CLAS_EG1b.csv" download="proton_CLAS_EG1b.csv">Download CLAS EG1b</a></h3>
+            <h3><a href="./proton_CLAS EG1b.csv" download="proton_CLAS_EG1b.csv">Download CLAS EG1b</a></h3>
             <p>Source: <a href="https://clas.sinp.msu.ru/cgi-bin/jlab/publ.cgi?eid=95&pid=1">https://clas.sinp.msu.ru/cgi-bin/jlab/publ.cgi?eid=95&pid=1</a></p>
 
             <hr>
@@ -783,7 +783,7 @@
               </tr>
             </table>
             <h3><a href="./proton_EMC.csv" download="proton_EMC.csv">Download EMC</a></h3>
-            <p>Source: <a href="https://pdf.sciencedirectassets.com/271560/1-s2.0-S0550321300X04968/1-s2.0-0550321389900898/main.pdf?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEGQaCXVzLWVhc3QtMSJHMEUCIQDMH8Ewrosp9s3wYRM6UMU3XzsEr6hqgxUncCWFbncxjQIgBfDcPdqbPJgS%2FD9u%2FypbRzDKnUAhajnkJb4MDQ9lOp8quwUI%2FP%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAFGgwwNTkwMDM1NDY4NjUiDGjAfExdBGI6CCxQkSqPBerQF%2BrWreOEg5g8ZV%2ByAH%2FIJGDkQVJtPNK1r%2B58ieQ0GbgXAoMZTVDd7QbbArKxMuVlSKD40W%2BL3McS6Gq6iozufIkmLD43Wm%2FgD6scssfZVDHEx3uyXYrSvFCw4XExytsYq%2B1fUlkLFMHxl4YsBG4QXOjfsIGWti8dGHDcbGTrRWxFdBVe7V%2FNdRYtXiLxD6MjE0zq3RYNcO9dWG6TQjCOtJyxSfnfbF15zLcYdhzZu8hfZHDgGIFUMW6Yoz1kovscT4ApIBiapipKPiVcg6ETlWJRnopxDAovn4ZZLoPeUWbcy4w1SWyP2yb5mv9ZAT7rrLNewchZDOOVaMltYiDAurlw0Yo47FzI5%2FOhvtTCYoQDsF%2Fk6EjANPTw78AcWQvS4TxQNfhOK2oLKMfi4EJdjnVHWTWmfX10okMod%2BCVDVsWJtBGeDmLV%2FPZm5cHm035ee8Jm64lRExWozSHjq7utV8eYdJmJ1IFah9mDTF1tBkf5jY6dUuAnonq7WUgHxeOM%2FwhoK5kKZYTkT%2BDYKsqVyHsF%2FlNxG%2BGc1AOM%2F0PhdC79pRBU3cSLZHVKrlH%2Fbgwq0BeIMuq7jNJH4uVKcRw8btLILYsr1ao7wdcL5Biij3baKXSlgXiyJbojXaHtn2sjCT3dWrfhbXEV6D8%2BJDPPSldw%2BAKil79o0d0YFANNJA2LNW2QqV1PoqOd4EHW293VNgE4K%2BrZGrb5GoyMtDB%2FSy1gATEylZkk3Sh1pDTFjB7w1J2KD0%2FwzO4vz02Hicf%2F47IfKM7vwOY%2BYJidjSYwHTd3G1k7ui61C2yJTccTuGiPC7G%2BcUuP0YkGGiP5EwWxF1d7U4tGIS8hU4t3vy6giMcfurtRFsFoRG%2FW10wgpT4rAY6sQFVysO49DmEYxZ7yMUs10U8DaqMkIlx0WY18%2BufdSRlBew5bfjtbY5W4x0jPOalGnpW4g%2BHHUHgEG5ifOCAGPs%2F2H9qXNDtJg7f9JXkWP0GQdgoHeM4blN5LiRsygtncZf35XN5PihvGoaZzNNVyPsMYTFPe%2B9xAvvWk2V9Ch2PE%2F3hwWv6XgjhcwgNLDDQsGl7DTeczZL9%2F785jOcFCxPB6%2B4ix0QLaqBChOQzPO3osPk%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240110T035757Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIAQ3PHCVTYTW6JVNZZ%2F20240110%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=c8084c8f59ed92a2c703e713329e2d6192d3e56d55e524801886a8515383edc4&hash=93e7da838157e93752dabd8a911860e32ad4ec7141faab7a7834341f1fed5123&host=68042c943591013ac2b2430a89b270f6af2c76d8dfd086a07176afe7c76c2c61&pii=0550321389900898&tid=spdf-270d41f0-1277-4073-8815-5c4e90f5df42&sid=bf3e0e909a0fc840598b8de11b43ca9cee48gxrqa&type=client&tsoh=d3d3LnNjaWVuY2VkaXJlY3QuY29t&ua=0f135a56555602070250&rr=8431ffb139c84fdb&cc=us">https://pdf.sciencedirectassets.com/271560</a></p>
+            <p>Source: <a href="https://pdf.sciencedirectassets.com/271560/1-s2.0-S0550321300X04968/1-s2.0-0550321389900898/main.pdf?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEGQaCXVzLWVhc3QtMSJHMEUCIQDMH8Ewrosp9s3wYRM6UMU3XzsEr6hqgxUncCWFbncxjQIgBfDcPdqbPJgS%2FD9u%2FypbRzDKnUAhajnkJb4MDQ9lOp8quwUI%2FP%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAFGgwwNTkwMDM1NDY4NjUiDGjAfExdBGI6CCxQkSqPBerQF%2BrWreOEg5g8ZV%2ByAH%2FIJGDkQVJtPNK1r%2B58ieQ0GbgXAoMZTVDd7QbbArKxMuVlSKD40W%2BL3McS6Gq6iozufIkmLD43Wm%2FgD6scssfZVDHEx3uyXYrSvFCw4XExytsYq%2B1fUlkLFMHxl4YsBG4QXOjfsIGWti8dGHDcbGTrRWxFdBVe7V%2FNdRYtXiLxD6MjE0zq3RYNcO9dWG6TQjCOtJyxSfnfbF15zLcYdhzZu8hfZHDgGIFUMW6Yoz1kovscT4ApIBiapipKPiVcg6ETlWJRnopxDAovn4ZZLoPeUWbcy4w1SWyP2yb5mv9ZAT8rrLNewchZDOOVaMltYiDAurlw0Yo47FzI5%2FOhvtTCYoQDsF%2Fk6EjANPTw78AcWQvS4TxQNfhOK2oLKMfi4EJdjnVHWTWmfX10okMod%2BCVDVsWJtBGeDmLV%2FPZm5cHm035ee8Jm64lRExWozSHjq7utV8eYdJmJ1IFah9mDTF1tBkf5jY6dUuAnonq7WUgHxeOM%2FwhoK5kKZYTkT%2BDYKsqVyHsF%2FlNxG%2BGc1AOM%2F0PhdC79pRBU3cSLZHVKrlH%2Fbgwq0BeIMuq7jNJH4uVKcRw8btLILYsr1ao7wdcL5Biij3baKXSlgXiyJbojXaHtn2sjCT3dWrfhbXEV6D8%2BJDPPSldw%2BAKil79o0d0YFANNJA2LNW2QqV1PoqOd4EHW293VNgE4K%2BrZGrb5GoyMtDB%2FSy1gATEylZkk3Sh1pDTFjB7w1J2KD0%2FwzO4vz02Hicf%2F47IfKM7vwOY%2BYJidjSYwHTd3G1k7ui61C2yJTccTuGiPC7G%2BcUuP0YkGGiP5EwWxF1d7U4tGIS8hU4t3vy6giMcfurtRFsFoRG%2FW10wgpT4rAY6sQFVysO49DmEYxZ7yMUs10U8DaqMkIlx0WY18%2BufdSRlBew5bfjtbY5W4x0jPOalGnpW4g%2BHHUHgEG5ifOCAGPs%2F2H9qXNDtJg7f9JXkWP0GQdgoHeM4blN5LiRsygtncZf35XN5PihvGoaZzNNVyPsMYTFPe%2B9xAvvWk2V9Ch2PE%2F3hwWv6XgjhcwgNLDDQsGl7DTeczZL9%2F785jOcFCxPB6%2B4ix0QLaqBChOQzPO3osPk%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240110T035757Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIAQ3PHCVTYTW6JVNZZ%2F20240110%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=c8084c8f59ed92a2c703e713329e2d6192d3e56d55e524801886a8515383edc4&hash=93e7da838157e93752dabd8a911860e32ad4ec7141faab7a7834341f1fed5123&host=68042c943591013ac2b2430a89b270f6af2c76d8dfd086a07176afe7c76c2c61&pii=0550321389900898&tid=spdf-270d41f0-1277-4073-8815-5c4e90f5df42&sid=bf3e0e909a0fc840598b8de11b43ca9cee48gxrqa&type=client&tsoh=d3d3LnNjaWVuY2VkaXJlY3QuY29t&ua=0f135a56555602070250&rr=8431ffb139c84fdb&cc=us">https://pdf.sciencedirectassets.com/271560</a></p>
 
             <hr>
 
