@@ -14,10 +14,11 @@ def import_csv_with_pandas(file_path):
 
 file_path = '/Users/scarlettimorse/PycharmProjects/sim.github.io/NeutronData.csv'
 ND_df = import_csv_with_pandas(file_path)
-PDF_df = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/n_g1.csv")
+PDF_df = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/g1n.csv")
 
 columns_to_check = ['x', 'Q2', 'g1']
 h_df = ND_df.dropna(subset=columns_to_check)
+h_df = h_df[h_df['Experiment'] != 'COMPASS_(CJ15+CT18)']
 
 centers = np.array([0.0036, 0.0045, 0.0055, 0.007, 0.009, 0.012, 0.017, 0.024,
                     0.035, 0.049, 0.077, 0.12, 0.17, 0.22, 0.29, 0.41, 0.57, 0.74])
@@ -225,6 +226,15 @@ fig.update_layout(
     annotations=annotations,
     xaxis=dict(type='log'),
     yaxis=dict(range=[-2, 12.5]),
+    legend=dict(
+        xanchor="right",
+        yanchor="top",
+        x=0.99,
+        y=0.99,
+        bgcolor="white",
+        bordercolor="black",
+        borderwidth=1
+    ),
     updatemenus=[
         dict(
             type="buttons",
@@ -266,8 +276,8 @@ pio.write_html(
     config={
         'toImageButtonOptions': {
             'filename': 'g1(n)_vs_Q2_plot',
-            'height': 600,
-            'width': 800,
+            # 'height': 600,
+            # 'width': 800,
             'scale': 2
         }
     }

@@ -17,6 +17,7 @@ ND_df = import_csv_with_pandas(file_path)
 
 columns_to_check = ['x', 'Q2']
 plot_df = ND_df.dropna(subset=columns_to_check)
+plot_df = plot_df[plot_df['Experiment'] != 'COMPASS_(CJ15+CT18)']
 
 plot_df['A1(x,Q2)'] = pd.to_numeric(plot_df['A1'], errors='coerce')
 plot_df['G1F1(x,Q2)'] = pd.to_numeric(plot_df['g1/F1'], errors='coerce')
@@ -46,32 +47,30 @@ symbol_map = {
     'Flay': 'triangle-left',
     'SLAC_E143': 'star-open',
     'SLAC_E155': 'cross-open',
-    'COMPASS': 'triangle-up-open',
-    'COMPASS(JAM22)': 'x-open'
+    'COMPASS_(JAM22)': 'x-open'
 }
 
 color_map_g1f1= {
     'SLAC_E154': 'brown',
     'SLAC_E142': 'green',
     'Zheng': 'purple',
-    'HERMES': 'fuchsia',
+    'HERMES': 'red',
     'Flay': 'gold',
     'SLAC_E143': 'blue',
     'SLAC_E155': 'orange',
-    'COMPASS': 'darkred',
-    'COMPASS(JAM22)': 'red'
+    'COMPASS_(JAM22)': 'fuchsia'
 }
 
 color_map_A1= {
     'SLAC_E154': 'sienna',
     'SLAC_E142': 'lightgreen',
     'Zheng': 'magenta',
-    'HERMES': 'pink',
+    'HERMES': 'darkred',
     'Flay': 'yellow',
     'SLAC_E143': 'lightblue',
     'SLAC_E155': 'peachpuff',
     'COMPASS': 'firebrick',
-    'COMPASS(JAM22)': 'red'
+    'COMPASS(JAM22)': 'pink'
 }
 
 g1f1_trace_idxs = []

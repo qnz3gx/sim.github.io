@@ -48,7 +48,7 @@ symbol_map_g1f1 = {
 symbol_map_a1 = {
     'CLAS_EG1b': 'square-open',
     'SLAC_E143': 'star-open',
-    'COMPASS': 'triangle-up-open',
+    'COMPASS_(JAM22)': 'triangle-up-open',
     'SMC': 'diamond-open'
 }
 
@@ -63,7 +63,7 @@ color_map_g1f1= {
 color_map_A1= {
     'CLAS_EG1b': 'lavender',
     'SLAC_E143': 'lightblue',
-    'COMPASS': 'lightgray'
+    'COMPASS_(JAM22)': 'lightgray'
 }
 
 g1f1_trace_idxs = []

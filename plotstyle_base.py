@@ -7,9 +7,8 @@ def offset(x_array, trace_index, total_traces, offset_fraction=0.1):
     if len(x_sorted) > 1:
         min_spacing = np.min(np.diff(x_sorted))
     else:
-        min_spacing = x_sorted[0] * offset_fraction  # fallback
+        min_spacing = x_sorted[0] * offset_fraction
     
-    total_offset_range = (total_traces - 1) * min_spacing * offset_fraction
     offset = (trace_index - (total_traces - 1) / 2) * min_spacing * offset_fraction
 
     return x_array + offset
