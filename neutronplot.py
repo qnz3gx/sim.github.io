@@ -226,15 +226,15 @@ fig.update_layout(
     annotations=annotations,
     xaxis=dict(type='log'),
     yaxis=dict(range=[-2, 12.5]),
-    legend=dict(
-        xanchor="right",
-        yanchor="top",
-        x=0.99,
-        y=0.99,
-        bgcolor="white",
-        bordercolor="black",
-        borderwidth=1
-    ),
+    # legend=dict(
+    #     xanchor="right",
+    #     yanchor="top",
+    #     x=0.99,
+    #     y=0.99,
+    #     bgcolor="white",
+    #     bordercolor="black",
+    #     borderwidth=1
+    # ),
     updatemenus=[
         dict(
             type="buttons",
