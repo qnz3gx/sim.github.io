@@ -10,10 +10,11 @@ def import_csv_with_pandas(file_path):
 
 file_path = '/Users/scarlettimorse/PycharmProjects/sim.github.io/DeuteronData.csv'
 P_df = import_csv_with_pandas(file_path)
-PDF_df = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/d_g1.csv")
+PDF_df = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/g1d.csv")
 
 columns_to_check = ['x', 'Q2', 'g1']
 h_df = P_df.dropna(subset=columns_to_check)
+h_df = h_df[h_df['Experiment'] != 'COMPASS_(CJ15+CT18)']
 
 centers = np.array([0.0036, 0.0045, 0.0055, 0.007, 0.009, 0.012, 0.017, 0.024,
                     0.035, 0.049, 0.077, 0.12, 0.17, 0.22, 0.29, 0.41, 0.57, 0.74])
@@ -98,7 +99,7 @@ symbol_map = {
     'SMC': 'hexagon-open',
     'SLAC_E143': 'star-open',
     'SLAC_E155': 'cross-open',
-    'COMPASS': 'triangle-up-open'
+    'COMPASS_(JAM22)': 'triangle-up-open'
 }
 
 for exp in experiments:
@@ -142,8 +143,8 @@ for exp in experiments:
         print("Fit failed for reciprocal function")
 
     annotations.append(dict(
-        x=-0.45,
-        y=4.1,
+        x=-0.5,
+        y=6.3,
         text=f"W = 2 GeV",
         showarrow=False,
         xshift=0,
@@ -223,6 +224,16 @@ fig.update_layout(
     annotations=annotations,
     xaxis=dict(type='log'),
     yaxis=dict(range=[-2, 12.5]),
+    # legend=dict(
+    #     xanchor="right",
+    #     yanchor="top",
+    #     x=0.99,
+    #     y=0.99,
+    #     bgcolor="white",
+    #     bordercolor="black",
+    #     font=dict(size=8),
+    #     borderwidth=1
+    # ),
     updatemenus=[
         dict(
             type="buttons",
