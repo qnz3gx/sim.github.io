@@ -44,21 +44,24 @@ symbol_map = {
     'SLAC E142': 'diamond',
     'Zheng': 'circle',
     'Solvignon': 'triangle-up',
-    'Flay': 'square'
+    'Flay': 'square',
+    'HERMES': 'cross'
 }
 
 open_symbol_map = {
     'SLAC E142': 'diamond-open',
     'Zheng': 'circle-open',
     'Solvignon': 'triangle-up-open',
-    'Flay': 'square-open'
+    'Flay': 'square-open',
+    'HERMES': 'cross-open'
 }
 
 colors = {
     'SLAC E142': 'coral',
     'Zheng': 'cornflowerblue',
     'Solvignon': 'blueviolet',
-    'Flay': 'burlywood'
+    'Flay': 'burlywood',
+    'HERMES': 'green'
 }
 
 g1f1_trace_idxs = []
