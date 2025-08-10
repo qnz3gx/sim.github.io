@@ -37,8 +37,8 @@ def quadrature_sum(df,col1,col2,result):
     df.loc[mask, result] = np.sqrt(df.loc[mask, col1]**2 + df.loc[mask, col2]**2)
     return df
 
-# cj15nlo = pd.read_csv("deuteron_CJ15nlo.csv")
-# ct18nnlo = pd.read_csv("deuteron_CT18NNLO.csv")
+# cj15nlo = pd.read_csv("neutron_CJ15nlo.csv")
+# ct18nnlo = pd.read_csv("neutron_CT18NNLO.csv")
 
 # compass = (cj15nlo + ct18nnlo)/2
 # compass['x'] = cj15nlo['x']
@@ -46,7 +46,15 @@ def quadrature_sum(df,col1,col2,result):
 # compass['dg1(stat)'] = 1/2 * np.sqrt(cj15nlo['dg1(stat)'].values ** 2 + ct18nnlo['dg1(stat)'].values ** 2)
 # compass['dg1(sys)'] = 1/2 * np.sqrt(cj15nlo['dg1(sys)'].values ** 2 + ct18nnlo['dg1(sys)'].values ** 2)
 
-# three = [cj15nlo,ct18nnlo]
+# columns = [cj15nlo,ct18nnlo]
+
+# compass['dg1(model)'] = np.abs(cj15nlo['g1'] - ct18nnlo['g1']) / 2
+# compass['dg1(tot)'] = np.sqrt(compass['dg1(stat)']**2 + compass['dg1(sys)']**2 + compass['dg1(model)']**2)
+# compass.drop(columns=['dg1/F1(stat)', 'dg1/F1(sys)'], inplace=True)
+# compass['g1/F1'] = compass['g1'] / compass['F1']
+# compass['dg1/F1'] = np.abs(compass['g1/F1'] * np.sqrt((compass['dg1(tot)']/compass['g1'])**2 + (compass['dF1(tot)']/compass['F1'])**2))
+# compass = compass.round(4)
+# compass.to_csv('neutron_COMPASS.csv', index=False)
 
 def maxerr(datasets,column):
     maximum_error = []
@@ -79,9 +87,12 @@ def maxerr(datasets,column):
 # deuteron=replace_exp(deuteron,jamd,'COMPASS(JAM22)',7967,7981)
 # deuteron.to_csv("DeuteronData.csv", index=False)
 
-hermes = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/threeHe_Hermes.csv")
-quadrature_sum(hermes, 'dA1(stat)', 'dA1(sys)', 'dA1(tot)')
-hermes = hermes.round(4)
-hermes.to_csv("threeHe_Hermes.csv",index=False)
-helium = replace_exp(helium,hermes,'HERMES',107,115)
-helium.to_csv("threeHedata.csv",index=False)
+# hermes = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/threeHe_Hermes.csv")
+# quadrature_sum(hermes, 'dA1(stat)', 'dA1(sys)', 'dA1(tot)')
+# hermes = hermes.round(4)
+# hermes.to_csv("threeHe_Hermes.csv",index=False)
+# helium = replace_exp(helium,hermes,'HERMES',107,115)
+# helium.to_csv("threeHedata.csv",index=False)
+
+deuteron = deuteron.replace('CLAS_EG1', 'CLAS_EG1dvcs')
+deuteron.to_csv("DeuteronData.csv", index=False)

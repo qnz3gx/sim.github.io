@@ -4,7 +4,7 @@ import plotly.graph_objects as go
 import plotly.io as pio
 import plotstyle_base as ps
 
-traces = 6
+traces = 2
 
 ctandcj = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/neutron_COMPASS.csv")
 cj = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/neutron_CJ15nlo.csv")
@@ -16,53 +16,53 @@ jam = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/neutron_J
 
 fig = go.Figure()
 
-fig.add_trace(go.Scatter(
-    x=ps.offset(ctandcj['x'], 0, traces),
-    y=ctandcj['g1/F1'],
-    mode='markers',
-    marker=dict(size=6, symbol='circle'),
-    error_y=dict(
-        type='data',
-        array=ctandcj['dg1/F1(tot)'],
-        visible=True,
-        thickness=0.5
-    ),
-    name='CJ15 and CT18',
-    legendgroup='cjct',
-    showlegend=True
-))
+# fig.add_trace(go.Scatter(
+#     x=ps.offset(ctandcj['x'], 0, traces),
+#     y=ctandcj['g1/F1'],
+#     mode='markers',
+#     marker=dict(size=6, symbol='circle'),
+#     error_y=dict(
+#         type='data',
+#         array=ctandcj['dg1/F1'],
+#         visible=True,
+#         thickness=0.5
+#     ),
+#     name='CJ15 and CT18',
+#     legendgroup='cjct',
+#     showlegend=True
+# ))
 
-fig.add_trace(go.Scatter(
-    x=ps.offset(cj['x'], 0, traces),
-    y=cj['g1/F1'],
-    mode='markers',
-    marker=dict(size=6, symbol='star'),
-    error_y=dict(
-        type='data',
-        array=np.sqrt(cj['dg1/F1(stat)'].values**2 + cj['dg1/F1(sys)'].values**2).round(4),
-        visible=True,
-        thickness=0.5
-    ),
-    name='CJ15nlo (recalculated)',
-    legendgroup='cj',
-    showlegend=True
-))
+# fig.add_trace(go.Scatter(
+#     x=ps.offset(cj['x'], 0, traces),
+#     y=cj['g1/F1'],
+#     mode='markers',
+#     marker=dict(size=6, symbol='star'),
+#     error_y=dict(
+#         type='data',
+#         array=np.sqrt(cj['dg1/F1(stat)'].values**2 + cj['dg1/F1(sys)'].values**2).round(4),
+#         visible=True,
+#         thickness=0.5
+#     ),
+#     name='CJ15nlo (recalculated)',
+#     legendgroup='cj',
+#     showlegend=True
+# ))
 
-fig.add_trace(go.Scatter(
-    x=ps.offset(ct['x'],1,traces),
-    y=ct['g1/F1'],
-    mode='markers',
-    marker=dict(size=6, symbol='triangle-up'),
-    error_y=dict(
-        type='data',
-        array=np.sqrt(ct['dg1/F1(stat)'].values**2 + ct['dg1/F1(sys)'].values**2).round(4),
-        visible=True,
-        thickness=0.5
-    ),
-    name='CT18NNLO (recalculated)',
-    legendgroup='ct',
-    showlegend=True
-))
+# fig.add_trace(go.Scatter(
+#     x=ps.offset(ct['x'],1,traces),
+#     y=ct['g1/F1'],
+#     mode='markers',
+#     marker=dict(size=6, symbol='triangle-up'),
+#     error_y=dict(
+#         type='data',
+#         array=np.sqrt(ct['dg1/F1(stat)'].values**2 + ct['dg1/F1(sys)'].values**2).round(4),
+#         visible=True,
+#         thickness=0.5
+#     ),
+#     name='CT18NNLO (recalculated)',
+#     legendgroup='ct',
+#     showlegend=True
+# ))
 
 # fig.add_trace(go.Scatter(
 #     x=ps.offset(oldcj['x'],2,traces),
@@ -112,21 +112,35 @@ fig.add_trace(go.Scatter(
     showlegend=True
 ))
 
-# fig.add_trace(go.Scatter(
-#     x=ps.offset(oldjam['x'],5,traces),
-#     y=oldjam['g1/F1n'],
-#     mode='markers',
-#     marker=dict(size=6, symbol='circle'),
-#     error_y=dict(
-#         type='data',
-#         array=np.sqrt(oldjam['dg1/F1n(stat)'].values**2 + oldjam['dg1/F1n(sys)'].values**2).round(4),
-#         visible=True,
-#         thickness=0.5
-#     ),
-#     name='JAM22 (original COMPASS)',
-#     legendgroup='oldjam',
-#     showlegend=True
-# ))
+fig.add_trace(go.Scatter(
+    x=ps.offset(oldjam['x'],5,traces),
+    y=oldjam['g1/F1n'],
+    mode='markers',
+    marker=dict(size=6, symbol='circle'),
+    error_y=dict(
+        type='data',
+        array=np.sqrt(oldjam['dg1/F1n(stat)'].values**2 + oldjam['dg1/F1n(sys)'].values**2).round(4),
+        visible=True,
+        thickness=0.5
+    ),
+    name='JAM22 (original COMPASS)',
+    legendgroup='oldjam',
+    showlegend=True
+))
+
+fig.add_shape(
+    type="rect",
+    xref="paper",
+    yref="paper",
+    x0=0,          
+    y0=0,          
+    x1=1,          
+    y1=1,          
+    line=dict(
+        color="black",
+        width=1,
+    )
+)
 
 fig.update_layout(
     title="Comparison of COMPASS g₁<sup>n</sup>/F₁<sup>n</sup>",
@@ -149,9 +163,11 @@ pio.write_html(
     file='COMPASS_comparison.html',
     auto_open=True,
     config={
-        'toImageButtonOptions': {
-            'filename': 'COMPASS_comparison.html',
-            'scale': 2
+    'toImageButtonOptions': {
+        'filename': 'COMPASS_comparison',
+        'height': 600,
+        'width': 800,
+        'scale': 2
         }
     }
 )

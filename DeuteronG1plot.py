@@ -99,7 +99,7 @@ symbol_map = {
     'SMC': 'hexagon-open',
     'SLAC_E143': 'star-open',
     'SLAC_E155': 'cross-open',
-    'COMPASS_(JAM22)': 'triangle-up-open'
+    'COMPASS(JAM22)': 'triangle-up-open'
 }
 
 for exp in experiments:
@@ -143,7 +143,7 @@ for exp in experiments:
         print("Fit failed for reciprocal function")
 
     annotations.append(dict(
-        x=-0.5,
+        x=-0.45,
         y=6.3,
         text=f"W = 2 GeV",
         showarrow=False,
@@ -182,7 +182,7 @@ for i in range(len(centers)):
         x_val = large[i]
 
     annotations.append(dict(
-        x=np.log10(x_val)+0.15,
+        x=np.log10(x_val)+0.16,
         y=y_val-0.1,
         text=f"x = {centers[i]}",
         showarrow=False,
@@ -194,7 +194,7 @@ for i in range(len(centers)):
 rightmost_by_bin = plot_df.loc[plot_df.groupby('X_index')['Q2'].idxmax()]
 top_point = rightmost_by_bin.loc[rightmost_by_bin['G1(x,Q2)'].idxmax()]
 annotations.append(dict(
-    x=np.log10(top_point['Q2']),
+    x=np.log10(top_point['Q2']) + 0.08,
     y=top_point['G1(x,Q2)'],
     text=f"(i={top_point['X_index']})",
     showarrow=False,
@@ -216,6 +216,19 @@ if not bin_df.empty:
         font=dict(size=10, color="black", family='Arial Black'),
     ))
 
+fig.add_shape(
+    type="rect",
+    xref="paper",
+    yref="paper",
+    x0=0,          
+    y0=0,          
+    x1=1,          
+    y1=1,          
+    line=dict(
+        color="black",
+        width=1,
+    )
+)
 fig.update_layout(
     title='g\u2081<sup>d</sup>(x,Q²) vs Q²',
     xaxis_title='log(Q²)',
@@ -224,16 +237,16 @@ fig.update_layout(
     annotations=annotations,
     xaxis=dict(type='log'),
     yaxis=dict(range=[-2, 12.5]),
-    # legend=dict(
-    #     xanchor="right",
-    #     yanchor="top",
-    #     x=0.99,
-    #     y=0.99,
-    #     bgcolor="white",
-    #     bordercolor="black",
-    #     font=dict(size=8),
-    #     borderwidth=1
-    # ),
+    legend=dict(
+        xanchor="right",
+        yanchor="top",
+        x=0.99,
+        y=0.99,
+        bgcolor="white",
+        bordercolor="black",
+        font=dict(size=8),
+        borderwidth=1
+    ),
     updatemenus=[
         dict(
             type="buttons",
@@ -275,8 +288,8 @@ pio.write_html(
     config={
         'toImageButtonOptions': {
             'filename': 'g1(d)_vs_Q2_plot',
-            'height': 600,
-            'width': 800,
+            'height': 800,
+            'width': 600,
             'scale': 2
         }
     }

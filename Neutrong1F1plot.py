@@ -44,10 +44,10 @@ symbol_map = {
     'SLAC_E142': 'square',
     'Zheng': 'hourglass',
     'HERMES': 'pentagon',
-    'Flay': 'triangle-left',
+    'Flay': 'x',
     'SLAC_E143': 'star-open',
     'SLAC_E155': 'cross-open',
-    'COMPASS_(JAM22)': 'x-open'
+    'COMPASS(JAM22)': 'triangle-left-open'
 }
 
 color_map_g1f1= {
@@ -58,7 +58,7 @@ color_map_g1f1= {
     'Flay': 'gold',
     'SLAC_E143': 'blue',
     'SLAC_E155': 'orange',
-    'COMPASS_(JAM22)': 'fuchsia'
+    'COMPASS(JAM22)': 'fuchsia'
 }
 
 color_map_A1= {
@@ -155,6 +155,20 @@ error_y_values = [
     {"type": "data", "array": trace.error_y["array"], "thickness": 1} if "error_y" in trace else None
     for trace in fig.data
 ]
+
+fig.add_shape(
+    type="rect",
+    xref="paper",
+    yref="paper",
+    x0=0,          
+    y0=0,          
+    x1=1,          
+    y1=1,          
+    line=dict(
+        color="black",
+        width=1,
+    )
+)
 
 fig.update_layout(
     title='g\u2081<sup>n</sup>/F\u2081<sup>n</sup>(x,Q²) and A\u2081<sup>n</sup>(x,Q²) vs X',
@@ -270,7 +284,7 @@ pio.write_html(
     auto_open=True,
     config={
         'toImageButtonOptions': {
-            'filename': 'g1F1,A1(n)_vs_X.html',
+            'filename': 'g1F1,A1(n)_vs_X',
             'scale': 2
         }
     }

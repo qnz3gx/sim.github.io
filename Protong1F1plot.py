@@ -48,7 +48,7 @@ symbol_map_g1f1 = {
 symbol_map_a1 = {
     'CLAS_EG1b': 'square-open',
     'SLAC_E143': 'star-open',
-    'COMPASS_(JAM22)': 'triangle-up-open',
+    'COMPASS(JAM22)': 'triangle-up-open',
     'SMC': 'diamond-open'
 }
 
@@ -63,7 +63,7 @@ color_map_g1f1= {
 color_map_A1= {
     'CLAS_EG1b': 'lavender',
     'SLAC_E143': 'lightblue',
-    'COMPASS_(JAM22)': 'lightgray'
+    'COMPASS(JAM22)': 'lightsalmon'
 }
 
 g1f1_trace_idxs = []
@@ -254,6 +254,20 @@ fig.update_layout(
 )
 
 fig.write_html("g1F1,A1(p)_vs_X.html")
+
+fig.add_shape(
+    type="rect",
+    xref="paper",
+    yref="paper",
+    x0=0,          
+    y0=0,          
+    x1=1,          
+    y1=1,          
+    line=dict(
+        color="black",
+        width=1,
+    )
+)
 
 pio.write_html(
     fig,
