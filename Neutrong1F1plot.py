@@ -24,6 +24,9 @@ plot_df['G1F1(x,Q2)'] = pd.to_numeric(plot_df['g1/F1'], errors='coerce')
 
 fig = go.Figure()
 
+Mn = 0.939
+plot_df = plot_df[plot_df['x'] <= plot_df['Q2'] / (4 + plot_df['Q2'] - Mn**2)]
+
 experiments = plot_df['Experiment'].unique()
 g1f1exp = []
 a1exp = []
@@ -47,30 +50,29 @@ symbol_map = {
     'Flay': 'x',
     'SLAC_E143': 'star-open',
     'SLAC_E155': 'cross-open',
-    'COMPASS(JAM22)': 'triangle-left-open'
+    'COMPASS(SM prel.)': 'triangle-left-open'
 }
 
 color_map_g1f1= {
     'SLAC_E154': 'brown',
-    'SLAC_E142': 'green',
-    'Zheng': 'purple',
+    'SLAC_E142': 'darkred',
+    'Zheng': 'yellow',
     'HERMES': 'red',
     'Flay': 'gold',
-    'SLAC_E143': 'blue',
-    'SLAC_E155': 'orange',
-    'COMPASS(JAM22)': 'fuchsia'
+    'SLAC_E143': 'lightblue',
+    'SLAC_E155': 'blueviolet',
+    'COMPASS(SM prel.)': 'darkturquoise'
 }
 
 color_map_A1= {
-    'SLAC_E154': 'sienna',
-    'SLAC_E142': 'lightgreen',
-    'Zheng': 'magenta',
-    'HERMES': 'darkred',
-    'Flay': 'yellow',
-    'SLAC_E143': 'lightblue',
+    'SLAC_E154': 'firebrick',
+    'SLAC_E142': 'fuchsia',
+    'Zheng': 'red',
+    'HERMES': 'green',
+    'Flay': 'blue',
+    'SLAC_E143': 'orange',
     'SLAC_E155': 'peachpuff',
-    'COMPASS': 'firebrick',
-    'COMPASS(JAM22)': 'pink'
+    'COMPASS(SM prel.)': 'pink'
 }
 
 g1f1_trace_idxs = []
@@ -82,7 +84,7 @@ fig.add_trace(go.Scatter(
     y=[None],
     mode='markers',
     marker=dict(size=0, opacity=0, color='rgba(0,0,0,0)'),
-    name='                  ',
+    name='<b>g<sub>1</sub>/F<sub>1</sub></b>',
     legendgroup='g1f1title',
     showlegend=True
 ))
@@ -104,9 +106,10 @@ for exp in sorted(g1f1exp):
         type='data',
         array=exp_df['dg1/F1(tot)'],
         visible=True,
-        thickness=1
+        thickness=1,
+        width=0
     ),
-        marker=dict(size=6, symbol=symbol, color = color1),
+        marker=dict(size=7, symbol=symbol, color = color1),
         legendgroup=f"{exp}_g1f1",
         showlegend=True
     )
@@ -119,7 +122,7 @@ fig.add_trace(go.Scatter(
     y=[None],
     mode='markers',
     marker=dict(size=0, opacity=0, color='rgba(0,0,0,0)'),
-    name='           ',
+    name='<b>A<sub>1</sub></b>',
     legendgroup='a1title',
     showlegend=True
 ))
@@ -141,9 +144,10 @@ for exp2 in sorted(a1exp):
         type='data',
         array=exp2_df['dA1(tot)'],
         visible=True,
-        thickness=1
+        thickness=1,
+        width=0
     ),
-        marker=dict(size=6, symbol=symbol, color = color2),
+        marker=dict(size=7, symbol=symbol, color = color2),
         legendgroup=f"{exp2}_a1",
         showlegend=True
     )
@@ -155,6 +159,137 @@ error_y_values = [
     {"type": "data", "array": trace.error_y["array"], "thickness": 1} if "error_y" in trace else None
     for trace in fig.data
 ]
+
+g1pdf = pd.read_csv('/Users/scarlettimorse/PycharmProjects/PDFs/g1n.csv')
+F1pdf = pd.read_csv('/Users/scarlettimorse/PycharmProjects/PDFs/JAM22_F1n_grid.csv')
+
+def retrieve(grid_df, values_df, target_retrieved): #Type: dataframe, dataframe, string
+    print("Commencing retrieval")
+    target = []
+    for i in range(len(values_df)):
+        distance = np.sqrt((grid_df['x'] - values_df.loc[i, 'x'])**2 + (grid_df['Q2'] - values_df.loc[i, 'Q2'])**2)
+        nearest_idx = distance.idxmin()
+        target.append(grid_df.loc[nearest_idx, target_retrieved])
+    print("Retrieved")
+    return np.array(target)
+
+fig.update_layout(
+    title='g\u2081<sup>n</sup>/F\u2081<sup>n</sup>(x,Q²) and A\u2081<sup>n</sup>(x,Q²) vs X',
+    xaxis_title='X',
+    yaxis_title='g\u2081<sup>n</sup>/F\u2081<sup>n</sup>, A\u2081<sup>n</sup>',
+    template='plotly_white',
+    annotations=annotations,
+    legend=dict(
+        xanchor="right",
+        yanchor="bottom",
+        x=0.99,
+        y=0.01,
+        bgcolor = 'rgba(0,0,0,0)',
+        bordercolor="black",
+        font=dict(size=14),
+        borderwidth=1,
+        tracegroupgap=2),
+    xaxis=dict(type='log',range=[-1.8,0.4]),
+    yaxis=dict(range=[-1.2, 1.2]),
+    # updatemenus=[
+    #     dict(
+    #         type="buttons",
+    #         direction="right",
+    #         showactive=True,
+    #         x=0.5,
+    #         xanchor="center",
+    #         y=1.1,
+    #         yanchor="top",
+    #         buttons=[
+    #             dict(
+    #                 label="Color",
+    #                 method="update",
+    #                 args=[{
+    #                     "marker.color": [trace.marker.color if hasattr(trace.marker, "color") else 'gray' for trace in fig.data],
+    #                     "line.color": [trace.line.color if hasattr(trace.line, "color") else 'gray' for trace in fig.data]
+    #                 }],
+    #             ),
+    #             dict(
+    #                 label="No Color",
+    #                 method="update",
+    #                 args=[{
+    #                     "marker.color": ['gray'],
+    #                     "line.color": ['gray']
+    #                 }],
+    #             ),
+    #         ],
+    #         pad={"r": 10, "t": 10},
+    #     ),
+    #     dict(
+    #         type="buttons",
+    #         direction="down",
+    #         xanchor="left",
+    #         x=1.04,
+    #         y=1.00,
+    #         yanchor="top",
+    #         showactive=False,
+    #         buttons=[
+    #             dict(
+    #                 label="— g₁/F₁ —",
+    #                 method="update",
+    #                 args=[{
+    #                     "mode": default_modes,
+    #                     "error_y": [{"visible": True, "array": error_y_values[i]["array"], "thickness": 1} for i in range(len(fig.data))]
+    #                 }],
+    #                 args2=[{
+    #                     "mode": [
+    #                         'none' if (trace.legendgroup and trace.legendgroup.endswith('_a1')) else default_modes[i]
+    #                         for i, trace in enumerate(fig.data)
+    #                     ],
+    #                     "error_y": [
+    #                         {"visible": False, "array": error_y_values[i]["array"], "thickness": 1} if (trace.legendgroup and trace.legendgroup.endswith('_a1')) else {"visible": True, "array": error_y_values[i]["array"], "thickness": 1}
+    #                         for i, trace in enumerate(fig.data)
+    #                     ]
+    #                 }],
+    #             ),
+    #         ],
+    #         pad={"r": 0, "t": 0},
+    #         bgcolor="rgba(0,0,0,0)",
+    #         borderwidth=0,
+    #         font=dict(size=12, color="black")
+    #     ),
+    #     dict(
+    #         type="buttons",
+    #         direction="down",
+    #         x=1.045,
+    #         xanchor="left",
+    #         y=0.675,
+    #         yanchor="top",
+    #         showactive=False,
+    #         buttons=[
+    #             dict(
+    #                 label="— A₁ —",
+    #                 method="update",
+    #                 args=[{
+    #                     "mode": default_modes,
+    #                     "error_y": [{"visible": True, "array": error_y_values[i]["array"], "thickness": 1} for i in range(len(fig.data))]
+    #                 }],
+    #                 args2=[{
+    #                     "mode": [
+    #                         'none' if (trace.legendgroup and trace.legendgroup.endswith('_g1f1')) else default_modes[i]
+    #                         for i, trace in enumerate(fig.data)
+    #                     ],
+    #                     "error_y": [
+    #                         {"visible": False, "array": error_y_values[i]["array"], "thickness": 1} if (trace.legendgroup and trace.legendgroup.endswith('_g1f1')) else {"visible": True, "array": error_y_values[i]["array"], "thickness": 1}
+    #                         for i, trace in enumerate(fig.data)
+    #                     ]
+    #                 }],
+    #             ),
+    #         ],
+    #         pad={"r": 0, "t": 0},
+    #         bgcolor="rgba(0,0,0,0)",
+    #         borderwidth=0,
+    #         font=dict(size=12, color="black")
+    #     )
+    # ]
+)
+
+fig.write_html("g1F1,A1(n)_vs_X.html")
 
 fig.add_shape(
     type="rect",
@@ -170,114 +305,6 @@ fig.add_shape(
     )
 )
 
-fig.update_layout(
-    title='g\u2081<sup>n</sup>/F\u2081<sup>n</sup>(x,Q²) and A\u2081<sup>n</sup>(x,Q²) vs X',
-    xaxis_title='log(X)',
-    yaxis_title='g\u2081<sup>n</sup>/F\u2081<sup>n</sup>, A\u2081<sup>n</sup>',
-    template='plotly_white',
-    annotations=annotations,
-    xaxis=dict(type='log',range=[-1.8,0.1]),
-    yaxis=dict(range=[-1.2, 1.2]),
-    updatemenus=[
-        dict(
-            type="buttons",
-            direction="right",
-            showactive=True,
-            x=0.5,
-            xanchor="center",
-            y=1.1,
-            yanchor="top",
-            buttons=[
-                dict(
-                    label="Color",
-                    method="update",
-                    args=[{
-                        "marker.color": [trace.marker.color if hasattr(trace.marker, "color") else 'gray' for trace in fig.data],
-                        "line.color": [trace.line.color if hasattr(trace.line, "color") else 'gray' for trace in fig.data]
-                    }],
-                ),
-                dict(
-                    label="No Color",
-                    method="update",
-                    args=[{
-                        "marker.color": ['gray'],
-                        "line.color": ['gray']
-                    }],
-                ),
-            ],
-            pad={"r": 10, "t": 10},
-        ),
-        dict(
-            type="buttons",
-            direction="down",
-            xanchor="left",
-            x=1.04,
-            y=1.00,
-            yanchor="top",
-            showactive=False,
-            buttons=[
-                dict(
-                    label="— g₁/F₁ —",
-                    method="update",
-                    args=[{
-                        "mode": default_modes,
-                        "error_y": [{"visible": True, "array": error_y_values[i]["array"], "thickness": 1} for i in range(len(fig.data))]
-                    }],
-                    args2=[{
-                        "mode": [
-                            'none' if (trace.legendgroup and trace.legendgroup.endswith('_a1')) else default_modes[i]
-                            for i, trace in enumerate(fig.data)
-                        ],
-                        "error_y": [
-                            {"visible": False, "array": error_y_values[i]["array"], "thickness": 1} if (trace.legendgroup and trace.legendgroup.endswith('_a1')) else {"visible": True, "array": error_y_values[i]["array"], "thickness": 1}
-                            for i, trace in enumerate(fig.data)
-                        ]
-                    }],
-                ),
-            ],
-            pad={"r": 0, "t": 0},
-            bgcolor="rgba(0,0,0,0)",
-            borderwidth=0,
-            font=dict(size=12, color="black")
-        ),
-        dict(
-            type="buttons",
-            direction="down",
-            x=1.045,
-            xanchor="left",
-            y=0.675,
-            yanchor="top",
-            showactive=False,
-            buttons=[
-                dict(
-                    label="— A₁ —",
-                    method="update",
-                    args=[{
-                        "mode": default_modes,
-                        "error_y": [{"visible": True, "array": error_y_values[i]["array"], "thickness": 1} for i in range(len(fig.data))]
-                    }],
-                    args2=[{
-                        "mode": [
-                            'none' if (trace.legendgroup and trace.legendgroup.endswith('_g1f1')) else default_modes[i]
-                            for i, trace in enumerate(fig.data)
-                        ],
-                        "error_y": [
-                            {"visible": False, "array": error_y_values[i]["array"], "thickness": 1} if (trace.legendgroup and trace.legendgroup.endswith('_g1f1')) else {"visible": True, "array": error_y_values[i]["array"], "thickness": 1}
-                            for i, trace in enumerate(fig.data)
-                        ]
-                    }],
-                ),
-            ],
-            pad={"r": 0, "t": 0},
-            bgcolor="rgba(0,0,0,0)",
-            borderwidth=0,
-            font=dict(size=12, color="black")
-        )
-    ]
-)
-
-fig.write_html("g1F1,A1(n)_vs_X.html")
-
 pio.write_html(
     fig,
     file='g1F1,A1(n)_vs_X.html',
@@ -285,6 +312,8 @@ pio.write_html(
     config={
         'toImageButtonOptions': {
             'filename': 'g1F1,A1(n)_vs_X',
+            'height': 685,
+            'width': 940,
             'scale': 2
         }
     }

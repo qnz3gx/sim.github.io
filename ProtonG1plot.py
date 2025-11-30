@@ -101,13 +101,25 @@ symbol_map = {
     'SMC': 'hexagon-open',
     'SLAC_E143': 'star-open',
     'SLAC_E155': 'cross-open',
-    'COMPASS(JAM22)': 'triangle-up-open'#,
-    # 'COMPASS_(CJ15+CT18)': 'triangle-up'
+    'COMPASS(JAM22)': 'triangle-up-open'
+}
+
+color_map = {
+    'CLAS_EG1b': 'orange',
+    'HERMES': 'green',
+    'EMC': 'blue',
+    'SLAC_E143': 'red',
+    'COMPASS(SM prel.)': 'blueviolet',
+    'SoLID_22GeV': 'gray',
+    'RGC': 'gray',
+    'CLAS_EG1dvcs': 'gray',
+    'EIC': 'gray',
 }
 
 for exp in experiments:
     exp_df = plot_df[plot_df['Experiment'] == exp]
-    symbol = symbol_map.get(exp, 'circle')
+    symbol = symbol_map.get(exp, 'circle'),
+    color = color_map.get(exp, 'gray')
     fig.add_trace(go.Scatter(
         x= exp_df['Q2'],
         y=exp_df['G1(x,Q2)'],
@@ -119,7 +131,7 @@ for exp in experiments:
         visible=True,
         thickness=1
     ),
-        marker=dict(size=6, symbol=symbol),
+        marker=dict(size=6, symbol=symbol, color=color),
         legendgroup=str(exp),
         showlegend=True
     ))
@@ -235,7 +247,7 @@ fig.add_shape(
 
 fig.update_layout(
     title='g\u2081<sup>p</sup>(x,Q²) vs Q²',
-    xaxis_title='log(Q²)',
+    xaxis_title='Q²',
     yaxis_title='g\u2081<sup>p</sup>(x,Q²) + 12.1 - 0.71i',
     template='plotly_white',
     annotations=annotations,
@@ -250,36 +262,36 @@ fig.update_layout(
         bordercolor='black',
         borderwidth=1
         ),
-    updatemenus=[
-        dict(
-            type="buttons",
-            direction="right",
-            showactive=True,
-            x=0.5,
-            xanchor="center",
-            y=1.1,
-            yanchor="top",
-            buttons=[
-                dict(
-                    label="Color",
-                    method="update",
-                    args=[{
-                        "marker.color": [trace.marker.color if hasattr(trace.marker, "color") else 'gray' for trace in fig.data],
-                        "line.color": [trace.line.color if hasattr(trace.line, "color") else 'gray' for trace in fig.data]
-                    }],
-                ),
-                dict(
-                    label="No Color",
-                    method="update",
-                    args=[{
-                        "marker.color": ['gray' for trace in fig.data],
-                        "line.color": ['gray' for trace in fig.data]
-                    }],
-                ),
-            ],
-            pad={"r": 10, "t": 10},
-        )
-    ]
+    # updatemenus=[
+    #     dict(
+    #         type="buttons",
+    #         direction="right",
+    #         showactive=True,
+    #         x=0.5,
+    #         xanchor="center",
+    #         y=1.1,
+    #         yanchor="top",
+    #         buttons=[
+    #             dict(
+    #                 label="Color",
+    #                 method="update",
+    #                 args=[{
+    #                     "marker.color": [trace.marker.color if hasattr(trace.marker, "color") else 'gray' for trace in fig.data],
+    #                     "line.color": [trace.line.color if hasattr(trace.line, "color") else 'gray' for trace in fig.data]
+    #                 }],
+    #             ),
+    #             dict(
+    #                 label="No Color",
+    #                 method="update",
+    #                 args=[{
+    #                     "marker.color": ['gray' for trace in fig.data],
+    #                     "line.color": ['gray' for trace in fig.data]
+    #                 }],
+    #             ),
+    #         ],
+    #         pad={"r": 10, "t": 10},
+    #     )
+    # ]
 )
 
 fig.write_html("g1(p)_vs_Q2.html")

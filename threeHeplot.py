@@ -66,8 +66,11 @@ symbol_map = {
     'Zheng': 'triangle-up',
     'Kramer': 'diamond',
     'Solvignon': 'star',
-    'Flay': 'hourglass'
+    'Flay': 'hourglass',
+    'HERMES': 'pentagon'
 }
+
+plot_df = plot_df.dropna(subset=['X','Q2','G1(x,Q2)'])
 
 for exp in experiments:
     exp_df = plot_df[plot_df['Experiment'] == exp]
@@ -81,7 +84,8 @@ for exp in experiments:
         type='data',
         array=exp_df['dg1(tot)'],
         visible=True,
-        thickness=1
+        thickness=1,
+        width=0
     ),
         marker=dict(size=6, symbol=symbol),
         legendgroup=str(exp),
@@ -112,7 +116,7 @@ for exp in experiments:
     annotations.append(dict(
         x=0.57,
         y=y_line[0],
-        text=f"W = 2GeV",
+        text=f"W = 2 GeV",
         showarrow=False,
         xshift=0,
         yshift=10,
@@ -165,7 +169,7 @@ annotations.append(dict(
     y=top_point['G1(x,Q2)'],
     text=f"(i={int(top_point['X_index'])})",
     showarrow=False,
-    xshift=90,
+    xshift=16,
     yshift=0,
     font=dict(size=10, color="black", family='Arial Black'),
 ))
@@ -178,10 +182,24 @@ if not bin_12_df.empty:
         y=bin_12_point['G1(x,Q2)'],
         text=f"(i=12)",
         showarrow=False,
-        xshift=90,
+        xshift=22,
         yshift=0,
         font=dict(size=10, color="black", family='Arial Black'),
     ))
+
+fig.add_shape(
+    type="rect",
+    xref="paper",
+    yref="paper",
+    x0=0,          
+    y0=0,          
+    x1=1,          
+    y1=1,          
+    line=dict(
+        color="black",
+        width=1,
+    )
+)
 
 fig.update_layout(
     title='g\u2081<sup><sup>3</sup>He</sup>(x,Q²) vs Q²',
@@ -189,36 +207,46 @@ fig.update_layout(
     yaxis_title='g\u2081<sup><sup>3</sup>He</sup>(x,Q²) + 2.6 - 0.15i',
     template='plotly_white',
     annotations=annotations,
-    updatemenus=[
-        dict(
-            type="buttons",
-            direction="right",
-            showactive=True,
-            x=0.5,
-            xanchor="center",
-            y=1.1,
-            yanchor="top",
-            buttons=[
-                dict(
-                    label="Color",
-                    method="update",
-                    args=[{
-                        "marker.color": [trace.marker.color if hasattr(trace.marker, "color") else 'gray' for trace in fig.data],
-                        "line.color": [trace.line.color if hasattr(trace.line, "color") else 'gray' for trace in fig.data]
-                    }],
-                ),
-                dict(
-                    label="No Color",
-                    method="update",
-                    args=[{
-                        "marker.color": ['gray' for trace in fig.data],
-                        "line.color": ['gray' for trace in fig.data]
-                    }],
-                ),
-            ],
-            pad={"r": 10, "t": 10},
-        )
-    ]
+        legend=dict(
+        xanchor="right",
+        yanchor="top",
+        x=0.99,
+        y=0.99,
+        bgcolor="white",
+        bordercolor="black",
+        font=dict(size=8),
+        borderwidth=1
+    )
+    # updatemenus=[
+    #     dict(
+    #         type="buttons",
+    #         direction="right",
+    #         showactive=True,
+    #         x=0.5,
+    #         xanchor="center",
+    #         y=1.1,
+    #         yanchor="top",
+    #         buttons=[
+    #             dict(
+    #                 label="Color",
+    #                 method="update",
+    #                 args=[{
+    #                     "marker.color": [trace.marker.color if hasattr(trace.marker, "color") else 'gray' for trace in fig.data],
+    #                     "line.color": [trace.line.color if hasattr(trace.line, "color") else 'gray' for trace in fig.data]
+    #                 }],
+    #             ),
+    #             dict(
+    #                 label="No Color",
+    #                 method="update",
+    #                 args=[{
+    #                     "marker.color": ['gray' for trace in fig.data],
+    #                     "line.color": ['gray' for trace in fig.data]
+    #                 }],
+    #             ),
+    #         ],
+    #         pad={"r": 10, "t": 10},
+    #     )
+    # ]
 )
 
 fig.write_html("g1(3He)_vs_Q2.html")
@@ -230,8 +258,8 @@ pio.write_html(
     config={
         'toImageButtonOptions': {
             'filename': 'g1(3He)_vs_Q2_plot',
-            'height': 600,
-            'width': 800,
+            'height': 800,
+            'width': 600,
             'scale': 2
         }
     }

@@ -1,3 +1,4 @@
+#%%
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -19,6 +20,7 @@ PDF_df = pd.read_csv("/Users/scarlettimorse/PycharmProjects/PDFs/g1n.csv")
 columns_to_check = ['x', 'Q2', 'g1']
 h_df = ND_df.dropna(subset=columns_to_check)
 h_df = h_df[h_df['Experiment'] != 'COMPASS_(CJ15+CT18)']
+
 
 centers = np.array([0.0036, 0.0045, 0.0055, 0.007, 0.009, 0.012, 0.017, 0.024,
                     0.035, 0.049, 0.077, 0.12, 0.17, 0.22, 0.29, 0.41, 0.57, 0.74])
@@ -89,6 +91,8 @@ w_df['g1'] = w_df['X_index'].map(g1s)
 fig = go.Figure()
 
 experiments = plot_df['Experiment'].unique()
+
+#%%
 bins = sorted(plot_df['X_index'].unique())
 annotations = []
 
@@ -101,12 +105,31 @@ symbol_map = {
     'SMC': 'hexagon-open',
     'SLAC_E143': 'star-open',
     'SLAC_E155': 'cross-open',
-    'COMPASS(JAM22)': 'triangle-up-open'
+    'COMPASS(SIM_prel.)': 'triangle-up-open',
+    'CLAS_EG1dvcs(SIM_prel.)': 'hourglass-open',
+    'Flay': 'triangle-down',
+    'CLAS_EG1b': 'triangle-left',
+}
+
+color_map = {
+    'SLAC_E154': 'firebrick',
+    'SLAC_E142': 'fuchsia',
+    'Zheng': 'red',
+    'Kramer': 'purple',
+    'HERMES': 'green',
+    'SMC': 'blue',
+    'SLAC_E143': 'orange',
+    'SLAC_E155': 'darkturquoise',
+    'COMPASS(SIM_prel.)': 'blueviolet',
+    'CLAS_EG1dvcs(SIM_prel.)': 'olivedrab',
+    'Flay': 'darkgoldenrod',
+    'CLAS_EG1b': 'gray'
 }
 
 for exp in experiments:
     exp_df = plot_df[plot_df['Experiment'] == exp]
     symbol = symbol_map.get(exp, 'circle')
+    colors = color_map.get(exp, 'black')
     fig.add_trace(go.Scatter(
         x= exp_df['Q2'],
         y=exp_df['G1(x,Q2)'],
@@ -116,9 +139,10 @@ for exp in experiments:
         type='data',
         array=exp_df['dg1(tot)'],
         visible=True,
-        thickness=1
+        thickness=1,
+        width=0
     ),
-        marker=dict(size=6, symbol=symbol),
+        marker=dict(size=7, symbol=symbol, color=colors),
         legendgroup=str(exp),
         showlegend=True
     ))
@@ -138,15 +162,15 @@ for exp in experiments:
             y=y_line,
             mode='lines',
             line=dict(color='red', width=1, dash='solid'),
-            name="W = 2 GeV",
+            name="<b>W = 2 GeV</b>",
             showlegend=False
         ))
     except RuntimeError:
         print("Fit failed for reciprocal function")
 
     annotations.append(dict(
-        x=-0.45,
-        y=4.1,
+        x=-0.3,
+        y=3.9,
         text=f"W = 2 GeV",
         showarrow=False,
         xshift=0,
@@ -234,11 +258,11 @@ fig.add_shape(
 
 fig.update_layout(
     title='g\u2081<sup>n</sup>(x,Q²) vs Q²',
-    xaxis_title='log(Q²)',
+    xaxis_title='Q²',
     yaxis_title='g\u2081<sup>n</sup>(x,Q²) + 12.1 - 0.71i',
     template='plotly_white',
     annotations=annotations,
-    xaxis=dict(type='log'),
+    xaxis=dict(type='log', range=[-0.6,2]),
     yaxis=dict(range=[-2, 12.5]),
     legend=dict(
         xanchor="right",
@@ -247,8 +271,9 @@ fig.update_layout(
         y=0.99,
         bgcolor="white",
         bordercolor="black",
-        font=dict(size=8),
-        borderwidth=1
+        font=dict(size=14),
+        borderwidth=1,
+        tracegroupgap=2
     )#,
     # updatemenus=[
     #     dict(
@@ -291,8 +316,8 @@ pio.write_html(
     config={
         'toImageButtonOptions': {
             'filename': 'g1(n)_vs_Q2_plot',
-            'height': 675,
-            'width': 875,
+            'height': 800,
+            'width': 700,
             'scale': 2
         }
     }

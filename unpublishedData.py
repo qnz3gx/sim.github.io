@@ -3,7 +3,7 @@ import numpy as np
 import plotly.express as px
 
 helium = pd.read_csv("threeHedata.csv")
-neutron = pd.read_csv("NeutronData.csv")
+neutron = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/NeutronData.csv")
 deuteron = pd.read_csv("DeuteronData.csv")
 proton = pd.read_csv("ProtonData.csv")
 
@@ -25,7 +25,7 @@ def sort(df, particle):
         filename = f"{particle}_{experiment}.csv"
         df_subset.to_csv(filename, index=False)
 
-def replace_exp(main_df, exp_df, exp,rowa,rowb):
+def replace_exp(main_df, exp_df, exp, rowa, rowb):
     common_cols = main_df.columns.intersection(exp_df.columns)
     main_df.loc[rowa:rowb, common_cols] = exp_df[common_cols].values
     main_df.loc[rowa:rowb,'Experiment'] = exp
@@ -94,5 +94,25 @@ def maxerr(datasets,column):
 # helium = replace_exp(helium,hermes,'HERMES',107,115)
 # helium.to_csv("threeHedata.csv",index=False)
 
-deuteron = deuteron.replace('CLAS_EG1', 'CLAS_EG1dvcs')
-deuteron.to_csv("DeuteronData.csv", index=False)
+# deuteron = deuteron.replace('CLAS_EG1', 'CLAS_EG1dvcs')
+# deuteron.to_csv("DeuteronData.csv", index=False)
+
+Mn = 0.93957
+
+dvcs = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/neutron_CLAS_EG1b.csv")
+dvcs['x'] = np.nan
+
+for i, row in dvcs.iterrows():
+    if pd.isna(row['x']):
+        dvcs.loc[i, 'x'] = row['Q2'] / (row['W']**2 - Mn**2 + row['Q2'])
+    elif pd.isna(row['W']):
+        dvcs.loc[i, 'W'] = (row['Q2'] / row['x']) + Mn**2 - row['Q2']
+dvcs.to_csv("neutron_CLAS_EG1b.csv", index=False)
+
+a = len(neutron)
+b = a + len(dvcs)
+new_rows = pd.DataFrame(None, columns=neutron.columns, index=range(b-a))
+
+# neutron = pd.concat([neutron, new_rows], ignore_index=True)
+# neutron = replace_exp(neutron, dvcs, 'CLAS_EG1b', a, b).reset_index(drop=True)
+# neutron.to_csv("NeutronData.csv", index=False)
