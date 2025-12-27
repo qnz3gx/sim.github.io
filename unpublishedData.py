@@ -37,25 +37,6 @@ def quadrature_sum(df,col1,col2,result):
     df.loc[mask, result] = np.sqrt(df.loc[mask, col1]**2 + df.loc[mask, col2]**2)
     return df
 
-# cj15nlo = pd.read_csv("neutron_CJ15nlo.csv")
-# ct18nnlo = pd.read_csv("neutron_CT18NNLO.csv")
-
-# compass = (cj15nlo + ct18nnlo)/2
-# compass['x'] = cj15nlo['x']
-# compass['Q2'] = cj15nlo['Q2']
-# compass['dg1(stat)'] = 1/2 * np.sqrt(cj15nlo['dg1(stat)'].values ** 2 + ct18nnlo['dg1(stat)'].values ** 2)
-# compass['dg1(sys)'] = 1/2 * np.sqrt(cj15nlo['dg1(sys)'].values ** 2 + ct18nnlo['dg1(sys)'].values ** 2)
-
-# columns = [cj15nlo,ct18nnlo]
-
-# compass['dg1(model)'] = np.abs(cj15nlo['g1'] - ct18nnlo['g1']) / 2
-# compass['dg1(tot)'] = np.sqrt(compass['dg1(stat)']**2 + compass['dg1(sys)']**2 + compass['dg1(model)']**2)
-# compass.drop(columns=['dg1/F1(stat)', 'dg1/F1(sys)'], inplace=True)
-# compass['g1/F1'] = compass['g1'] / compass['F1']
-# compass['dg1/F1'] = np.abs(compass['g1/F1'] * np.sqrt((compass['dg1(tot)']/compass['g1'])**2 + (compass['dF1(tot)']/compass['F1'])**2))
-# compass = compass.round(4)
-# compass.to_csv('neutron_COMPASS.csv', index=False)
-
 def maxerr(datasets,column):
     maximum_error = []
     for i in range(len(datasets[0])):
@@ -63,68 +44,45 @@ def maxerr(datasets,column):
         maximum_error.append(maximum/2)
     return maximum_error
 
-# jamn=pd.read_csv('neutron_JAM22.csv')
-# quadrature_sum(jamn,'dg1(stat)','dg1(sys)','dg1(tot)')
-# quadrature_sum(jamn,'dg1/F1(stat)','dg1/F1(sys)','dg1/F1(tot)')
-# jamn=jamn.round(4)
-# jamn.to_csv('neutron_JAM22.csv', index=False)
-# neutron=replace_exp(neutron,jamn,'COMPASS(JAM22)',394,408)
-# neutron.to_csv("NeutronData.csv", index=False)
+# hermes = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/deuteron_HERMES.csv")
+# compass = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/deuteron_COMPASS.csv")
+# smc = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/deuteron_SMC.csv")
 
-# jamp=pd.read_csv('proton_JAM22.csv')
-# quadrature_sum(jamp,'dg1(stat)','dg1(sys)','dg1(tot)')
-# quadrature_sum(jamp,'dA1(stat)','dA1(sys)','dA1(tot)')
-# jamp=jamp.round(4)
-# jamp.to_csv('proton_JAM22.csv', index=False)
-# proton=replace_exp(proton,jamp,'COMPASS(JAM22)',3029,3043)
-# proton.to_csv("ProtonData.csv", index=False)
+# deuteron = replace_exp(deuteron,hermes,'HERMES',7715,7778)
+# print('hermes')
+# deuteron = replace_exp(deuteron,compass,'COMPASS',7642,7714)
+# print('compass')
+# deuteron = replace_exp(deuteron,smc,'SMC',8008,8110)
+# print('smc')
+# deuteron.to_csv("DeuteronData.csv",index=False)
 
-# jamd=pd.read_csv('deuteron_JAM22.csv')
-# quadrature_sum(jamd,'dg1(stat)','dg1(sys)','dg1(tot)')
-# quadrature_sum(jamd,'dA1(stat)','dA1(sys)','dA1(tot)')
-# jamd=jamd.round(4)
-# jamd.to_csv('deuteron_JAM22.csv', index=False)
-# deuteron=replace_exp(deuteron,jamd,'COMPASS(JAM22)',7967,7981)
-# deuteron.to_csv("DeuteronData.csv", index=False)
+# smc = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/proton_SMC.csv")
+# emc = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/proton_EMC.csv")
+# e155 = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/proton_SLAC_E155.csv")
+# hermes = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/proton_HERMES.csv")
+# compass = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/proton_COMPASS.csv")
 
-# hermes = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/threeHe_Hermes.csv")
-# quadrature_sum(hermes, 'dA1(stat)', 'dA1(sys)', 'dA1(tot)')
-# hermes = hermes.round(4)
-# hermes.to_csv("threeHe_Hermes.csv",index=False)
-# helium = replace_exp(helium,hermes,'HERMES',107,115)
-# helium.to_csv("threeHedata.csv",index=False)
+# proton = replace_exp(proton,smc,'SMC',1204,1424)
+# print('smc')
+# proton = replace_exp(proton,emc,'EMC',1155,1164)
+# print('emc')
+# proton = replace_exp(proton,e155,'SLAC_E155',1165,1188)
+# print('e155')
+# proton = replace_exp(proton,hermes,'HERMES',834,933)
+# print('hermes')
+# proton = replace_exp(proton,compass,'COMPASS',1425,1505)
+# print('compass')
 
-# deuteron = deuteron.replace('CLAS_EG1', 'CLAS_EG1dvcs')
-# deuteron.to_csv("DeuteronData.csv", index=False)
+# proton.to_csv("ProtonData.csv",index=False)
 
-Mn = 0.93957
+# e155 = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/neutron_SLAC_E155.csv")
+# hermes = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/neutron_HERMES.csv")
 
-dvcs = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/neutron_CLAS_EG1b.csv")
-dvcs['x'] = np.nan
+# neutron = replace_exp(neutron,e155,'SLAC_E155',163,197)
+# print("e155")
+# neutron = replace_exp(neutron,hermes,'HERMES',94,162)
+# print('hermes')
 
-for i, row in dvcs.iterrows():
-    if pd.isna(row['x']):
-        dvcs.loc[i, 'x'] = row['Q2'] / (row['W']**2 - Mn**2 + row['Q2'])
-    elif pd.isna(row['W']):
-        dvcs.loc[i, 'W'] = (row['Q2'] / row['x']) + Mn**2 - row['Q2']
-dvcs.to_csv("neutron_CLAS_EG1b.csv", index=False)
+# neutron.to_csv("NeutronData.csv",index=False)
 
-a = len(neutron)
-b = a + len(dvcs)
-new_rows = pd.DataFrame(None, columns=neutron.columns, index=range(b-a))
-
-# neutron = pd.concat([neutron, new_rows], ignore_index=True)
-# neutron = replace_exp(neutron, dvcs, 'CLAS_EG1b', a, b).reset_index(drop=True)
-# neutron.to_csv("NeutronData.csv", index=False)
-
-hermes = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/deuteron_HERMES.csv")
-compass = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/deuteron_HERMES.csv")
-smc = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/deuteron_SMC.csv")
-
-deuteron = replace_exp(deuteron,hermes,'HERMES',7715,7778)
-print('hermes')
-deuteron = replace_exp(deuteron,compass,'COMPASS_(CJ15+CT18)',7642,7705)
-print('compass')
-deuteron = replace_exp(deuteron,smc,'SMC',8008,8110)
-print('smc')
-deuteron.to_csv("DeuteronData.csv",index=False)
+print(proton['Experiment'].unique())
