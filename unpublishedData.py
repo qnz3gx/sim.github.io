@@ -44,45 +44,12 @@ def maxerr(datasets,column):
         maximum_error.append(maximum/2)
     return maximum_error
 
-# hermes = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/deuteron_HERMES.csv")
-# compass = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/deuteron_COMPASS.csv")
-# smc = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/deuteron_SMC.csv")
+eg1a = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/proton_CLAS_EG1a.csv")
+eg1b = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/proton_CLAS_EG1b.csv")
 
-# deuteron = replace_exp(deuteron,hermes,'HERMES',7715,7778)
-# print('hermes')
-# deuteron = replace_exp(deuteron,compass,'COMPASS',7642,7714)
-# print('compass')
-# deuteron = replace_exp(deuteron,smc,'SMC',8008,8110)
-# print('smc')
-# deuteron.to_csv("DeuteronData.csv",index=False)
+proton = replace_exp(proton,eg1a,'CLAS_EG1a',6576,6738)
+print('eg1a')
+proton = replace_exp(proton,eg1b,'CLAS_EG1b',47,5903)
+print('eg1b')
 
-# smc = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/proton_SMC.csv")
-# emc = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/proton_EMC.csv")
-# e155 = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/proton_SLAC_E155.csv")
-# hermes = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/proton_HERMES.csv")
-# compass = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/proton_COMPASS.csv")
-
-# proton = replace_exp(proton,smc,'SMC',1204,1424)
-# print('smc')
-# proton = replace_exp(proton,emc,'EMC',1155,1164)
-# print('emc')
-# proton = replace_exp(proton,e155,'SLAC_E155',1165,1188)
-# print('e155')
-# proton = replace_exp(proton,hermes,'HERMES',834,933)
-# print('hermes')
-# proton = replace_exp(proton,compass,'COMPASS',1425,1505)
-# print('compass')
-
-# proton.to_csv("ProtonData.csv",index=False)
-
-# e155 = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/neutron_SLAC_E155.csv")
-# hermes = pd.read_csv("/Users/scarlettimorse/PycharmProjects/sim.github.io/neutron_HERMES.csv")
-
-# neutron = replace_exp(neutron,e155,'SLAC_E155',163,197)
-# print("e155")
-# neutron = replace_exp(neutron,hermes,'HERMES',94,162)
-# print('hermes')
-
-# neutron.to_csv("NeutronData.csv",index=False)
-
-print(proton['Experiment'].unique())
+proton.to_csv("ProtonData.csv",index=False)
