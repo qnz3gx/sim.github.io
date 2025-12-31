@@ -99,7 +99,8 @@ symbol_map = {
     'SMC': 'hexagon-open',
     'SLAC_E143': 'star-open',
     'SLAC_E155': 'cross-open',
-    'COMPASS(JAM22)': 'triangle-up-open'
+    'COMPASS': 'triangle-up-open',
+    'CLAS_EG1b': 'square-open',
 }
 
 for exp in experiments:
@@ -114,7 +115,8 @@ for exp in experiments:
         type='data',
         array=exp_df['dg1(tot)'],
         visible=True,
-        thickness=1
+        thickness=1,
+        width=0
     ),
         marker=dict(size=6, symbol=symbol),
         legendgroup=str(exp),

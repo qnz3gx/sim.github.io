@@ -46,28 +46,32 @@ symbol_map_g1f1 = {
     'CLAS_EG1dvcs': 'circle',
     'CLAS_EG1b': 'square',
     'SLAC_E143': 'star',
-    'SLAC_E155': 'cross'
+    'SLAC_E155': 'cross',
+    'HERMES': 'triangle-up'
 }
 
 symbol_map_a1 = {
     'CLAS_EG1b': 'square-open',
     'SLAC_E143': 'star-open',
-    'COMPASS(SM prel.)': 'triangle-up-open',
-    'SMC': 'diamond-open'
+    'COMPASS': 'cross-open',
+    'SMC': 'diamond-open',
+    'HERMES': 'triangle-up-open'
 }
 
 color_map_g1f1= {
     'CLAS_EG1dvcs': 'red',
     'CLAS_EG1b': 'slategray',
     'SLAC_E143': 'blue',
-    'SLAC_E155': 'blueviolet'
+    'SLAC_E155': 'blueviolet',
+    'HERMES': 'purple'
 }
 
 color_map_A1= {
     'CLAS_EG1b': 'lavender',
     'SLAC_E143': 'orange',
-    'COMPASS(SM prel.)': 'darkturquoise',
-    'SMC': 'green'
+    'COMPASS': 'darkturquoise',
+    'SMC': 'green',
+    'HERMES': 'olivedrab'
 }
 
 g1f1_trace_idxs = []
@@ -101,7 +105,8 @@ for exp in sorted(g1f1exp):
         type='data',
         array=exp_df['dg1/F1(tot)'],
         visible=True,
-        thickness=1
+        thickness=1,
+        width=0
     ),
         marker=dict(size=7, symbol=symbol1, color = color1),
         legendgroup=f"{exp}_g1f1",
@@ -138,7 +143,8 @@ for exp2 in sorted(a1exp):
         type='data',
         array=exp2_df['dA1(tot)'],
         visible=True,
-        thickness=1
+        thickness=1,
+        width=0
     ),
         marker=dict(size=7, symbol=symbol2, color = color2),
         legendgroup=f"{exp2}_a1",
@@ -168,36 +174,39 @@ fig.update_layout(
         bordercolor="black",
         font=dict(size=14),
         borderwidth=1,
-        tracegroupgap=2)
-#     updatemenus=[
-#         dict(
-#             type="buttons",
-#             direction="right",
-#             showactive=True,
-#             x=0.5,
-#             xanchor="center",
-#             y=1.1,
-#             yanchor="top",
-#             buttons=[
-#                 dict(
-#                     label="Color",
-#                     method="update",
-#                     args=[{
-#                         "marker.color": [trace.marker.color if hasattr(trace.marker, "color") else 'gray' for trace in fig.data],
-#                         "line.color": [trace.line.color if hasattr(trace.line, "color") else 'gray' for trace in fig.data]
-#                     }],
-#                 ),
-#                 dict(
-#                     label="No Color",
-#                     method="update",
-#                     args=[{
-#                         "marker.color": ['gray'],
-#                         "line.color": ['gray']
-#                     }],
-#                 ),
-#             ],
-#             pad={"r": 10, "t": 10},
-#         ),
+        tracegroupgap=2),
+    updatemenus=[
+        dict(
+            type="buttons",
+            direction="right",
+            showactive=True,
+            x=0.5,
+            xanchor="center",
+            y=1.1,
+            yanchor="top",
+            buttons=[
+                dict(
+                    label="Color",
+                    method="update",
+                    args=[{
+                        "marker.color": [trace.marker.color if hasattr(trace.marker, "color") else 'gray' for trace in fig.data],
+                        "line.color": [trace.line.color if hasattr(trace.line, "color") else 'gray' for trace in fig.data]
+                    }],
+                ),
+                dict(
+                    label="No Color",
+                    method="update",
+                    args=[{
+                        "marker.color": ['gray'],
+                        "line.color": ['gray']
+                    }],
+                ),
+            ],
+            pad={"r": 10, "t": 10},
+        ),
+    ],
+)
+
 #         dict(
 #             type="buttons",
 #             direction="down",
@@ -264,8 +273,8 @@ fig.update_layout(
 #             borderwidth=0,
 #             font=dict(size=12, color="black")
 #         )
-#     ]
-)
+    # ]
+# )
 
 fig.write_html("g1F1,A1(d)_vs_X.html")
 

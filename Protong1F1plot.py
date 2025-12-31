@@ -49,10 +49,13 @@ symbol_map_g1f1 = {
 }
 
 symbol_map_a1 = {
+    'CLAS_EG1a': 'hourglass-open',
     'CLAS_EG1b': 'square-open',
     'SLAC_E143': 'star-open',
-    'COMPASS(SM prel.)': 'triangle-up-open',
-    'SMC': 'diamond-open'
+    'COMPASS': 'triangle-up-open',
+    'EMC': 'square-open',
+    'SMC': 'diamond-open',
+    'HERMES': 'pentagon-open'
 }
 
 color_map_g1f1= {
@@ -65,9 +68,13 @@ color_map_g1f1= {
 }
 
 color_map_A1= {
+    'CLAS_EG1a': 'gray',
     'CLAS_EG1b': 'lavender',
     'SLAC_E143': 'orange',
-    'COMPASS(SM prel.)': 'darkturquoise'
+    'COMPASS': 'darkturquoise',
+    'EMC': 'lightblue',
+    'HERMES': 'olivedrab',
+    'SMC': 'purple'
 }
 
 g1f1_trace_idxs = []
@@ -168,105 +175,106 @@ fig.update_layout(
         bordercolor="black",
         font=dict(size=14),
         borderwidth=1,
-        tracegroupgap=2)
-    #     ,
-    # updatemenus=[
-    #     dict(
-    #         type="buttons",
-    #         direction="right",
-    #         showactive=True,
-    #         x=0.5,
-    #         xanchor="center",
-    #         y=1.1,
-    #         yanchor="top",
-    #         buttons=[
-    #             dict(
-    #                 label="Color",
-    #                 method="update",
-    #                 args=[{
-    #                     "marker.color": [trace.marker.color if hasattr(trace.marker, "color") else 'gray' for trace in fig.data],
-    #                     "line.color": [trace.line.color if hasattr(trace.line, "color") else 'gray' for trace in fig.data]
-    #                 }],
-    #             ),
-    #             dict(
-    #                 label="No Color",
-    #                 method="update",
-    #                 args=[{
-    #                     "marker.color": ['gray'],
-    #                     "line.color": ['gray']
-    #                 }],
-    #             ),
-    #         ],
-    #         pad={"r": 10, "t": 10},
-    #     ),
-    #     dict(
-    #         type="buttons",
-    #         direction="down",
-    #         xanchor="left",
-    #         x=1.04,
-    #         y=1.00,
-    #         yanchor="top",
-    #         showactive=False,
-    #         buttons=[
-    #             dict(
-    #                 label="— g₁/F₁ —",
-    #                 method="update",
-    #                 args=[{
-    #                     "mode": default_modes,
-    #                     "error_y": [{"visible": True, "array": error_y_values[i]["array"], "thickness": 1} for i in range(len(fig.data))]
-    #                 }],
-    #                 args2=[{
-    #                     "mode": [
-    #                         'none' if (trace.legendgroup and trace.legendgroup.endswith('_a1')) else default_modes[i]
-    #                         for i, trace in enumerate(fig.data)
-    #                     ],
-    #                     "error_y": [
-    #                         {"visible": False, "array": error_y_values[i]["array"], "thickness": 1} if (trace.legendgroup and trace.legendgroup.endswith('_a1')) else {"visible": True, "array": error_y_values[i]["array"], "thickness": 1}
-    #                         for i, trace in enumerate(fig.data)
-    #                     ]
-    #                 }],
-    #             ),
-    #         ],
-    #         pad={"r": 0, "t": 0},
-    #         bgcolor="rgba(0,0,0,0)",
-    #         borderwidth=0,
-    #         font=dict(size=12, color="black")
-    #     ),
-    #     dict(
-    #         type="buttons",
-    #         direction="down",
-    #         x=1.045,
-    #         xanchor="left",
-    #         y=0.67,
-    #         yanchor="top",
-    #         showactive=False,
-    #         buttons=[
-    #             dict(
-    #                 label="— A₁ —",
-    #                 method="update",
-    #                 args=[{
-    #                     "mode": default_modes,
-    #                     "error_y": [{"visible": True, "array": error_y_values[i]["array"], "thickness": 1} for i in range(len(fig.data))]
-    #                 }],
-    #                 args2=[{
-    #                     "mode": [
-    #                         'none' if (trace.legendgroup and trace.legendgroup.endswith('_g1f1')) else default_modes[i]
-    #                         for i, trace in enumerate(fig.data)
-    #                     ],
-    #                     "error_y": [
-    #                         {"visible": False, "array": error_y_values[i]["array"], "thickness": 1} if (trace.legendgroup and trace.legendgroup.endswith('_g1f1')) else {"visible": True, "array": error_y_values[i]["array"], "thickness": 1}
-    #                         for i, trace in enumerate(fig.data)
-    #                     ]
-    #                 }],
-    #             ),
-    #         ],
-    #         pad={"r": 0, "t": 0},
-    #         bgcolor="rgba(0,0,0,0)",
-    #         borderwidth=0,
-    #         font=dict(size=12, color="black")
-    #     )
-    # ]
-)
+        tracegroupgap=2
+    ),
+    updatemenus=[
+        dict(
+            type="buttons",
+            direction="right",
+            showactive=True,
+            x=0.5,
+            xanchor="center",
+            y=1.1,
+            yanchor="top",
+            buttons=[
+                dict(
+                    label="Color",
+                    method="update",
+                    args=[{
+                        "marker.color": [trace.marker.color if hasattr(trace.marker, "color") else 'gray' for trace in fig.data],
+                        "line.color": [trace.line.color if hasattr(trace.line, "color") else 'gray' for trace in fig.data]
+                    }],
+                ),
+                dict(
+                    label="No Color",
+                    method="update",
+                    args=[{
+                        "marker.color": ['gray'],
+                        "line.color": ['gray']
+                    }],
+                ),
+            ],
+            pad={"r": 10, "t": 10},
+        )
+    ]
+        # dict(
+        #     type="buttons",
+        #     direction="down",
+        #     xanchor="left",
+        #     x=1.04,
+        #     y=1.00,
+        #     yanchor="top",
+        #     showactive=False,
+        #     buttons=[
+        #         dict(
+        #             label="— g₁/F₁ —",
+        #             method="update",
+        #             args=[{
+        #                 "mode": default_modes,
+        #                 "error_y": [{"visible": True, "array": error_y_values[i]["array"], "thickness": 1} for i in range(len(fig.data))]
+        #             }],
+        #             args2=[{
+        #                 "mode": [
+        #                     'none' if (trace.legendgroup and trace.legendgroup.endswith('_a1')) else default_modes[i]
+        #                     for i, trace in enumerate(fig.data)
+        #                 ],
+        #                 "error_y": [
+        #                     {"visible": False, "array": error_y_values[i]["array"], "thickness": 1} if (trace.legendgroup and trace.legendgroup.endswith('_a1')) else {"visible": True, "array": error_y_values[i]["array"], "thickness": 1}
+        #                     for i, trace in enumerate(fig.data)
+        #                 ]
+        #             }],
+        #         ),
+        #     ],
+        #     pad={"r": 0, "t": 0},
+        #     bgcolor="rgba(0,0,0,0)",
+        #     borderwidth=0,
+        #     font=dict(size=12, color="black")
+        # ),
+        # dict(
+        #     type="buttons",
+        #     direction="down",
+        #     x=1.045,
+        #     xanchor="left",
+        #     y=0.67,
+        #     yanchor="top",
+        #     showactive=False,
+        #     buttons=[
+        #         dict(
+        #             label="— A₁ —",
+        #             method="update",
+        #             args=[{
+        #                 "mode": default_modes,
+        #                 "error_y": [{"visible": True, "array": error_y_values[i]["array"], "thickness": 1} for i in range(len(fig.data))]
+        #             }],
+        #             args2=[{
+        #                 "mode": [
+        #                     'none' if (trace.legendgroup and trace.legendgroup.endswith('_g1f1')) else default_modes[i]
+        #                     for i, trace in enumerate(fig.data)
+        #                 ],
+        #                 "error_y": [
+        #                     {"visible": False, "array": error_y_values[i]["array"], "thickness": 1} if (trace.legendgroup and trace.legendgroup.endswith('_g1f1')) else {"visible": True, "array": error_y_values[i]["array"], "thickness": 1}
+        #                     for i, trace in enumerate(fig.data)
+        #                 ]
+                    # }],
+                # ),
+            # ],
+            # pad={"r": 0, "t": 0},
+            # bgcolor="rgba(0,0,0,0)",
+            # borderwidth=0,
+            # font=dict(size=12, color="black")
+        )
+#     ]
+# )
 
 fig.write_html("g1F1,A1(p)_vs_X.html")
 

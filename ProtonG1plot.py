@@ -1,3 +1,4 @@
+#%%
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -41,7 +42,7 @@ def xbins(set):
     return set
 
 plot_df = xbins(h_df)
-plot_df['G1(x,Q2)'] = plot_df['g1'] + 12.1 - 0.71 * plot_df['X_index']
+plot_df['G1(x,Q2)'] = pd.to_numeric(plot_df['g1'].values) + 12.1 - 0.71 * pd.to_numeric(plot_df['X_index'].values)
 
 small = []
 large = []
@@ -98,10 +99,13 @@ symbol_map = {
     'Zheng': 'hourglass',
     'Kramer': 'diamond',
     'HERMES': 'pentagon',
+    'EMC': 'square-open',
     'SMC': 'hexagon-open',
     'SLAC_E143': 'star-open',
     'SLAC_E155': 'cross-open',
-    'COMPASS(JAM22)': 'triangle-up-open'
+    'COMPASS': 'triangle-up-open',
+    'CLAS_EG1a': 'hourglass-open',
+    'CLAS_EG1b': 'hexagon'
 }
 
 color_map = {
@@ -109,19 +113,21 @@ color_map = {
     'HERMES': 'green',
     'EMC': 'blue',
     'SLAC_E143': 'red',
-    'COMPASS(SM prel.)': 'blueviolet',
+    'COMPASS': 'blueviolet',
+    'CLAS_EG1a': 'olivedrab',
+    'SMC': 'darkturquoise',
     'SoLID_22GeV': 'gray',
     'RGC': 'gray',
     'CLAS_EG1dvcs': 'gray',
-    'EIC': 'gray',
+    'EIC': 'gray'
 }
 
 for exp in experiments:
     exp_df = plot_df[plot_df['Experiment'] == exp]
-    symbol = symbol_map.get(exp, 'circle'),
-    color = color_map.get(exp, 'gray')
+    symbols = symbol_map.get(exp, 'circle')
+    colors = color_map.get(exp, 'gray')
     fig.add_trace(go.Scatter(
-        x= exp_df['Q2'],
+        x=exp_df['Q2'],
         y=exp_df['G1(x,Q2)'],
         mode='markers',
         name=str(exp),
@@ -129,9 +135,10 @@ for exp in experiments:
         type='data',
         array=exp_df['dg1(tot)'],
         visible=True,
-        thickness=1
+        thickness=1,
+        width=0
     ),
-        marker=dict(size=6, symbol=symbol, color=color),
+        marker=dict(size=7, symbol=symbols, color=colors),
         legendgroup=str(exp),
         showlegend=True
     ))
@@ -205,7 +212,7 @@ for i in range(len(centers)):
         yshift=0,
         font=dict(size=10, color="black"),
     ))
-    
+  
 rightmost_by_bin = plot_df.loc[plot_df.groupby('X_index')['Q2'].idxmax()]
 top_point = rightmost_by_bin.loc[rightmost_by_bin['G1(x,Q2)'].idxmax()]
 annotations.append(dict(
@@ -262,36 +269,36 @@ fig.update_layout(
         bordercolor='black',
         borderwidth=1
         ),
-    # updatemenus=[
-    #     dict(
-    #         type="buttons",
-    #         direction="right",
-    #         showactive=True,
-    #         x=0.5,
-    #         xanchor="center",
-    #         y=1.1,
-    #         yanchor="top",
-    #         buttons=[
-    #             dict(
-    #                 label="Color",
-    #                 method="update",
-    #                 args=[{
-    #                     "marker.color": [trace.marker.color if hasattr(trace.marker, "color") else 'gray' for trace in fig.data],
-    #                     "line.color": [trace.line.color if hasattr(trace.line, "color") else 'gray' for trace in fig.data]
-    #                 }],
-    #             ),
-    #             dict(
-    #                 label="No Color",
-    #                 method="update",
-    #                 args=[{
-    #                     "marker.color": ['gray' for trace in fig.data],
-    #                     "line.color": ['gray' for trace in fig.data]
-    #                 }],
-    #             ),
-    #         ],
-    #         pad={"r": 10, "t": 10},
-    #     )
-    # ]
+    updatemenus=[
+        dict(
+            type="buttons",
+            direction="right",
+            showactive=True,
+            x=0.5,
+            xanchor="center",
+            y=1.1,
+            yanchor="top",
+            buttons=[
+                dict(
+                    label="Color",
+                    method="update",
+                    args=[{
+                        "marker.color": [trace.marker.color if hasattr(trace.marker, "color") else 'gray' for trace in fig.data],
+                        "line.color": [trace.line.color if hasattr(trace.line, "color") else 'gray' for trace in fig.data]
+                    }],
+                ),
+                dict(
+                    label="No Color",
+                    method="update",
+                    args=[{
+                        "marker.color": ['gray' for trace in fig.data],
+                        "line.color": ['gray' for trace in fig.data]
+                    }],
+                ),
+            ],
+            pad={"r": 10, "t": 10},
+        )
+    ]
 )
 
 fig.write_html("g1(p)_vs_Q2.html")
@@ -309,3 +316,4 @@ pio.write_html(
         }
     }
 )
+# %%

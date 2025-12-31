@@ -50,7 +50,9 @@ symbol_map = {
     'Flay': 'x',
     'SLAC_E143': 'star-open',
     'SLAC_E155': 'cross-open',
-    'COMPASS(SM prel.)': 'triangle-left-open'
+    'COMPASS(SIM_prel.)': 'triangle-left-open',
+    'CLAS_EG1dvcs(SIM_prel.)': 'hourglass-open',
+    'CLAS_EG1b': 'triangle-left'
 }
 
 color_map_g1f1= {
@@ -61,7 +63,9 @@ color_map_g1f1= {
     'Flay': 'gold',
     'SLAC_E143': 'lightblue',
     'SLAC_E155': 'blueviolet',
-    'COMPASS(SM prel.)': 'darkturquoise'
+    'COMPASS(SIM_prel.)': 'darkturquoise',
+    'CLAS_EG1dvcs(SIM_prel.)': 'olivedrab',
+    'CLAS_EG1b': 'gray'
 }
 
 color_map_A1= {
@@ -72,7 +76,8 @@ color_map_A1= {
     'Flay': 'blue',
     'SLAC_E143': 'orange',
     'SLAC_E155': 'peachpuff',
-    'COMPASS(SM prel.)': 'pink'
+    'COMPASS(SIM_prel.)': 'pink',
+    'CLAS_EG1b': 'lightgray'
 }
 
 g1f1_trace_idxs = []

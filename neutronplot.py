@@ -131,7 +131,7 @@ for exp in experiments:
     symbol = symbol_map.get(exp, 'circle')
     colors = color_map.get(exp, 'black')
     fig.add_trace(go.Scatter(
-        x= exp_df['Q2'],
+        x=exp_df['Q2'],
         y=exp_df['G1(x,Q2)'],
         mode='markers',
         name=str(exp),
